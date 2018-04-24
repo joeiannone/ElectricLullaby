@@ -1,5 +1,5 @@
 # StepSequencerJS
-A musical step sequencer built with javascript
+An ongoing javascript project that began with me playing around with the Web Audio API.
 
 Tech used:
 - Pure Javascript
