@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StepSequencerJS</title>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/buttons.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class='container' ng-app='stepScript' ng-controller="mainController">
+    <h1>{{ appTitle }}</h1>
+    <h3>{{ appSubTitle }}</h3>
+    <div class='container' id='control-board'>  
+      <div class='row'> 
+        <div class='control-box col-sm-4'> 
+          <table>
+            <tr>
+              <td><label>start/stop: </label></td>
+              <td><input class='form-control' id='startStopButton' type="checkbox" ng-model='start' ng-change="startStopSequencer()" data-toggle="toggle"></td>
+            </tr>
+            <tr>
+              <td><label>steps/minute: </label></td>
+              <td><input class='form-control' ng-model="tempo" onkeypress="return false;" ng-mouseup="setTempo()" type='number' min='100' max='500'></input></td>
+            </tr>
+            <tr>
+              <td><label>wave: </label></td>
+              <td>
+                <select class='form-control' ng-model="wave" ng-change="setWave()">
+                  <option ng-repeat="wave in waves" value="{{ wave }}">{{ wave }}</option>
+                </select></td>
+            </tr>
+          </table>
+        </div>
+        <div class='control-box col-sm-4'>
+          <table>
+            <tr>
+              <td><label>vol: <span id='vol-display'> {{ displayVol }}</span></label></td>
+            <td><input class='form-control' ng-model="vol" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
+            </tr>
+            <tr>
+              <td><label>range: </label></td>
+              <td><input class='form-control' disabled type='range' step="1" min='-8' max='8'></input></td>
+            </tr>
+            <tr>
+              <td><label>detune: <br><span id='detune-display'> {{ displayDetune }}</span></label></td>
+              <td><input class='form-control' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-400" max="400"></td>
+            </tr>
+          </table>
+        </div>
+        <div class='control-box col-sm-4'>
+          <table>
+            <tr>
+              <td><button class='btn btn-default' ng-click="clearBoard()">clear board</button></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><span id='counter'> 0</span>
+              </td><td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div> <!--/control-board-->
+    
+    <div class='container row'>
+      <div class='container' id='controller'></div>
+    </div>
+  
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/sequencer.js"></script>
+  <script src="js/controller.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+.active-step {
+  background-color: rgba(0,120,30,.3);
+}
+
+.control-box {
+  display: inline-block;
+}
+.control-box label, .control-box button {
+  font-weight: 200;
+}
+
+.control-box input[type=number], .control-box select {
+  height: 31px;
+}
+
+table td {
+  padding: 4px 15px;
+}
+
+#counter {
+  font-size: 40px;
+  font-weight: 200;
+}
+
+#control-board {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(16, auto);
+  width: auto;
+}
+
+.grid-item {
+  padding-left: 5px;
+  padding-bottom: 15px;
+}
+
+#controller {
+  margin-bottom: 100px;
+}
+
