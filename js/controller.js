@@ -18,14 +18,14 @@ app.controller('mainController', function($scope) {
   sequencer = new Sequencer($scope.tempo, $scope.wave, $scope.vol, $scope.detune, $scope.step);
   
   $scope.startStopSequencer = function() {
-    var state = angular.element(event.target);
-    if (state.attr('class') == 'glyphicon glyphicon-play') { 
-      state.removeClass('glyphicon-play');
-      state.addClass('glyphicon-pause');
+    var state = document.getElementById('play-button').classList;
+    if (state.contains('glyphicon-play')) { 
+      state.remove('glyphicon-play');
+      state.add('glyphicon-pause');
       sequencer.resume();
     } else {
-      state.removeClass('glyphicon-pause');
-      state.addClass('glyphicon-play');
+      state.remove('glyphicon-pause');
+      state.add('glyphicon-play');
       sequencer.pause();
     }
   }

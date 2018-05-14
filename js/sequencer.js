@@ -137,12 +137,16 @@ Sequencer.prototype.deactivateSteps = function() {
 
 
 function sequenceInterval(seq) {
-    var j;
+    var j, count;
     seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
 
     if (seq.isPaused == false) {
       currentStep = seq.i;
-      document.getElementById('counter').innerHTML = seq.i+1;
+      
+      // pad display count
+      count = seq.i+1;
+      if (count < 10) count = '0' + count;
+      document.getElementById('counter').innerHTML = count;
       /**
       * Set background color of column to indicate which 
       * step in sequence is currently active

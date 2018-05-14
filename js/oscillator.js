@@ -23,3 +23,9 @@ Oscillator.prototype.stop = function() {
 Oscillator.prototype.mute = function() {
   this.vol.gain.value = 0;
 };
+
+
+/* required for chrome */
+document.addEventListener("DOMContentLoaded", function(event) {
+  this.addEventListener('click', function() { audioCtx.resume(); });
+});
