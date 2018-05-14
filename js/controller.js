@@ -5,7 +5,7 @@ app.controller('mainController', function($scope) {
   var sequencer; 
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.appTitle = "";
-	$scope.appSubTitle = "StepSequencerJS: A musical step sequencer built with javascript.";
+  $scope.appSubTitle = "StepSequencerJS: A musical step sequencer built with javascript.";
  
   $scope.wave = 'sine';
   $scope.tempo = 240;     
