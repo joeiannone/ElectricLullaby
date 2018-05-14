@@ -1,3 +1,7 @@
+/**
+* global var to hold current step
+*/
+var currentStep = 0;
 
 function Sequencer(tempo, wave, vol, detune, steps) {
   
@@ -97,9 +101,11 @@ Sequencer.prototype.getActiveStep = function() {
 Sequencer.prototype.setSteps = function(steps) {
   this.steps = steps;
   this.deactivateSteps();
-  this.clearActiveStep();
+  //if (currentStep >= (this.steps-1)) {
   this.i = 0;
+  this.clearActiveStep();
   this.resetInterval();
+  //}
 }
 
 Sequencer.prototype.clearActiveStep = function() {
@@ -133,8 +139,9 @@ Sequencer.prototype.deactivateSteps = function() {
 function sequenceInterval(seq) {
     var j;
     seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
-    
+
     if (seq.isPaused == false) {
+      currentStep = seq.i;
       document.getElementById('counter').innerHTML = seq.i+1;
       /**
       * Set background color of column to indicate which 
