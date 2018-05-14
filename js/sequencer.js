@@ -56,16 +56,17 @@ Sequencer.prototype.setDetune = function(detune) {
   this.detune = detune;
 }
 
-Sequencer.prototype.getCheckboxes = function() {
-  return document.querySelectorAll('.grid-item input');
+Sequencer.prototype.getBoxes = function() {
+  return document.querySelectorAll('.grid-item .board-block');
 }
 
 Sequencer.prototype.clearBoard = function() {
-  var checkboxes = this.getCheckboxes();  
+  var boxes = this.getBoxes();
   var i;
-  for (i=0; i<checkboxes.length; i++) {
-    if (checkboxes[i].checked == true) 
-      checkboxes[i].checked = false;
+  for (i=0; i<boxes.length; i++) {
+    if (boxes[i].classList.contains('selected')) 
+      boxes[i].classList.remove('selected');
+      boxes[i].classList.add('unselected');
   }
   
 }
@@ -106,8 +107,8 @@ function sequenceInterval(seq) {
       // now get the ones that are actually selected
       seq.selected_notes = [];
       for(j=0; j < seq.current_notes.length; j++) {
-        if (seq.current_notes[j].checked == true)
-          seq.selected_notes.push(seq.current_notes[j].value);
+        if (seq.current_notes[j].childNodes[0].classList.contains('selected'))
+          seq.selected_notes.push(seq.current_notes[j].childNodes[0].id);
       }
     
       // now create an oscillator for each of those

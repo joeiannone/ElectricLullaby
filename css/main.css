@@ -34,8 +34,9 @@ table td {
 }
 
 .grid-item {
-  padding-left: 5px;
-  padding-bottom: 15px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  height: 35px;
 }
 
 #controller {
@@ -43,9 +44,20 @@ table td {
 }
 
 #startStopButton {
-	color: black;
+  color: black;
 }
 
 #play-button {
-	font-size: 26px;
+  font-size: 26px;
+}
+
+.board-block {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border: 1px solid gray;
+}
+
+.selected {
+  background-color: rgba(255, 0, 0, .5);
 }
