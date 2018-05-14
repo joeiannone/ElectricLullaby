@@ -6,3 +6,5 @@ Tech used:
 - Web Audio API
 - AngualrJS
 - Bootstrap3
+
+[demo image](/img/demo.png)
