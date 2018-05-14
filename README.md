@@ -8,4 +8,4 @@ An ongoing javascript project that began with me playing around with the Web Aud
 - Bootstrap3
 
 ### Screenshot:
-![screenshot](img/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/jmi0/StepSequencerJS/master/img/screenshot.png)
