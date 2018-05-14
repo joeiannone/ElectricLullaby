@@ -16,9 +16,14 @@ app.controller('mainController', function($scope) {
   sequencer = new Sequencer($scope.tempo, $scope.wave, $scope.vol, $scope.detune);
   
   $scope.startStopSequencer = function() {
-    if ($scope.start) { 
-      sequencer.resume();
+    var state = angular.element(event.target);
+		if (state.attr('class') == 'fas fa-play') { 
+      state.removeClass('fa-play');
+      state.addClass('fa-pause');
+			sequencer.resume();
     } else {
+      state.removeClass('fa-pause');
+      state.addClass('fa-play');
       sequencer.pause();
     }
   }
