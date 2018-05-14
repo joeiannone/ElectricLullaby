@@ -17,10 +17,10 @@ app.controller('mainController', function($scope) {
   
   $scope.startStopSequencer = function() {
     var state = angular.element(event.target);
-		if (state.attr('class') == 'fas fa-play') { 
+    if (state.attr('class') == 'fas fa-play') { 
       state.removeClass('fa-play');
       state.addClass('fa-pause');
-			sequencer.resume();
+      sequencer.resume();
     } else {
       state.removeClass('fa-pause');
       state.addClass('fa-play');
