@@ -2,8 +2,13 @@
   background-color: rgba(0,120,30,.3);
 }
 
+.main {
+  margin-top: 20px;
+}
+
 .control-box {
   display: inline-block;
+  margin-bottom: 20px;
 }
 .control-box label, .control-box button {
   font-weight: 200;
@@ -22,11 +27,6 @@ table td {
   font-weight: 200;
 }
 
-#control-board {
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
 .grid-container {
   display: grid;
   grid-template-columns: repeat(16, auto);
@@ -40,7 +40,7 @@ table td {
 }
 
 #controller {
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 }
 
 #startStopButton {

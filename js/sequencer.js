@@ -64,10 +64,11 @@ Sequencer.prototype.clearBoard = function() {
   var boxes = this.getBoxes();
   var i;
   for (i=0; i<boxes.length; i++) {
-    if (boxes[i].classList.contains('selected')) 
+    if (boxes[i].classList.contains('selected')) {
       boxes[i].classList.remove('selected');
       boxes[i].classList.add('unselected');
-  }
+    }
+	}
   
 }
 

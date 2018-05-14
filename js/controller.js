@@ -17,13 +17,13 @@ app.controller('mainController', function($scope) {
   
   $scope.startStopSequencer = function() {
     var state = angular.element(event.target);
-    if (state.attr('class') == 'fas fa-play') { 
-      state.removeClass('fa-play');
-      state.addClass('fa-pause');
+    if (state.attr('class') == 'glyphicon glyphicon-play') { 
+      state.removeClass('glyphicon-play');
+      state.addClass('glyphicon-pause');
       sequencer.resume();
     } else {
-      state.removeClass('fa-pause');
-      state.addClass('fa-play');
+      state.removeClass('glyphicon-pause');
+      state.addClass('glyphicon-play');
       sequencer.pause();
     }
   }
