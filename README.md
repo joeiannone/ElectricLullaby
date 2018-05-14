@@ -1,10 +1,11 @@
 # StepSequencerJS
 An ongoing javascript project that began with me playing around with the Web Audio API.
 
-Tech used:
+#### Tech used:
 - Pure Javascript
 - Web Audio API
 - AngualrJS
 - Bootstrap3
 
-[demo image](/img/demo.png)
+#### Screenshot:
+![screenshot](https://raw.githubusercontent.com/jmi0/StepSequencerJS/master/img/screenshot.png)
