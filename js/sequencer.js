@@ -1,10 +1,12 @@
 
-function Sequencer(tempo, wave, vol, detune) {
+function Sequencer(tempo, wave, vol, detune, steps) {
   
   this.interval_val = 60000 / tempo;
   this.wave = wave;
   this.vol = vol;
   this.detune = detune;
+  this.steps = steps;
+  this.deactivateSteps();
   this.isPaused = true;
   this.oscillators = [];
   this.oscillators['current'] = [];
@@ -32,9 +34,7 @@ Sequencer.prototype.getTempo = function() {
 
 Sequencer.prototype.setTempo = function(bpm) {
   this.interval_val = 60000 / bpm;
-  var that = this;
-  clearInterval(this.interval);
-  this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
+  this.resetInterval();
 }
 
 Sequencer.prototype.setWave = function(wave) {
@@ -68,9 +68,67 @@ Sequencer.prototype.clearBoard = function() {
       boxes[i].classList.remove('selected');
       boxes[i].classList.add('unselected');
     }
-	}
+  }
   
 }
+
+Sequencer.prototype.resetInterval = function() {
+  var that = this;
+  clearInterval(this.interval);
+  this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
+}
+
+Sequencer.prototype.getAllSteps = function() {
+  return document.getElementById('controller').childNodes[0].childNodes;
+}
+
+Sequencer.prototype.getActiveStep = function() {
+  var stepsList = this.getAllSteps();
+  var i = 0;
+  for (i=0; i < stepsList.length; i++) {
+    if (stepsList[i].classList.contains('active-step')) {
+      var stepclass = stepsList[i].classList[1];
+      var step = stepclass.split('-')[1];
+      return step;
+    }
+  }
+}
+
+Sequencer.prototype.setSteps = function(steps) {
+  this.steps = steps;
+  this.deactivateSteps();
+  this.clearActiveStep();
+  this.i = 0;
+  this.resetInterval();
+}
+
+Sequencer.prototype.clearActiveStep = function() {
+  var stepsList = this.getAllSteps();
+  var i = 0;
+  for (i=0; i < stepsList.length; i++) {
+    if (stepsList[i].classList.contains('active-step'))
+      stepsList[i].classList.remove('active-step');
+  }
+}
+
+Sequencer.prototype.deactivateSteps = function() {
+  var stepsList = this.getAllSteps(); 
+  var i;
+  for (i=0; i < stepsList.length; i++) {
+    var stepclass = stepsList[i].classList[1];    
+    var step = stepclass.split('-')[1];
+    if (step > (this.steps - 1)) {
+      var btn = stepsList[i].childNodes[0].childNodes[0];
+      btn.classList.add('disabled-block');
+    }
+    else if (step < (this.steps)) {
+      var btn = stepsList[i].childNodes[0].childNodes[0];
+      if (btn.classList.contains('disabled-block'))
+        btn.classList.remove('disabled-block');
+    } 
+  }
+}
+
 
 function sequenceInterval(seq) {
     var j;
@@ -92,7 +150,7 @@ function sequenceInterval(seq) {
       
       // now remove from last (inactive) step   
       if (seq.i > 0) { seq.last_step = 'step-' + (seq.i-1); }
-      else { seq.last_step = 'step-' + (15); }
+      else { seq.last_step = 'step-' + (seq.steps - 1); }
     
       seq.last_col = document.getElementsByClassName(seq.last_step);
       for (j = 0; j < seq.last_col.length; j++) {
@@ -132,7 +190,7 @@ function sequenceInterval(seq) {
       seq.oscillators['current'] = [];
       
       seq.i++;
-      if (seq.i == 16) seq.i = 0;
+      if (seq.i == seq.steps) seq.i = 0;
     }
     
 }

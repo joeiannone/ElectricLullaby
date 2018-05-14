@@ -23,12 +23,14 @@ for (var i = 0; i < buttons.length; i++) {
   
   buttons[i].addEventListener('click', function() {
     var div = this.childNodes[0];
-    if (div.classList.contains('unselected')) {
-      div.classList.remove('unselected');
-      div.classList.add('selected');
-    } else {
-      div.classList.remove('selected');
-      div.classList.add('unselected');
+    if (!div.classList.contains('disabled-block')) {
+      if (div.classList.contains('unselected')) {
+        div.classList.remove('unselected');
+        div.classList.add('selected');
+      } else {
+        div.classList.remove('selected');
+        div.classList.add('unselected');
+      }
     }
   });
 

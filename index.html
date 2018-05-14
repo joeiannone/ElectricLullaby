@@ -60,9 +60,18 @@
             <div class='control-box col-md-12'>
               <table>
                 <tr>
+                  <td><label>steps: </label></td>
+                  <td>
+                    <select class='form-control' ng-model="step" ng-change="setSteps()">
+                      <option ng-repeat="step in steps" value="{{ step }}">{{ step }}</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr><td><div>&nbsp;</div></td></tr>
+                <tr>
                   <td><button class='btn btn-default' ng-click="clearBoard()">clear board</button></td>
                   <td></td>
-               </tr>
+                </tr>
              </table>
             </div>
           </div>
