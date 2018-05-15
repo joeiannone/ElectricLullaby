@@ -49,7 +49,7 @@ app.controller('mainController', function($scope) {
     } else {
       $scope.displayDetune = $scope.detune;
     }
-    sequencer.setDetune($scope.detune);
+    sequencer.setDetune($scope.detune*10);
   }
   
   $scope.setSteps = function() {
