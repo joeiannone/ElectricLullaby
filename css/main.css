@@ -1,3 +1,11 @@
+h3 {
+  font-weight: 200 !important;
+}
+
+#control-board table {
+  width: 100% !important;
+}
+
 .active-step {
   background-color: rgba(0,120,30,.3);
 }
@@ -10,7 +18,12 @@
   display: inline-block;
   margin-bottom: 20px;
 }
-.control-box label, .control-box button {
+
+.control-box label {
+  font-weight: 300;
+}
+
+.control-box button {
   font-weight: 200;
 }
 

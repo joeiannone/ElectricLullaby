@@ -21,9 +21,10 @@
       <div class='col-md-8' id='controller'></div>
       
       <div class='col-md-4'>
-        <div class='container' id='control-board'>  
+        <div id='control-board'>
           <div class='row'> 
-            <div class='control-box col-md-12'> 
+       
+            <div class='control-box'> 
               <table>
                 <tr>
                   <td><label>start/stop: </label></td>
@@ -41,8 +42,10 @@
                     </select></td>
                 </tr>
               </table>
-            </div>
-            <div class='control-box col-md-12'>
+            </div> <!--/control-box-->
+            
+            
+            <div class='control-box'>
               <table>
                 <tr>
                   <td><label>vol: <span id='vol-display'> {{ displayVol }}</span></label></td>
@@ -57,8 +60,10 @@
                   <td><input class='form-control' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-400" max="400"></td>
                 </tr>
               </table>
-            </div>
-            <div class='control-box col-md-12'>
+            </div> <!--/control-box-->
+            
+          
+            <div class='control-box'>
               <table>
                 <tr>
                   <td><label>steps: </label></td>
@@ -68,13 +73,14 @@
                     </select>
                   </td>
                 </tr>
-                <tr><td><div>&nbsp;</div></td></tr>
+                <tr><td><div>&nbsp;</div></td><td><div>&nbsp;</div></td></tr>
                 <tr>
                   <td><button class='btn btn-default' ng-click="clearBoard()">clear board</button></td>
                   <td></td>
                 </tr>
              </table>
-            </div>
+            </div> <!--/control-box-->
+            
           </div>
         </div> <!--/control-board-->
 

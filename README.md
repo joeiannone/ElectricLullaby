@@ -4,7 +4,7 @@ An ongoing javascript project that began with me playing around with the Web Aud
 ### Tech used:
 - Pure Javascript
 - Web Audio API
-- AngualrJS
+- AngularJS
 - Bootstrap3
 
 ### Screenshot:
