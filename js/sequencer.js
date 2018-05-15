@@ -101,10 +101,13 @@ Sequencer.prototype.getActiveStep = function() {
 Sequencer.prototype.setSteps = function(steps) {
   this.steps = steps;
   this.deactivateSteps();
-  //if (currentStep >= (this.steps-1)) {
-  this.i = 0;
-  this.clearActiveStep();
-  this.resetInterval();
+  /* TODO */
+  //if (currentStep >= (steps-3)) {
+    //this.pause(); // used as a mutex
+    this.clearActiveStep();
+    this.i = 0;
+    this.resetInterval();
+    //this.resume(); // used as a mutex
   //}
 }
 
