@@ -59,5 +59,16 @@ app.controller('mainController', function($scope) {
   $scope.clearBoard = function() {
     sequencer.clearBoard();
   }
+  
+  /**
+  * natively handle blur and focus to pause sequence
+  */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      sequencer.pause();
+    } else {
+      sequencer.resume();
+    }
+  });
 
 });
