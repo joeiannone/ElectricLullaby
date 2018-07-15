@@ -3,7 +3,8 @@ const app = angular.module('stepScript', []);
 app.controller('mainController', function($scope) {
    
   var sequencer; 
-  $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
+  var state = document.getElementById('play-button').classList;
+	$scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
   $scope.appTitle = "";
   $scope.appSubTitle = "StepSequencerJS: A polyphonic musical step sequencer built with javascript.";
@@ -18,7 +19,6 @@ app.controller('mainController', function($scope) {
   sequencer = new Sequencer($scope.tempo, $scope.wave, $scope.vol, $scope.detune, $scope.step);
   
   $scope.startStopSequencer = function() {
-    var state = document.getElementById('play-button').classList;
     if (state.contains('glyphicon-play')) { 
       state.remove('glyphicon-play');
       state.add('glyphicon-pause');
@@ -67,7 +67,8 @@ app.controller('mainController', function($scope) {
     if (document.hidden) {
       sequencer.pause();
     } else {
-      sequencer.resume();
+      if (state.contains('glyphicon-pause'))
+        sequencer.resume();
     }
   });
 
