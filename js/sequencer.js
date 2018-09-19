@@ -3,22 +3,22 @@
 */
 var currentStep = 0;
 
-function Sequencer(tempo, wave, vol, detune, steps) {
-  
-  this.interval_val = 60000 / tempo;
-  this.wave = wave;
-  this.vol = vol;
-  this.detune = detune;
-  this.steps = steps;
+function Sequencer(props) {
+
+  this.interval_val = 60000 / props['tempo'];
+  this.wave = props['wave'];
+  this.vol = props['volume'];
+  this.detune = props['detune'];
+  this.steps = props['step'];
   this.deactivateSteps();
   this.isPaused = true;
   this.oscillators = [];
   this.oscillators['current'] = [];
   this.oscillators['previous'] = [];
   this.i = 0;
-    
+
   var that = this;
-  
+
   this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
 
 }
@@ -73,7 +73,7 @@ Sequencer.prototype.clearBoard = function() {
       boxes[i].classList.add('unselected');
     }
   }
-  
+
 }
 
 Sequencer.prototype.resetInterval = function() {
@@ -121,10 +121,10 @@ Sequencer.prototype.clearActiveStep = function() {
 }
 
 Sequencer.prototype.deactivateSteps = function() {
-  var stepsList = this.getAllSteps(); 
+  var stepsList = this.getAllSteps();
   var i;
   for (i=0; i < stepsList.length; i++) {
-    var stepclass = stepsList[i].classList[1];    
+    var stepclass = stepsList[i].classList[1];
     var step = stepclass.split('-')[1];
     if (step > (this.steps - 1)) {
       var btn = stepsList[i].childNodes[0].childNodes[0];
@@ -134,7 +134,7 @@ Sequencer.prototype.deactivateSteps = function() {
       var btn = stepsList[i].childNodes[0].childNodes[0];
       if (btn.classList.contains('disabled-block'))
         btn.classList.remove('disabled-block');
-    } 
+    }
   }
 }
 
@@ -145,13 +145,13 @@ function sequenceInterval(seq) {
 
     if (seq.isPaused == false) {
       currentStep = seq.i;
-      
+
       // pad display count
       count = seq.i+1;
       if (count < 10) count = '0' + count;
       document.getElementById('counter').innerHTML = count;
       /**
-      * Set background color of column to indicate which 
+      * Set background color of column to indicate which
       * step in sequence is currently active
       */
       // set class on active step
@@ -161,50 +161,50 @@ function sequenceInterval(seq) {
       for (j = 0; j < seq.current_col.length; j++) {
         seq.current_col[j].classList.add('active-step');
       }
-      
-      // now remove from last (inactive) step   
+
+      // now remove from last (inactive) step
       if (seq.i > 0) { seq.last_step = 'step-' + (seq.i-1); }
       else { seq.last_step = 'step-' + (seq.steps - 1); }
-    
+
       seq.last_col = document.getElementsByClassName(seq.last_step);
       for (j = 0; j < seq.last_col.length; j++) {
         seq.last_col[j].classList.remove('active-step');
       }
-    
+
       // get all available notes
       seq.current_notes = [];
       for(j=0; j < seq.current_col.length; j++) {
         seq.current_notes.push(seq.current_col[j].childNodes[0]);
-      } 
-  
+      }
+
       // now get the ones that are actually selected
       seq.selected_notes = [];
       for(j=0; j < seq.current_notes.length; j++) {
         if (seq.current_notes[j].childNodes[0].classList.contains('selected'))
           seq.selected_notes.push(seq.current_notes[j].childNodes[0].id);
       }
-    
+
       // now create an oscillator for each of those
       for(j=0; j < seq.selected_notes.length; j++) {
         seq.oscillators['current'].push(new Oscillator(seq.freq[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune));
       }
-    
+
       // now play those oscillator objects
       for (j=0; j < seq.oscillators['current'].length; j++) {
         seq.oscillators['current'][j].play();
-      } 
-  
+      }
+
       // stop the oscillators from the previous step
       for (j=0; j < seq.oscillators['previous'].length; j++) {
         seq.oscillators['previous'][j].stop();
-      } 
+      }
 
       // prepare the current oscillators to be stopped and cleared on next step
       seq.oscillators['previous'] = seq.oscillators['current'];
       seq.oscillators['current'] = [];
-      
+
       seq.i++;
       if (seq.i == seq.steps) seq.i = 0;
     }
-    
+
 }

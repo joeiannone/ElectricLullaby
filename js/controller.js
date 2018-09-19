@@ -1,25 +1,34 @@
 const app = angular.module('stepScript', []);
 
 app.controller('mainController', function($scope) {
-   
-  var sequencer; 
+
+  var sequencer;
   var state = document.getElementById('play-button').classList;
-	$scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
+  $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
   $scope.appTitle = "";
-  $scope.appSubTitle = "StepSequencerJS: A polyphonic musical step sequencer built with javascript.";
- 
+  $scope.appSubTitle = "StepSequencerJS: A polyphonic musical step sequencer.";
+
   $scope.wave = 'sine';
   $scope.step = $scope.steps[0];
-  $scope.tempo = 240;     
+  $scope.tempo = 240;
   $scope.vol = 0.5;
   $scope.displayVol = Math.round($scope.vol*100);
   $scope.detune = 0;
   $scope.displayDetune = $scope.detune;
-  sequencer = new Sequencer($scope.tempo, $scope.wave, $scope.vol, $scope.detune, $scope.step);
-  
+
+  var props = {
+    tempo: $scope.tempo,
+    wave: $scope.wave,
+    volume: $scope.vol,
+    detune: $scope.detune,
+    step: $scope.step
+  };
+
+  sequencer = new Sequencer(props);
+
   $scope.startStopSequencer = function() {
-    if (state.contains('glyphicon-play')) { 
+    if (state.contains('glyphicon-play')) {
       state.remove('glyphicon-play');
       state.add('glyphicon-pause');
       sequencer.resume();
@@ -29,7 +38,7 @@ app.controller('mainController', function($scope) {
       sequencer.pause();
     }
   }
-  
+
   $scope.setTempo = function() {
     sequencer.setTempo($scope.tempo);
   }
@@ -37,7 +46,7 @@ app.controller('mainController', function($scope) {
   $scope.setWave = function() {
     sequencer.setWave($scope.wave);
   }
-  
+
   $scope.setVol = function() {
     $scope.displayVol = Math.round($scope.vol*100);
     sequencer.setVol($scope.vol);
@@ -51,7 +60,7 @@ app.controller('mainController', function($scope) {
     }
     sequencer.setDetune($scope.detune*10);
   }
-  
+
   $scope.setSteps = function() {
     sequencer.setSteps($scope.step);
   }
@@ -59,7 +68,7 @@ app.controller('mainController', function($scope) {
   $scope.clearBoard = function() {
     sequencer.clearBoard();
   }
-  
+
   /**
   * natively handle blur and focus to pause sequence
   */
