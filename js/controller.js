@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-04-26T11:40:10-04:00
+ * @Last modified time: 2019-04-26T13:25:40-04:00
  */
 
 
@@ -22,6 +22,7 @@ app.controller('mainController', function($scope) {
   $scope.wave = 'sine';
   $scope.step = $scope.steps[0];
   $scope.tempo = 240;
+  $scope.displayTempo = 240;
   $scope.vol = 0.5;
   $scope.displayVol = Math.round($scope.vol*100);
   $scope.detune = 0;
@@ -55,6 +56,7 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.setTempo = function() {
+    $scope.displayTempo = $scope.tempo;
     sequencer.setTempo($scope.tempo);
   }
 
@@ -95,7 +97,7 @@ app.controller('mainController', function($scope) {
       document.getElementById('play-button').style.color = '#ffffff';
       document.getElementById('color-mode-btn').style.background = '#000000';
       document.getElementById('color-mode-btn').style.color = '#ffffff';
-      document.getElementsByClassName('grid-item').style.background = '#ffffff';
+      //document.getElementsByClassName('grid-item').style.background = '#ffffff';
       //sequencer.setColorMode('dark');
     } else {
       $scope.color_mode_value = 'light';
