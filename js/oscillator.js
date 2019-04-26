@@ -1,3 +1,12 @@
+/**
+ * @Author: Joe Iannone
+ * @Date:   2018-04-24T09:52:48-04:00
+ * @Email:  joseph.m.iannone@gmail.com
+ * @Filename: oscillator.js
+ * @Last modified time: 2019-04-26T11:39:40-04:00
+ */
+
+
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function Oscillator(freq, wave, volume, detune) {

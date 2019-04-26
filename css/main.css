@@ -1,3 +1,11 @@
+/**
+ * @Author: Joe Iannone
+ * @Date:   2018-04-24T09:52:48-04:00
+ * @Email:  joseph.m.iannone@gmail.com
+ * @Filename: main.css
+ * @Last modified time: 2019-04-26T11:39:42-04:00
+ */
+
 h3 {
   font-weight: 200 !important;
 }
@@ -7,7 +15,11 @@ h3 {
 }
 
 .active-step {
-  background-color: rgba(0,120,30,.3);
+  background-color: rgb(0, 120, 30, .3);
+}
+
+.active-step-dark {
+  background-color: rgba(0,120,30);
 }
 
 .main {
@@ -75,6 +87,14 @@ table td {
   background-color: rgba(255, 0, 0, .5);
 }
 
+.selected-dark {
+  background-color: rgba(255, 0, 0);
+}
+
 .disabled-block {
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, .3);
+}
+
+.disabled-block-dark {
+  background-color: #ffffff;
 }

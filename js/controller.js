@@ -1,3 +1,12 @@
+/**
+ * @Author: Joe Iannone
+ * @Date:   2018-04-24T09:52:48-04:00
+ * @Email:  joseph.m.iannone@gmail.com
+ * @Filename: controller.js
+ * @Last modified time: 2019-04-26T11:40:10-04:00
+ */
+
+
 const app = angular.module('stepScript', []);
 
 app.controller('mainController', function($scope) {
@@ -6,6 +15,7 @@ app.controller('mainController', function($scope) {
   var state = document.getElementById('play-button').classList;
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
+  $scope.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25]
   $scope.appTitle = "";
   $scope.appSubTitle = "StepSequencerJS: A polyphonic musical step sequencer.";
 
@@ -17,12 +27,17 @@ app.controller('mainController', function($scope) {
   $scope.detune = 0;
   $scope.displayDetune = $scope.detune;
 
+  $scope.color_mode_value = 'light';
+  $scope.color_mode_btn_class = 'btn-default';
+  $scope.color_mode_display_txt = 'dark mode';
+
   var props = {
     tempo: $scope.tempo,
     wave: $scope.wave,
     volume: $scope.vol,
     detune: $scope.detune,
-    step: $scope.step
+    step: $scope.step,
+    freqs: $scope.freqs
   };
 
   sequencer = new Sequencer(props);
@@ -67,6 +82,34 @@ app.controller('mainController', function($scope) {
 
   $scope.clearBoard = function() {
     sequencer.clearBoard();
+  }
+
+  $scope.colorMode = function() {
+
+    if ($scope.color_mode_value === 'light') {
+      $scope.color_mode_value = 'dark';
+      $scope.color_mode_display_txt = 'light mode';
+      //$scope.color_mode_btn_class = 'btn-success';
+      document.body.style.background = '#000000';
+      document.body.style.color = '#ffffff';
+      document.getElementById('play-button').style.color = '#ffffff';
+      document.getElementById('color-mode-btn').style.background = '#000000';
+      document.getElementById('color-mode-btn').style.color = '#ffffff';
+      document.getElementsByClassName('grid-item').style.background = '#ffffff';
+      //sequencer.setColorMode('dark');
+    } else {
+      $scope.color_mode_value = 'light';
+      //$scope.color_mode_btn_class = 'btn-default';
+      $scope.color_mode_display_txt = 'dark mode';
+      document.body.style.background = '#ffffff';
+      document.body.style.color = '#000000';
+      document.getElementById('play-button').style.color = '#000000';
+      document.getElementById('color-mode-btn').style.background = '#ffffff';
+      document.getElementById('color-mode-btn').style.color = '#000000';
+
+      //sequencer.setColorMode('light');
+    }
+
   }
 
   /**

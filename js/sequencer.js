@@ -1,20 +1,30 @@
 /**
-* global var to hold current step
-*/
+ * @Author: Joe Iannone
+ * @Date:   2018-04-24T09:52:48-04:00
+ * @Email:  joseph.m.iannone@gmail.com
+ * @Filename: sequencer.js
+ * @Last modified time: 2019-04-26T11:39:30-04:00
+ */
+
+
+// global var to hold current step
 var currentStep = 0;
 
 function Sequencer(props) {
 
-  this.interval_val = 60000 / props['tempo'];
-  this.wave = props['wave'];
-  this.vol = props['volume'];
-  this.detune = props['detune'];
-  this.steps = props['step'];
+  this.interval_val = 60000 / props.tempo;
+  this.wave = props.wave;
+  this.vol = props.volume;
+  this.detune = props.detune;
+  this.steps = props.step;
+  this.freqs = props.freqs;
+  this.color_mode = 'light';
+
   this.deactivateSteps();
   this.isPaused = true;
   this.oscillators = [];
-  this.oscillators['current'] = [];
-  this.oscillators['previous'] = [];
+  this.oscillators.current = [];
+  this.oscillators.previous = [];
   this.i = 0;
 
   var that = this;
@@ -22,6 +32,8 @@ function Sequencer(props) {
   this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
 
 }
+
+
 
 Sequencer.prototype.pause = function() {
   this.mute();
@@ -138,10 +150,15 @@ Sequencer.prototype.deactivateSteps = function() {
   }
 }
 
+Sequencer.prototype.changeColorMode = function() {
+  //TODO
+  return;
+}
+
 
 function sequenceInterval(seq) {
     var j, count;
-    seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
+    //seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
 
     if (seq.isPaused == false) {
       currentStep = seq.i;
@@ -186,7 +203,7 @@ function sequenceInterval(seq) {
 
       // now create an oscillator for each of those
       for(j=0; j < seq.selected_notes.length; j++) {
-        seq.oscillators['current'].push(new Oscillator(seq.freq[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune));
+        seq.oscillators['current'].push(new Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune));
       }
 
       // now play those oscillator objects

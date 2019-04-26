@@ -2,10 +2,10 @@
 <html>
 <head>
   <title>StepSequencerJS</title>
-  <meta charset="UTF-8"> 
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 </head>
@@ -16,15 +16,15 @@
     <h3>{{ appSubTitle }}</h3>
 
     <div class='row main'>
-      
+
       <!-- this div will contain 'control-board' grid -->
       <div class='col-md-8' id='controller'></div>
-      
+
       <div class='col-md-4'>
         <div id='control-board'>
-          <div class='row'> 
-       
-            <div class='control-box'> 
+          <div class='row'>
+
+            <div class='control-box'>
               <table>
                 <tr>
                   <td><label>start/stop: </label></td>
@@ -43,8 +43,8 @@
                 </tr>
               </table>
             </div> <!--/control-box-->
-            
-            
+
+
             <div class='control-box'>
               <table>
                 <tr>
@@ -61,8 +61,8 @@
                 </tr>
               </table>
             </div> <!--/control-box-->
-            
-          
+
+
             <div class='control-box'>
               <table>
                 <tr>
@@ -78,15 +78,21 @@
                   <td><button class='btn btn-default' ng-click="clearBoard()">clear board</button></td>
                   <td></td>
                 </tr>
+                <tr>
+                  <td><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='btn {{ color_mode_btn_class}}'>{{ color_mode_display_txt }}</button></td>
+                  <td>
+                    &nbsp;
+                  </td>
+                </tr>
              </table>
             </div> <!--/control-box-->
-            
+
           </div>
         </div> <!--/control-board-->
 
       </div>
     </div>
-  
+
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="js/board.js"></script>
