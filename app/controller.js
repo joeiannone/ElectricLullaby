@@ -26,7 +26,7 @@ app.controller('mainController', function($scope) {
   $scope.step = $scope.steps[0];
   $scope.tempo = 240;
   $scope.displayTempo = 240;
-  $scope.vol = 0.5;
+  $scope.vol = 0.35;
   $scope.displayVol = Math.round($scope.vol*100);
   $scope.detune = 0;
   $scope.displayDetune = $scope.detune;
