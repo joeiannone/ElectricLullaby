@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="./css/main.css">
+  <link rel="stylesheet" type="text/css" href="./style/main.css">
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
@@ -17,19 +17,26 @@
 
 <body>
 
-  <div id='controller-container' class='hide' ng-app='stepScript' ng-controller="mainController">
+  <div id='controller-container' class='hide container-fluid' ng-app='stepScript' ng-controller="mainController">
 
     <h1>{{ appTitle }}</h1>
     <h3>{{ appSubTitle }}</h3>
 
+    <div id="row1" class="row">
+      <div class="col1 col"></div>
+      <div class="col2 col" id="step-key-container"></div>
+      <div class="col3 col"><img id="top-logo" class="logo" src="{{ logoPath }}"></img></div>
+    </div>
 
+    <div id="row2" class="row">
+      <div id="note-key-container" class="col1 col"></div>
 
-    <!-- this div will contain 'control-board' grid -->
-    <div class='' id='controller'></div>
+      <!-- this div will contain 'control-board' grid -->
+      <div class="col2 col" id="controller"></div>
 
-    <div id='control-board'>
+      <div class="col3 col small" id="control-board">
 
-      <div class='control-box'>
+        <div class='control-box'>
             <table>
               <tr>
                 <td><label>start/stop: </label></td>
@@ -43,14 +50,14 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
-              <tr class='small'>
+              <tr class=''>
                 <td><label>wave: </label></td>
                 <td>
                   <select class='form-control-sm' ng-model="wave" ng-change="setWave()">
                     <option ng-repeat="wave in waves" value="{{ wave }}">{{ wave }}</option>
                   </select></td>
               </tr>
-              <tr class='small'>
+              <tr class=''>
                 <td><label>steps: </label></td>
                 <td>
                   <select class='form-control-sm' ng-model="step" ng-change="setSteps()">
@@ -61,8 +68,7 @@
             </table>
           </div> <!--/control-box-->
 
-
-      <div class='control-box small'>
+        <div class='control-box'>
             <table>
               <tr>
                 <td><label>steps/minute: <span id='tempo-display'> {{ displayTempo }}</span></label></td>
@@ -77,18 +83,17 @@
                 <td><input class='form-control-sm' disabled type='range' step="1" min='-8' max='8'></input></td>
               </tr>
               <tr>
-                <td><label>detune: <br><span id='detune-display'> {{ displayDetune }}</span></label></td>
+                <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>
                 <td><input class='form-control-sm' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-50" max="50"></td>
               </tr>
               <tr>
-                <td><label>sustain: <br><span id='sustain-display'> {{ displaySustain }}</span></label></td>
+                <td><label>sustain: <span id='sustain-display'> {{ displaySustain }}</span></label></td>
                 <td><input class='form-control-sm' ng-model="sustain" ng-change="setSustain()" type="range" step=".1" min=".1" max="6"></td>
               </tr>
             </table>
           </div> <!--/control-box-->
 
-
-      <div class='control-box small'>
+        <div class='control-box'>
             <table>
               <tr><td><div>&nbsp;</div></td><td><div>&nbsp;</div></td></tr>
               <tr>
@@ -104,9 +109,9 @@
             </table>
           </div> <!--/control-box-->
 
+      </div> <!--/control-board-->
 
-    </div> <!--/control-board-->
-
+    </div>
 
   </div>
 

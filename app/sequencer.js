@@ -61,7 +61,7 @@ Sequencer.prototype.setWave = function(wave) {
 Sequencer.prototype.mute = function() {
   var j = 0;
   for (j=0; j < this.oscillators['previous'].length; j++) {
-    this.oscillators['previous'][j].mute();
+    this.oscillators['previous'][j].stop();
   }
 }
 

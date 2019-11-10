@@ -15,50 +15,54 @@ h3 {
   opacity: 0;
 }
 
+#row1 {
+  padding: 10px;
+}
+
+.col1 {
+  max-width: 40px;
+  min-width: 30px;
+}
+
+.col2 {
+  max-width: 860px;
+  min-width: 786px;
+}
+
+.col3 {
+  max-width: 300px;
+  min-width: 250px;
+}
+
 .animate-display {
   visibility: visible;
   opacity: 1;
   transition: all 0.5s ease-in-out;
 }
 
-#control-board table {
-  width: 100%;
-}
+
 
 .controller-btn {
   border: 1px solid gray;
 }
 
-.active-step {
-  background-color: rgb(0, 120, 30, .3);
-}
 
-.active-step-dark {
-  background-color: rgba(0,120,30);
-}
 
-.control-box {
-  display: inline-block;
-  margin-bottom: 20px;
-  width: 300px;
+#top-logo {
+  width: 50px;
+  float: right;
 }
 
 .control-box label {
   font-weight: 300;
-  width: 100px;
+  min-width: 130px;
 }
 
 .control-box button {
   font-weight: 200;
 }
 
-.control-box input[type=number], .control-box select {
-  height: 31px;
-}
 
-table td {
-  padding: 4px 15px;
-}
 
 #counter {
   padding: 20px;
@@ -109,4 +113,12 @@ table td {
 
 .disabled-block-dark {
   background-color: #ffffff;
+}
+
+.active-step {
+  background-color: rgb(0, 120, 30, .3);
+}
+
+.active-step-dark {
+  background-color: rgba(0,120,30);
 }
