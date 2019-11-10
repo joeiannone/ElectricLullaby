@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-04-26T11:39:30-04:00
+ * @Last modified time: 2019-05-25T20:56:30-04:00
  */
 
 
@@ -16,6 +16,7 @@ function Sequencer(props) {
   this.wave = props.wave;
   this.vol = props.volume;
   this.detune = props.detune;
+  this.sustain = props.sustain;
   this.steps = props.step;
   this.freqs = props.freqs;
   this.color_mode = 'light';
@@ -70,6 +71,10 @@ Sequencer.prototype.setVol = function(vol) {
 
 Sequencer.prototype.setDetune = function(detune) {
   this.detune = detune;
+}
+
+Sequencer.prototype.setSustain = function(sustain) {
+  this.sustain = sustain;
 }
 
 Sequencer.prototype.getBoxes = function() {
@@ -203,7 +208,7 @@ function sequenceInterval(seq) {
 
       // now create an oscillator for each of those
       for(j=0; j < seq.selected_notes.length; j++) {
-        seq.oscillators['current'].push(new Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune));
+        seq.oscillators['current'].push(new Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune, seq.sustain));
       }
 
       // now play those oscillator objects

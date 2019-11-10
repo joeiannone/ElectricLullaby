@@ -7,11 +7,26 @@
  */
 
 h3 {
-  font-weight: 200 !important;
+  font-weight: 200;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.animate-display {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
 }
 
 #control-board table {
-  width: 100% !important;
+  width: 100%;
+}
+
+.controller-btn {
+  border: 1px solid gray;
 }
 
 .active-step {
@@ -22,18 +37,15 @@ h3 {
   background-color: rgba(0,120,30);
 }
 
-.main {
-  margin-top: 20px;
-}
-
 .control-box {
   display: inline-block;
   margin-bottom: 20px;
+  width: 300px;
 }
 
 .control-box label {
   font-weight: 300;
-  width: 150px;
+  width: 100px;
 }
 
 .control-box button {
@@ -49,6 +61,7 @@ table td {
 }
 
 #counter {
+  padding: 20px;
   font-size: 40px;
   font-weight: 200;
 }
@@ -56,18 +69,16 @@ table td {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(16, auto);
-  width: auto;
+  min-width: 781px;
+  max-width: 854px;
 }
 
 .grid-item {
   margin-left: 5px;
   margin-bottom: 5px;
-  height: 35px;
+  height: 45px;
 }
 
-#controller {
-  margin-bottom: 10px;
-}
 
 #startStopButton {
   color: black;

@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-04-26T13:25:40-04:00
+ * @Last modified time: 2019-05-25T20:56:18-04:00
  */
 
 
@@ -13,11 +13,13 @@ app.controller('mainController', function($scope) {
 
   var sequencer;
   var state = document.getElementById('play-button').classList;
+  var containerState = document.getElementById('controller-container').classList;
+
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
   $scope.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25]
   $scope.appTitle = "";
-  $scope.appSubTitle = "StepSequencerJS: A polyphonic musical step sequencer.";
+  $scope.appSubTitle = "";
 
   $scope.wave = 'sine';
   $scope.step = $scope.steps[0];
@@ -27,16 +29,24 @@ app.controller('mainController', function($scope) {
   $scope.displayVol = Math.round($scope.vol*100);
   $scope.detune = 0;
   $scope.displayDetune = $scope.detune;
+  $scope.sustain = 2;
+  $scope.displaySustain = '2s';
 
   $scope.color_mode_value = 'light';
-  $scope.color_mode_btn_class = 'btn-default';
+  $scope.color_mode_btn_class = 'btn-light';
   $scope.color_mode_display_txt = 'dark mode';
+
+  if (containerState.contains('hide')) {
+    containerState.remove('hide');
+    containerState.add('animate-display');
+  }
 
   var props = {
     tempo: $scope.tempo,
     wave: $scope.wave,
     volume: $scope.vol,
     detune: $scope.detune,
+    sustain: $scope.sustain,
     step: $scope.step,
     freqs: $scope.freqs
   };
@@ -44,13 +54,13 @@ app.controller('mainController', function($scope) {
   sequencer = new Sequencer(props);
 
   $scope.startStopSequencer = function() {
-    if (state.contains('glyphicon-play')) {
-      state.remove('glyphicon-play');
-      state.add('glyphicon-pause');
+    if (state.contains('fa-play')) {
+      state.remove('fa-play');
+      state.add('fa-pause');
       sequencer.resume();
     } else {
-      state.remove('glyphicon-pause');
-      state.add('glyphicon-play');
+      state.remove('fa-pause');
+      state.add('fa-play');
       sequencer.pause();
     }
   }
@@ -70,12 +80,15 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.setDetune = function() {
-    if ($scope.detune > 0) {
-      $scope.displayDetune = "+" + $scope.detune;
-    } else {
-      $scope.displayDetune = $scope.detune;
-    }
+    if ($scope.detune > 0) $scope.displayDetune = "+" + $scope.detune;
+    else $scope.displayDetune = $scope.detune;
+
     sequencer.setDetune($scope.detune*10);
+  }
+
+  $scope.setSustain = function() {
+    $scope.displaySustain = $scope.sustain+'s';
+    sequencer.setSustain($scope.sustain);
   }
 
   $scope.setSteps = function() {
@@ -91,7 +104,6 @@ app.controller('mainController', function($scope) {
     if ($scope.color_mode_value === 'light') {
       $scope.color_mode_value = 'dark';
       $scope.color_mode_display_txt = 'light mode';
-      //$scope.color_mode_btn_class = 'btn-success';
       document.body.style.background = '#000000';
       document.body.style.color = '#ffffff';
       document.getElementById('play-button').style.color = '#ffffff';
@@ -101,7 +113,6 @@ app.controller('mainController', function($scope) {
       //sequencer.setColorMode('dark');
     } else {
       $scope.color_mode_value = 'light';
-      //$scope.color_mode_btn_class = 'btn-default';
       $scope.color_mode_display_txt = 'dark mode';
       document.body.style.background = '#ffffff';
       document.body.style.color = '#000000';
@@ -121,7 +132,7 @@ app.controller('mainController', function($scope) {
     if (document.hidden) {
       sequencer.pause();
     } else {
-      if (state.contains('glyphicon-pause'))
+      if (state.contains('fa-pause'))
         sequencer.resume();
     }
   });

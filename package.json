@@ -1,0 +1,32 @@
+{
+  "name": "StepSequencerJS",
+  "version": "2.0.0",
+  "description": "A polyphonic musical step sequencer",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmi0/StepSequencerJS.git"
+  },
+  "author": "Joe Iannone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmi0/StepSequencerJS/issues"
+  },
+  "homepage": "https://github.com/jmi0/StepSequencerJS#readme",
+  "devDependencies": {
+    "electron": "^7.1.1",
+    "electron-builder": "^22.1.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "angular": "^1.7.8",
+    "bootstrap": "^4.3.1",
+    "electron-updater": "^4.2.0",
+    "jquery": "^3.4.1"
+  }
+}
