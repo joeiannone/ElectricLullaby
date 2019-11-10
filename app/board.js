@@ -22,10 +22,18 @@ for (i = 0; i < 12*16; i++) {
     '</div>';
 
 }
-
 grid_str += '</div>';
+/*
+var step_key_html = '';
+var step = 0;
+for (i = 0; i < 16; i++) {
+    step = i+1;
+    step_key_html += `<div class='step-key-item'><a><div class='step-key-block'>${step}</div></a></div>`;
+}
+*/
 
 document.getElementById('controller').innerHTML = grid_str;
+//document.getElementById('step-key-container').innerHTML = step_key_html;
 
 var buttons = document.getElementsByClassName('board-block-a');
 for (var i = 0; i < buttons.length; i++) {

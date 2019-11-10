@@ -1,0 +1,154 @@
+/**
+ * @Author: Joe Iannone
+ * @Date:   2018-04-24T09:52:48-04:00
+ * @Email:  joseph.m.iannone@gmail.com
+ * @Filename: main.css
+ * @Last modified time: 2019-04-26T13:25:42-04:00
+ */
+
+$board-grid-min-width: 781px;
+$board-grid-max-width: 854px;
+
+
+h3 {
+  font-weight: 200;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.col1 {
+  max-width: 40px;
+  min-width: 30px;
+}
+
+.col2 {
+  max-width: 860px;
+  min-width: 786px;
+}
+
+.col3 {
+  max-width: 300px;
+  min-width: 250px;
+}
+
+.animate-display {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+}
+
+
+
+.controller-btn {
+  border: 1px solid gray;
+}
+
+
+#logo-container {
+  width: 100%;
+  #top-logo {
+    border-radius: 50%;
+    border: 1px solid gray;
+    width: 50px;
+  }
+}
+
+.control-box {
+  label {
+    font-weight: 300;
+    min-width: 130px;
+  }
+  button {
+    font-weight: 200;
+  }
+}
+
+
+
+#counter {
+  padding: 20px;
+  font-size: 40px;
+  font-weight: 200;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(16, auto);
+  max-width: $board-grid-max-width;
+  min-width: $board-grid-min-width;
+
+  .grid-item {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    height: 45px;
+  }
+
+  .board-block {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border: 1px solid gray;
+  }
+}
+
+
+
+#step-key-container {
+  display: grid;
+  grid-template-columns: repeat(16, auto);
+  max-width: $board-grid-max-width;
+  min-width: $board-grid-min-width;
+
+  .step-key-item {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    width: 48.38px;
+  }
+
+  .step-key-block {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+  }
+
+}
+
+
+
+
+#startStopButton {
+  color: black;
+}
+
+#play-button {
+  font-size: 32px;
+}
+
+
+
+.selected {
+  background-color: rgba(255, 0, 0, .5);
+}
+
+.selected-dark {
+  background-color: rgb(255, 0, 0);
+}
+
+.disabled-block {
+  background-color: rgb(160,160,160);
+}
+
+.disabled-block-dark {
+  background-color: #ffffff;
+}
+
+.active-step {
+  background-color: rgba(0, 120, 30, .3);
+}
+
+.active-step-dark {
+  background-color: rgb(0,120,30);
+}
