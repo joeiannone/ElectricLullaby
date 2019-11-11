@@ -163,8 +163,6 @@ Sequencer.prototype.changeColorMode = function() {
 
 function sequenceInterval(seq) {
 
-  console.log(seq);
-
   if (seq.isPaused) return;
 
   var j, count;
