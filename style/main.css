@@ -32,12 +32,17 @@ h3 {
 .controller-btn {
   border: 1px solid gray; }
 
+#title-container {
+  font-size: 18px;
+  font-weight: 100; }
+
 #logo-container {
   width: 100%; }
   #logo-container #top-logo {
     border-radius: 50%;
     border: 1px solid gray;
-    width: 50px; }
+    width: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 
 .control-box label {
   font-weight: 300;
@@ -63,7 +68,12 @@ h3 {
     display: inline-block;
     height: 100%;
     width: 100%;
-    border: 1px solid gray; }
+    border: 1px solid gray;
+    text-decoration: none;
+    color: gray;
+    font-variant-numeric: tabular-nums;
+    padding: 5px;
+    font-size: 10px; }
 
 #step-key-container {
   display: grid;

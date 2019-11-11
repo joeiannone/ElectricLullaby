@@ -162,71 +162,77 @@ Sequencer.prototype.changeColorMode = function() {
 
 
 function sequenceInterval(seq) {
-    var j, count;
-    //seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
 
-    if (seq.isPaused == false) {
-      currentStep = seq.i;
+  console.log(seq);
 
-      // pad display count
-      count = seq.i+1;
-      if (count < 10) count = '0' + count;
-      document.getElementById('counter').innerHTML = count;
-      /**
-      * Set background color of column to indicate which
-      * step in sequence is currently active
-      */
-      // set class on active step
-      seq.current_step = 'step-' + seq.i;
-      seq.current_col = document.getElementsByClassName(seq.current_step);
+  if (seq.isPaused) return;
 
-      for (j = 0; j < seq.current_col.length; j++) {
-        seq.current_col[j].classList.add('active-step');
-      }
+  var j, count;
+  //seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
 
-      // now remove from last (inactive) step
-      if (seq.i > 0) { seq.last_step = 'step-' + (seq.i-1); }
-      else { seq.last_step = 'step-' + (seq.steps - 1); }
+  //if (seq.isPaused == false) {
 
-      seq.last_col = document.getElementsByClassName(seq.last_step);
-      for (j = 0; j < seq.last_col.length; j++) {
-        seq.last_col[j].classList.remove('active-step');
-      }
+  currentStep = seq.i;
 
-      // get all available notes
-      seq.current_notes = [];
-      for(j=0; j < seq.current_col.length; j++) {
-        seq.current_notes.push(seq.current_col[j].childNodes[0]);
-      }
+  // pad display count
+  count = seq.i+1;
+  if (count < 10) count = '0' + count;
+  document.getElementById('counter').innerHTML = count;
+  /**
+  * Set background color of column to indicate which
+  * step in sequence is currently active
+  */
+  // set class on active step
+  seq.current_step = 'step-' + seq.i;
+  seq.current_col = document.getElementsByClassName(seq.current_step);
 
-      // now get the ones that are actually selected
-      seq.selected_notes = [];
-      for(j=0; j < seq.current_notes.length; j++) {
-        if (seq.current_notes[j].childNodes[0].classList.contains('selected'))
-          seq.selected_notes.push(seq.current_notes[j].childNodes[0].id);
-      }
+  for (j = 0; j < seq.current_col.length; j++) {
+    seq.current_col[j].classList.add('active-step');
+  }
 
-      // now create an oscillator for each of those
-      for(j=0; j < seq.selected_notes.length; j++) {
-        seq.oscillators['current'].push(new Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune, seq.sustain));
-      }
+  // now remove from last (inactive) step
+  if (seq.i > 0) { seq.last_step = 'step-' + (seq.i-1); }
+  else { seq.last_step = 'step-' + (seq.steps - 1); }
 
-      // now play those oscillator objects
-      for (j=0; j < seq.oscillators['current'].length; j++) {
-        seq.oscillators['current'][j].play();
-      }
+  seq.last_col = document.getElementsByClassName(seq.last_step);
+  for (j = 0; j < seq.last_col.length; j++) {
+    seq.last_col[j].classList.remove('active-step');
+  }
 
-      // stop the oscillators from the previous step
-      for (j=0; j < seq.oscillators['previous'].length; j++) {
-        seq.oscillators['previous'][j].stop();
-      }
+  // get all available notes
+  seq.current_notes = [];
+  for (j = 0; j < seq.current_col.length; j++) {
+    seq.current_notes.push(seq.current_col[j].childNodes[0]);
+  }
 
-      // prepare the current oscillators to be stopped and cleared on next step
-      seq.oscillators['previous'] = seq.oscillators['current'];
-      seq.oscillators['current'] = [];
+  // now get the ones that are actually selected
+  seq.selected_notes = [];
+  for (j = 0; j < seq.current_notes.length; j++) {
+    if (seq.current_notes[j].childNodes[0].classList.contains('selected'))
+      seq.selected_notes.push(seq.current_notes[j].childNodes[0].id);
+  }
 
-      seq.i++;
-      if (seq.i == seq.steps) seq.i = 0;
-    }
+  // now create an oscillator for each of those
+  for (j = 0; j < seq.selected_notes.length; j++) {
+    seq.oscillators['current'].push(new Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune, seq.sustain));
+  }
+
+  // now play those oscillator objects
+  for (j = 0; j < seq.oscillators['current'].length; j++) {
+    seq.oscillators['current'][j].play();
+  }
+
+  // stop the oscillators from the previous step
+  for (j = 0; j < seq.oscillators['previous'].length; j++) {
+    seq.oscillators['previous'][j].stop();
+  }
+
+  // prepare the current oscillators to be stopped and cleared on next step
+  seq.oscillators['previous'] = seq.oscillators['current'];
+  seq.oscillators['current'] = [];
+
+  seq.i++;
+  if (seq.i == seq.steps) seq.i = 0;
+  //}
 
 }

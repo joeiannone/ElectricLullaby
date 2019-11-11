@@ -19,7 +19,7 @@ app.controller('mainController', function($scope) {
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
   $scope.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25]
-  $scope.appTitle = "";
+  $scope.appTitle = "StepSequencerJS";
   $scope.appSubTitle = "";
 
   $scope.wave = 'sine';
