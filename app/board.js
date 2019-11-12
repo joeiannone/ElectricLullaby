@@ -7,7 +7,6 @@
  */
 
 
-
 var i, step, note = 0;
 var key_step = 0;
 var grid_str = '<div class="grid-container">';

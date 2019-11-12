@@ -15,10 +15,19 @@ app.controller('mainController', function($scope) {
   var state = document.getElementById('play-button').classList;
   var containerState = document.getElementById('controller-container').classList;
 
+  if (typeof(notes) !== 'undefined') {
+    $scope.notes_start = 49;
+    $scope.notes_end = 61;
+    var notes_init_range = notes.slice($scope.notes_start, $scope.notes_end);
+    $scope.freqs = [];
+    for (i = $scope.notes_start; i < $scope.notes_end; i++) $scope.freqs.push(Number(notes[i].frequency));
+  } else {
+    $scope.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
+  }
+
   $scope.logoPath = './icon.png';
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
-  $scope.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25]
   $scope.appTitle = "StepSequencerJS";
   $scope.appSubTitle = "";
 
@@ -100,9 +109,11 @@ app.controller('mainController', function($scope) {
     sequencer.clearBoard();
   }
 
+
   $scope.colorMode = function() {
 
     if ($scope.color_mode_value === 'light') {
+      
       $scope.color_mode_value = 'dark';
       $scope.color_mode_display_txt = 'light mode';
       document.body.style.background = '#000000';
@@ -110,9 +121,9 @@ app.controller('mainController', function($scope) {
       document.getElementById('play-button').style.color = '#ffffff';
       document.getElementById('color-mode-btn').style.background = '#000000';
       document.getElementById('color-mode-btn').style.color = '#ffffff';
-      //document.getElementsByClassName('grid-item').style.background = '#ffffff';
-      //sequencer.setColorMode('dark');
+
     } else {
+
       $scope.color_mode_value = 'light';
       $scope.color_mode_display_txt = 'dark mode';
       document.body.style.background = '#ffffff';
@@ -121,13 +132,12 @@ app.controller('mainController', function($scope) {
       document.getElementById('color-mode-btn').style.background = '#ffffff';
       document.getElementById('color-mode-btn').style.color = '#000000';
 
-      //sequencer.setColorMode('light');
     }
 
   }
 
-  /**
-  * natively handle blur and focus to pause sequence
+  /*****************************************************************************
+  * handle blur and focus to pause sequence
   */
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
