@@ -12,7 +12,7 @@ function Board() {
   var i, step, note = 0;
   var key_step = 0;
   var key_note = '';
-  
+
   this.grid_str = '<div class="grid-container">';
 
   for (i = 0; i < 12*16; i++) {
@@ -60,6 +60,14 @@ Board.prototype.clickListen = function() {
   }
 
 };
+
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+/* required for chrome */
+document.addEventListener("DOMContentLoaded", function(event) {
+  this.addEventListener('click', function() { audioCtx.resume(); });
+});
 
 
 const board = new Board();

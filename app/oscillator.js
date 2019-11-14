@@ -7,8 +7,6 @@
  */
 
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
 function Oscillator(freq, wave, volume, detune, sustain) {
   this.vol = audioCtx.createGain();
   this.oscillator = audioCtx.createOscillator();
@@ -36,9 +34,3 @@ Oscillator.prototype.mute = function() {
   this.vol.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + this.sustain);
   //this.vol.gain.value = 0;
 };
-
-
-/* required for chrome */
-document.addEventListener("DOMContentLoaded", function(event) {
-  this.addEventListener('click', function() { audioCtx.resume(); });
-});

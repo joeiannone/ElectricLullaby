@@ -6,7 +6,6 @@
  * @Last modified time: 2019-05-25T20:56:18-04:00
  */
 
-
 const app = angular.module('stepScript', []);
 
 app.controller('mainController', function($scope) {
