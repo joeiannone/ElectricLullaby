@@ -120,7 +120,7 @@ app.controller('mainController', function($scope) {
   $scope.colorMode = function() {
 
     if ($scope.color_mode_value === 'light') {
-
+      // now dark mode
       $scope.color_mode_value = 'dark';
       $scope.color_mode_display_txt = 'light mode';
       document.body.style.background = '#000000';
@@ -131,7 +131,7 @@ app.controller('mainController', function($scope) {
       document.getElementById('color-mode-btn').style.color = '#ffffff';
 
     } else {
-
+      // now light mode
       $scope.color_mode_value = 'light';
       $scope.color_mode_display_txt = 'dark mode';
       document.body.style.background = '#ffffff';

@@ -9,7 +9,7 @@ const defaultProps = {
   icon: __dirname + '/icon.png',
   transparent: true,
   webPreferences: {
-    nodeIntegration: true
+    nodeIntegration: false,
   },
 }
 
