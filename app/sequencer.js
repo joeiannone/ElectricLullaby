@@ -172,7 +172,7 @@ Sequencer.prototype.deactivateSteps = function() {
 
 Sequencer.prototype.updateNoteKeyDisplay = function() {
   var key_note_containers = document.querySelectorAll('.key-note-container');
-  var start = this.notes_start;
+  var start = this.notes_start+1;
   for (i=0; i < key_note_containers.length; i++) {
     key_note_containers[i].innerHTML = `${this.notes[start].letter}${this.notes[start].sign}${this.notes[start].sequence_no}`.padEnd(3,' ')
     start++;

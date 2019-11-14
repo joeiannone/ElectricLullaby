@@ -73,10 +73,10 @@ h3 {
     color: gray;
     font-variant-numeric: tabular-nums;
     padding: 5px;
-    font-size: 10px;
-    font-variant: small-caps; }
+    font-size: 10px; }
     .grid-container .board-block .key-note-container {
-      color: black; }
+      color: black;
+      font-variant: small-caps; }
 
 #step-key-container {
   display: grid;

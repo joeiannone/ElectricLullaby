@@ -21,14 +21,18 @@ function Board() {
     if (i % 16 == 0 && i != 0) {
       note++;
       key_note = '<span class="key-note-container"></span>';
-    } else {
-      key_note = '&nbsp;&nbsp;&nbsp;';
+    }
+    else if (i === 0) {
+      //key_note = '<span class="key-note-container"></span>';
+    }
+    else {
+      key_note = '';
     }
 
     if (i < 16) key_step = (step+1).toString().padStart(2,'0').padEnd(3, ' ');
     else key_step = "";
 
-    this.grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_step} ${key_note}</div></a></div>`;
+    this.grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_note}${key_step}</div></a></div>`;
 
   }
   this.grid_str += '</div>';
