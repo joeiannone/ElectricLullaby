@@ -18,8 +18,17 @@ function Sequencer(props) {
   this.detune = props.detune;
   this.sustain = props.sustain;
   this.steps = props.step;
-  this.freqs = props.freqs;
   this.color_mode = 'light';
+  this.notes = props.notes;
+  this.notes_start = props.notes_start;
+  this.freqs = [];
+
+  if (this.notes !== null) {
+    for (i = this.notes_start; i < this.notes_start+12; i++) this.freqs.push(Number(this.notes[i].frequency));
+  } else {
+    this.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
+  }
+  this.updateNoteKeyDisplay();
 
   this.deactivateSteps();
   this.isPaused = true;
@@ -33,7 +42,6 @@ function Sequencer(props) {
   this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
 
 }
-
 
 
 Sequencer.prototype.pause = function() {
@@ -73,6 +81,13 @@ Sequencer.prototype.setDetune = function(detune) {
   this.detune = detune;
 }
 
+Sequencer.prototype.setNoteRange = function(start) {
+  this.notes_start = start;
+  this.freqs = [];
+  for (i = this.notes_start; i < this.notes_start+12; i++) this.freqs.push(Number(this.notes[i].frequency));
+  this.updateNoteKeyDisplay();
+}
+
 Sequencer.prototype.setSustain = function(sustain) {
   this.sustain = sustain;
 }
@@ -80,6 +95,7 @@ Sequencer.prototype.setSustain = function(sustain) {
 Sequencer.prototype.getBoxes = function() {
   return document.querySelectorAll('.grid-item .board-block');
 }
+
 
 Sequencer.prototype.clearBoard = function() {
   var boxes = this.getBoxes();
@@ -90,7 +106,6 @@ Sequencer.prototype.clearBoard = function() {
       boxes[i].classList.add('unselected');
     }
   }
-
 }
 
 Sequencer.prototype.resetInterval = function() {
@@ -152,6 +167,15 @@ Sequencer.prototype.deactivateSteps = function() {
       if (btn.classList.contains('disabled-block'))
         btn.classList.remove('disabled-block');
     }
+  }
+}
+
+Sequencer.prototype.updateNoteKeyDisplay = function() {
+  var key_note_containers = document.querySelectorAll('.key-note-container');
+  var start = this.notes_start;
+  for (i=0; i < key_note_containers.length; i++) {
+    key_note_containers[i].innerHTML = `${this.notes[start].letter}${this.notes[start].sign}${this.notes[start].sequence_no}`.padEnd(3,' ')
+    start++;
   }
 }
 

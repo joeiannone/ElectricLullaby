@@ -80,8 +80,8 @@
                 <td><input class='form-control-sm' ng-model="vol" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
               </tr>
               <tr>
-                <td><label>range: </label></td>
-                <td><input class='form-control-sm' disabled type='range' step="1" min='-8' max='8'></input></td>
+                <td><label>range: <span id='range-display'> {{ displayRange }}</span></label></td>
+                <td><input class='form-control-sm' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='40' max='80'></input></td>
               </tr>
               <tr>
                 <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>

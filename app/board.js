@@ -9,15 +9,22 @@
 
 var i, step, note = 0;
 var key_step = 0;
+var key_note = '';
 var grid_str = '<div class="grid-container">';
 
 for (i = 0; i < 12*16; i++) {
 
   step = i % 16;
-  if (i % 16 == 0 && i != 0) note++;
+  if (i % 16 == 0 && i != 0) {
+    note++;
+    key_note = '<span class="key-note-container"></span>';
+    //key_note = 'key-note-container';
+  } else {
+    key_note = '&nbsp;&nbsp;&nbsp;';
+  }
 
-  if (i < 16) key_step = (step+1).toString().padStart(2,'0');
-  else key_step = "&nbsp;";
+  if (i < 16) key_step = (step+1).toString().padStart(2,'0').padEnd(3, ' ');
+  else key_step = "";
 
   /*
   grid_str +=
@@ -25,7 +32,7 @@ for (i = 0; i < 12*16; i++) {
       '<a href class="board-block-a"><div id="'+note+'" class="board-block unselected"></div></a>'+
     '</div>';
   */
-  grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_step}</div></a></div>`;
+  grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_step} ${key_note}</div></a></div>`;
 
 }
 grid_str += '</div>';

@@ -15,14 +15,14 @@ app.controller('mainController', function($scope) {
   var state = document.getElementById('play-button').classList;
   var containerState = document.getElementById('controller-container').classList;
 
+  $scope.notes = null;
+  $scope.notes_start = 0;
+  $scope.displayRange = '';
+
   if (typeof(notes) !== 'undefined') {
+    $scope.notes = notes;
     $scope.notes_start = 49;
-    $scope.notes_end = 61;
-    var notes_init_range = notes.slice($scope.notes_start, $scope.notes_end);
-    $scope.freqs = [];
-    for (i = $scope.notes_start; i < $scope.notes_end; i++) $scope.freqs.push(Number(notes[i].frequency));
-  } else {
-    $scope.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
+    $scope.displayRange = $scope.notes_start;
   }
 
   $scope.logoPath = './icon.png';
@@ -58,7 +58,8 @@ app.controller('mainController', function($scope) {
     detune: $scope.detune,
     sustain: $scope.sustain,
     step: $scope.step,
-    freqs: $scope.freqs
+    notes: $scope.notes,
+    notes_start: $scope.notes_start,
   };
 
   sequencer = new Sequencer(props);
@@ -101,6 +102,12 @@ app.controller('mainController', function($scope) {
     sequencer.setSustain($scope.sustain);
   }
 
+  $scope.setRange = function() {
+    if (typeof($scope.notes_start) == 'undefined') return;
+    $scope.displayRange = $scope.notes_start;
+    sequencer.setNoteRange($scope.notes_start);
+  }
+
   $scope.setSteps = function() {
     sequencer.setSteps($scope.step);
   }
@@ -113,11 +120,12 @@ app.controller('mainController', function($scope) {
   $scope.colorMode = function() {
 
     if ($scope.color_mode_value === 'light') {
-      
+
       $scope.color_mode_value = 'dark';
       $scope.color_mode_display_txt = 'light mode';
       document.body.style.background = '#000000';
       document.body.style.color = '#ffffff';
+      $('.key-note-container').css('color', '#ffffff');
       document.getElementById('play-button').style.color = '#ffffff';
       document.getElementById('color-mode-btn').style.background = '#000000';
       document.getElementById('color-mode-btn').style.color = '#ffffff';
@@ -128,6 +136,7 @@ app.controller('mainController', function($scope) {
       $scope.color_mode_display_txt = 'dark mode';
       document.body.style.background = '#ffffff';
       document.body.style.color = '#000000';
+      $('.key-note-container').css('color', '#000000');
       document.getElementById('play-button').style.color = '#000000';
       document.getElementById('color-mode-btn').style.background = '#ffffff';
       document.getElementById('color-mode-btn').style.color = '#000000';
