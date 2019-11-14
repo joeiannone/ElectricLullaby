@@ -116,6 +116,21 @@ app.controller('mainController', function($scope) {
     sequencer.clearBoard();
   }
 
+  $scope.randomSelection = function() {
+    var boardBlocks = document.getElementsByClassName('board-block');
+    for (i=0;i<boardBlocks.length; i++) {
+      boardBlocks[i].classList.remove('selected');
+      boardBlocks[i].classList.add('unselected');
+    }
+    for (i=0;i<boardBlocks.length; i++) {
+      var rand = Math.round(Math.random() * 16);
+      if (i % rand == 6) {
+        boardBlocks[i].classList.remove('unselected');
+        boardBlocks[i].classList.add('selected');
+      }
+    }
+  }
+
 
   $scope.colorMode = function() {
 

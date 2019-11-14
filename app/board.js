@@ -7,63 +7,59 @@
  */
 
 
-var i, step, note = 0;
-var key_step = 0;
-var key_note = '';
-var grid_str = '<div class="grid-container">';
+function Board() {
 
-for (i = 0; i < 12*16; i++) {
+  var i, step, note = 0;
+  var key_step = 0;
+  var key_note = '';
+  
+  this.grid_str = '<div class="grid-container">';
 
-  step = i % 16;
-  if (i % 16 == 0 && i != 0) {
-    note++;
-    key_note = '<span class="key-note-container"></span>';
-    //key_note = 'key-note-container';
-  } else {
-    key_note = '&nbsp;&nbsp;&nbsp;';
+  for (i = 0; i < 12*16; i++) {
+
+    step = i % 16;
+    if (i % 16 == 0 && i != 0) {
+      note++;
+      key_note = '<span class="key-note-container"></span>';
+    } else {
+      key_note = '&nbsp;&nbsp;&nbsp;';
+    }
+
+    if (i < 16) key_step = (step+1).toString().padStart(2,'0').padEnd(3, ' ');
+    else key_step = "";
+
+    this.grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_step} ${key_note}</div></a></div>`;
+
+  }
+  this.grid_str += '</div>';
+
+  document.getElementById('controller').innerHTML = this.grid_str;
+
+  this.clickListen();
+
+}
+
+Board.prototype.clickListen = function() {
+
+  var buttons = document.getElementsByClassName('board-block-a');
+  for (var i = 0; i < buttons.length; i++) {
+
+    buttons[i].addEventListener('click', function() {
+      var div = this.childNodes[0];
+      if (!div.classList.contains('disabled-block')) {
+        if (div.classList.contains('unselected')) {
+          div.classList.remove('unselected');
+          div.classList.add('selected');
+        } else {
+          div.classList.remove('selected');
+          div.classList.add('unselected');
+        }
+      }
+    });
+
   }
 
-  if (i < 16) key_step = (step+1).toString().padStart(2,'0').padEnd(3, ' ');
-  else key_step = "";
-
-  /*
-  grid_str +=
-    '<div class="grid-item step-'+step+' note-'+note+'">'+
-      '<a href class="board-block-a"><div id="'+note+'" class="board-block unselected"></div></a>'+
-    '</div>';
-  */
-  grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_step} ${key_note}</div></a></div>`;
-
-}
-grid_str += '</div>';
-
-/*
-var step_key_html = '';
-var step = 0;
-for (i = 0; i < 16; i++) {
-    step = i+1;
-    step_key_html += `<div class='step-key-item'><a><div class='step-key-block'>${step}</div></a></div>`;
-}
-*/
+};
 
 
-document.getElementById('controller').innerHTML = grid_str;
-//document.getElementById('step-key-container').innerHTML = step_key_html;
-
-var buttons = document.getElementsByClassName('board-block-a');
-for (var i = 0; i < buttons.length; i++) {
-
-  buttons[i].addEventListener('click', function() {
-    var div = this.childNodes[0];
-    if (!div.classList.contains('disabled-block')) {
-      if (div.classList.contains('unselected')) {
-        div.classList.remove('unselected');
-        div.classList.add('selected');
-      } else {
-        div.classList.remove('selected');
-        div.classList.add('unselected');
-      }
-    }
-  });
-
-}
+const board = new Board();
