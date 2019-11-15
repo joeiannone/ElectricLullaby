@@ -13,6 +13,7 @@ var currentStep = 0;
 function Sequencer(props) {
 
   this.interval_val = 60000 / props.tempo;
+  this.scale = props.scale;
   this.wave = props.wave;
   this.vol = props.volume;
   this.detune = props.detune;
@@ -84,8 +85,16 @@ Sequencer.prototype.setDetune = function(detune) {
 Sequencer.prototype.setNoteRange = function(start) {
   this.notes_start = start;
   this.freqs = [];
-  for (i = this.notes_start; i < this.notes_start+12; i++) this.freqs.push(Number(this.notes[i].frequency));
+  for (i = this.notes_start; i < this.notes_start+12; i++)
+    this.freqs.push(Number(this.notes[i].frequency));
   this.updateNoteKeyDisplay();
+}
+
+Sequencer.prototype.setScale = function(scale) {
+  this.scale = scale;
+  console.log(this.scale);
+  // TODO:
+  //var pattern = [2, 2, 1, 2, 2, 2, 1];
 }
 
 Sequencer.prototype.setSustain = function(sustain) {
@@ -133,14 +142,9 @@ Sequencer.prototype.getActiveStep = function() {
 Sequencer.prototype.setSteps = function(steps) {
   this.steps = steps;
   this.deactivateSteps();
-  /* TODO */
-  //if (currentStep >= (steps-3)) {
-    //this.pause(); // used as a mutex
-    this.clearActiveStep();
-    this.i = 0;
-    this.resetInterval();
-    //this.resume(); // used as a mutex
-  //}
+  this.clearActiveStep();
+  this.i = 0;
+  this.resetInterval();
 }
 
 Sequencer.prototype.clearActiveStep = function() {

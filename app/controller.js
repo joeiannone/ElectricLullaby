@@ -25,11 +25,13 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.logoPath = './icon.png';
+  $scope.scales = [{display: 'chromatic', value: 'chromatic'}];
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
   $scope.appTitle = "StepSequencerJS";
   $scope.appSubTitle = "";
 
+  $scope.scale = 'chromatic';
   $scope.wave = 'sine';
   $scope.step = $scope.steps[0];
   $scope.tempo = 240;
@@ -52,6 +54,7 @@ app.controller('mainController', function($scope) {
 
   var props = {
     tempo: $scope.tempo,
+    scale: $scope.scale,
     wave: $scope.wave,
     volume: $scope.vol,
     detune: $scope.detune,
@@ -78,6 +81,10 @@ app.controller('mainController', function($scope) {
   $scope.setTempo = function() {
     $scope.displayTempo = $scope.tempo;
     sequencer.setTempo($scope.tempo);
+  }
+
+  $scope.setScale = function() {
+    sequencer.setScale($scope.scale);
   }
 
   $scope.setWave = function() {
