@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-05-25T20:56:30-04:00
+ * @Last modified time: 2019-11-14T22:34:59-05:00
  */
 
 
@@ -194,9 +194,6 @@ function sequenceInterval(seq) {
   if (seq.isPaused) return;
 
   var j, count;
-  //seq.freq = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
-
-  //if (seq.isPaused == false) {
 
   currentStep = seq.i;
 
@@ -259,6 +256,5 @@ function sequenceInterval(seq) {
 
   seq.i++;
   if (seq.i == seq.steps) seq.i = 0;
-  //}
 
 }

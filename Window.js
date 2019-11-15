@@ -1,3 +1,13 @@
+/**
+ * @Author: Joe Iannone <josephiannone>
+ * @Date:   2019-11-11T21:25:15-05:00
+ * @Filename: Window.js
+ * @Last modified by:   josephiannone
+ * @Last modified time: 2019-11-14T22:34:20-05:00
+ */
+
+
+
 'use strict'
 
 const { BrowserWindow } = require('electron')

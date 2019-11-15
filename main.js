@@ -1,3 +1,13 @@
+/**
+ * @Author: Joe Iannone <josephiannone>
+ * @Date:   2019-11-09T12:17:15-05:00
+ * @Filename: main.js
+ * @Last modified by:   josephiannone
+ * @Last modified time: 2019-11-14T22:31:47-05:00
+ */
+
+
+
 const { app, Menu } = require('electron')
 
 const path = require('path')
