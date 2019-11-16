@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-14T22:32:38-05:00
+ * @Last modified time: 2019-11-16T14:06:04-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -20,18 +20,24 @@ app.controller('mainController', function($scope) {
 
   if (typeof(notes) !== 'undefined') {
     $scope.notes = notes;
-    $scope.notes_start = 49;
+    $scope.notes_start = 28;
     $scope.displayRange = $scope.notes_start;
   }
 
-  $scope.logoPath = './icon.png';
-  $scope.scales = [{display: 'chromatic', value: 'chromatic'}];
-  $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
-  $scope.steps = ['16', '14', '12', '10'];
+  $scope.notes_in_key = $scope.notes;
+
   $scope.appTitle = "StepSequencerJS";
   $scope.appSubTitle = "";
+  $scope.logoPath = './icon.png';
+  $scope.keys = [
+    {display: 'Chromatic', value: 'chromatic'},
+    {display: 'Cmaj / Amin', value: 'c'},
+    {display: 'C#maj / A#min', value: 'c#'},
+  ];
+  $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
+  $scope.steps = ['16', '14', '12', '10'];
 
-  $scope.scale = 'chromatic';
+  $scope.key = $scope.keys[1].value;
   $scope.wave = 'sine';
   $scope.step = $scope.steps[0];
   $scope.tempo = 240;
@@ -54,13 +60,14 @@ app.controller('mainController', function($scope) {
 
   var props = {
     tempo: $scope.tempo,
-    scale: $scope.scale,
+    key: $scope.key,
     wave: $scope.wave,
     volume: $scope.vol,
     detune: $scope.detune,
     sustain: $scope.sustain,
     step: $scope.step,
     notes: $scope.notes,
+    notes_in_key: $scope.notes_in_key,
     notes_start: $scope.notes_start,
   };
 
@@ -83,8 +90,8 @@ app.controller('mainController', function($scope) {
     sequencer.setTempo($scope.tempo);
   }
 
-  $scope.setScale = function() {
-    sequencer.setScale($scope.scale);
+  $scope.setKey = function() {
+    sequencer.setKey($scope.key);
   }
 
   $scope.setWave = function() {

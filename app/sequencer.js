@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-14T22:34:59-05:00
+ * @Last modified time: 2019-11-16T14:10:40-05:00
  */
 
 
@@ -13,7 +13,7 @@ var currentStep = 0;
 function Sequencer(props) {
 
   this.interval_val = 60000 / props.tempo;
-  this.scale = props.scale;
+  this.key = props.key;
   this.wave = props.wave;
   this.vol = props.volume;
   this.detune = props.detune;
@@ -21,15 +21,17 @@ function Sequencer(props) {
   this.steps = props.step;
   this.color_mode = 'light';
   this.notes = props.notes;
+  this.notes_in_key = props.notes_in_key;
   this.notes_start = props.notes_start;
   this.freqs = [];
 
-  if (this.notes !== null) {
-    for (i = this.notes_start; i < this.notes_start+12; i++) this.freqs.push(Number(this.notes[i].frequency));
+  if (this.notes_in_key !== null) {
+    for (i = this.notes_start; i < this.notes_start+12; i++) this.freqs.push(Number(this.notes_in_key[i].frequency));
   } else {
     this.freqs = [277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88, 523.25];
   }
-  this.updateNoteKeyDisplay();
+
+  this.setKey(this.key);
 
   this.deactivateSteps();
   this.isPaused = true;
@@ -86,15 +88,47 @@ Sequencer.prototype.setNoteRange = function(start) {
   this.notes_start = start;
   this.freqs = [];
   for (i = this.notes_start; i < this.notes_start+12; i++)
-    this.freqs.push(Number(this.notes[i].frequency));
+    this.freqs.push(Number(this.notes_in_key[i].frequency));
   this.updateNoteKeyDisplay();
 }
 
-Sequencer.prototype.setScale = function(scale) {
-  this.scale = scale;
-  console.log(this.scale);
-  // TODO:
-  //var pattern = [2, 2, 1, 2, 2, 2, 1];
+Sequencer.prototype.setKey = function(key) {
+  this.key = key;
+  this.notes_in_key = this.getNotesByKey(this.key);
+  this.setNoteRange(28);
+}
+
+Sequencer.prototype.getNotesByKey = function(key) {
+  if (key == 'chromatic') return this.notes;
+  var scale_pattern = [2, 2, 1, 2, 2, 2, 1];
+  var notes_in_key = [];
+  var note_index = 0;
+  var key_sign = '';
+  var key_note = '';
+  if (key.length > 1) {
+    key = key.split('');
+    key_note = key[0];
+    key_sign = key[1];
+  } else {
+    key_note = key;
+  }
+
+  for (i = 0; i < this.notes.length; i++) {
+    if (this.notes[i].letter == key_note && this.notes[i].sign == key_sign) {
+      notes_in_key.push(this.notes[i]);
+      note_index = i;
+      break;
+    }
+  }
+
+  while (typeof(this.notes[note_index]) !== "undefined") {
+    for (i = 0; i < scale_pattern.length; i++) {
+      note_index += scale_pattern[i];
+      if (typeof(this.notes[note_index]) !== "undefined")
+        notes_in_key.push(this.notes[note_index]);
+    }
+  }
+  return notes_in_key;
 }
 
 Sequencer.prototype.setSustain = function(sustain) {
@@ -178,7 +212,7 @@ Sequencer.prototype.updateNoteKeyDisplay = function() {
   var key_note_containers = document.querySelectorAll('.key-note-container');
   var start = this.notes_start+1;
   for (i=0; i < key_note_containers.length; i++) {
-    key_note_containers[i].innerHTML = `${this.notes[start].letter}${this.notes[start].sign}${this.notes[start].sequence_no}`.padEnd(3,' ')
+    key_note_containers[i].innerHTML = `${this.notes_in_key[start].letter}${this.notes_in_key[start].sign}${this.notes_in_key[start].sequence_no}`.padEnd(3,' ')
     start++;
   }
 }

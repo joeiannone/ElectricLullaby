@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-14T22:35:04-05:00
+ * @Last modified time: 2019-11-16T12:57:28-05:00
  */
 
 
@@ -30,7 +30,7 @@ function Board() {
     }
 
     if (i < 16) key_step = (step+1).toString().padStart(2,'0').padEnd(3, ' ');
-    else key_step = "";
+    else key_step = "".padEnd(3, ' ');
 
     this.grid_str += `<div class="grid-item step-${step} note-${note}"><a href class="board-block-a"><div id="${note}" class="board-block unselected">${key_note}${key_step}</div></a></div>`;
 
