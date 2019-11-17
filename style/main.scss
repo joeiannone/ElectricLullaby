@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: main.css
-// @Last modified time: 2019-11-17T01:06:42-05:00
+// @Last modified time: 2019-11-17T18:35:57-05:00
  */
 
 $board-grid-min-width: 781px;
@@ -66,12 +66,25 @@ h3 {
     font-weight: 300;
     min-width: 130px;
   }
-  button {
+
+  .controller-btn {
     font-weight: 200;
+    margin: 1px;
+  }
+  .modal {
+    form {
+      padding: 10px;
+      * {
+        margin: 5px;
+      }
+    }
+
   }
 }
 
-
+.form-general-notification {
+  color: blue;
+}
 
 #counter {
   padding: 20px;

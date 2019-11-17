@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="./style/main.css">
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 
+  <script src="./node_modules/dexie/dist/dexie.min.js"></script>
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="./node_modules/angular/angular.min.js"></script>
@@ -36,7 +37,7 @@
         <div class='control-box'>
             <table>
               <tr>
-                <td><div id='logo-container'><img id="top-logo" class="logo" src="{{ logoPath }}"></img></div></td>
+                <td><div id='logo-container'><img id="top-logo" class="logo" ng-src="{{ logoPath }}"></img></div></td>
                 <td><div id='title-container'>{{ appTitle }}</div></td>
               <tr>
               <tr>
@@ -97,20 +98,45 @@
           </div> <!--/control-box-->
 
         <div class='control-box'>
-            <table>
-              <tr><td><div>&nbsp;</div></td><td><div>&nbsp;</div></td></tr>
-              <tr>
-                <td><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></td>
-                <td><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></td>
-                <td><button class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle()" ng-class="{autoMode: autoMode}">auto mode</button></td>
-              </tr>
-              <tr>
-                <td><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></td>
-                <td>
-                  &nbsp;
-                </td>
-              </tr>
-            </table>
+            <div class='container'>
+              <div class='row'>
+                <div><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
+                <div><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
+                <div><button class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle()" ng-class="{autoMode: autoMode}">auto mode</button></div>
+              </div>
+              <div class='row'>
+                <div><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></div>
+              </div>
+              <div class='row'>
+                <div>
+                  <button id="save-sequence-btn" ng-click='saveSequenceForm()' class='controller-btn btn-sm btn-success'>save sequence</button>
+                  <div class='modal fade' id='{{ saveSequenceModal.id }}' role="dialog">
+                    <div class='modal-dialog'>
+                      <div class='modal-content'>
+                        <!-- Modal Header -->
+                        <div class='modal-header'>
+                          <div class='modal-title'>
+                            {{ saveSequenceModal.header }}
+                          </div>
+                          <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class='modal-body'>
+                          <div>
+                            <form id='{{ saveSequenceModal.form_id }}' ng-submit="saveSequence(saveSequenceFormData)">
+                              <label>Sequence title:</label>
+                              <input type='text' ng-model='saveSequenceFormData.title' value='' required class='form-control form-control-sm'></input>
+                              <input type="submit" value="Save" class='btn btn-sm btn-success'></input>
+                            </form>
+                            <div class='form-general-notification'>{{ saveSequenceModal.form_notification }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div> <!--/control-box-->
 
       </div> <!--/control-board-->
@@ -119,6 +145,7 @@
 
   </div>
 
+  <script src="./app/store.js"></script>
   <script src="./app/notes.js"></script>
   <script src="./app/board.js"></script>
   <script src="./app/oscillator.js"></script>

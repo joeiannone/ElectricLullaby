@@ -3,12 +3,25 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-16T12:57:28-05:00
+ * @Last modified time: 2019-11-17T18:34:07-05:00
  */
 
 
+// define global audio context
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
 function Board() {
 
+  // build and insert the markup for sequencer board
+  this.build();
+
+  // create click listener for sequencer blocks
+  this.sequencerBlockClickListen();
+
+}
+
+
+Board.prototype.build = function() {
   var i, step, note = 0;
   var key_step = 0;
   var key_note = '';
@@ -37,13 +50,19 @@ function Board() {
   }
   this.grid_str += '</div>';
 
-  document.getElementById('controller').innerHTML = this.grid_str;
-
-  this.clickListen();
-
+  //document.getElementById('controller').innerHTML = this.grid_str;
+  $('#controller').html(this.grid_str);
 }
 
-Board.prototype.clickListen = function() {
+Board.prototype.getSelectedBlocks = function() {
+  var selected = [];
+  $('.board-block').each(function(index, block) {
+    if ($(block).hasClass('selected')) selected.push(index);
+  });
+  return selected;
+}
+
+Board.prototype.sequencerBlockClickListen = function() {
 
   var buttons = document.getElementsByClassName('board-block-a');
   for (var i = 0; i < buttons.length; i++) {
@@ -63,15 +82,12 @@ Board.prototype.clickListen = function() {
 
   }
 
-};
+}
 
+// required for chrome
+//document.addEventListener("DOMContentLoaded", function(event) {
+  //this.addEventListener('click', function() { audioCtx.resume(); });
+//});
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-/* required for chrome */
-document.addEventListener("DOMContentLoaded", function(event) {
-  this.addEventListener('click', function() { audioCtx.resume(); });
-});
-
-
+// instantiate new sequencer board
 const board = new Board();

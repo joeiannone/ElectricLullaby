@@ -3,9 +3,8 @@
  * @Date:   2019-11-09T12:17:15-05:00
  * @Filename: main.js
  * @Last modified by:   josephiannone
- * @Last modified time: 2019-11-17T01:39:09-05:00
+ * @Last modified time: 2019-11-17T16:57:53-05:00
  */
-
 
 
 const { app, Menu } = require('electron')
@@ -16,10 +15,7 @@ const Window = require('./Window')
 
 const DataStore = require('./DataStore')
 
-const data = new DataStore();
-
-var user_sequences = data.getData('user_sequences');
-console.log(user_sequences);
+const user_data = new DataStore();
 
 const isMac = process.platform === 'darwin'
 

@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-17T01:17:36-05:00
+ * @Last modified time: 2019-11-17T15:28:50-05:00
  */
 
 
@@ -253,7 +253,6 @@ Sequencer.prototype.autoModeToggle = function() {
     this.randomSelection();
     //if (this.isPaused) this.resume();
   } else this.autoMode = false;
-  console.log(this.autoMode);
 }
 
 
