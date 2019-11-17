@@ -3,7 +3,7 @@
  * @Date:   2019-11-09T12:17:15-05:00
  * @Filename: main.js
  * @Last modified by:   josephiannone
- * @Last modified time: 2019-11-14T22:31:47-05:00
+ * @Last modified time: 2019-11-17T01:39:09-05:00
  */
 
 
@@ -17,7 +17,9 @@ const Window = require('./Window')
 const DataStore = require('./DataStore')
 
 const data = new DataStore();
-//console.log(data.getData('test'));
+
+var user_sequences = data.getData('user_sequences');
+console.log(user_sequences);
 
 const isMac = process.platform === 'darwin'
 
