@@ -83,7 +83,7 @@
               </tr>
               <tr>
                 <td><label>range: <span id='range-display'> {{ displayRange }}</span></label></td>
-                <td><input class='form-control-sm' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='50'></input></td>
+                <td><input class='form-control-sm' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='45'></input></td>
               </tr>
               <tr>
                 <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>
@@ -102,6 +102,7 @@
               <tr>
                 <td><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></td>
                 <td><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></td>
+                <td><button class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle()" ng-class="{autoMode: autoMode}">auto mode</button></td>
               </tr>
               <tr>
                 <td><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></td>

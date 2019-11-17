@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-16T14:06:04-05:00
+ * @Last modified time: 2019-11-17T01:12:07-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -20,7 +20,7 @@ app.controller('mainController', function($scope) {
 
   if (typeof(notes) !== 'undefined') {
     $scope.notes = notes;
-    $scope.notes_start = 28;
+    $scope.notes_start = 23;
     $scope.displayRange = $scope.notes_start;
   }
 
@@ -30,14 +30,24 @@ app.controller('mainController', function($scope) {
   $scope.appSubTitle = "";
   $scope.logoPath = './icon.png';
   $scope.keys = [
-    {display: 'Chromatic', value: 'chromatic'},
     {display: 'Cmaj / Amin', value: 'c'},
     {display: 'C#maj / A#min', value: 'c#'},
+    {display: 'Dmaj / Bmin', value: 'd'},
+    {display: 'D#maj / Cmin', value: 'd#'},
+    {display: 'Emaj / C#min', value: 'e'},
+    {display: 'Fmaj / Dmin', value: 'f'},
+    {display: 'F#maj / D#min', value: 'f#'},
+    {display: 'Gmaj / Emin', value: 'g'},
+    {display: 'G#maj / Fmin', value: 'g#'},
+    {display: 'Amaj / F#min', value: 'a'},
+    {display: 'A#maj / Gmin', value: 'a#'},
+    {display: 'Bmaj / G#min', value: 'b'},
+    {display: 'Chromatic', value: 'chromatic'}
   ];
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
 
-  $scope.key = $scope.keys[1].value;
+  $scope.key = $scope.keys[0].value;
   $scope.wave = 'sine';
   $scope.step = $scope.steps[0];
   $scope.tempo = 240;
@@ -48,6 +58,7 @@ app.controller('mainController', function($scope) {
   $scope.displayDetune = $scope.detune;
   $scope.sustain = 2;
   $scope.displaySustain = '2s';
+  $scope.autoMode = false;
 
   $scope.color_mode_value = 'light';
   $scope.color_mode_btn_class = 'btn-light';
@@ -69,6 +80,7 @@ app.controller('mainController', function($scope) {
     notes: $scope.notes,
     notes_in_key: $scope.notes_in_key,
     notes_start: $scope.notes_start,
+    autoMode: $scope.autoMode,
   };
 
   sequencer = new Sequencer(props);
@@ -130,18 +142,16 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.randomSelection = function() {
-    var boardBlocks = document.getElementsByClassName('board-block');
-    for (i=0;i<boardBlocks.length; i++) {
-      boardBlocks[i].classList.remove('selected');
-      boardBlocks[i].classList.add('unselected');
+    sequencer.randomSelection();
+  }
+
+  $scope.autoModeToggle = function() {
+    if (!$scope.autoMode) {
+      $scope.autoMode = true;
+    } else {
+      $scope.autoMode = false;
     }
-    for (i=0;i<boardBlocks.length; i++) {
-      var rand = Math.round(Math.random() * 16);
-      if (i % rand == 6) {
-        boardBlocks[i].classList.remove('unselected');
-        boardBlocks[i].classList.add('selected');
-      }
-    }
+    sequencer.autoModeToggle();
   }
 
 

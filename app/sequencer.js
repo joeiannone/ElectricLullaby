@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-16T14:10:40-05:00
+ * @Last modified time: 2019-11-17T01:17:36-05:00
  */
 
 
@@ -21,6 +21,7 @@ function Sequencer(props) {
   this.steps = props.step;
   this.color_mode = 'light';
   this.notes = props.notes;
+  this.autoMode = props.autoMode;
   this.notes_in_key = props.notes_in_key;
   this.notes_start = props.notes_start;
   this.freqs = [];
@@ -95,13 +96,22 @@ Sequencer.prototype.setNoteRange = function(start) {
 Sequencer.prototype.setKey = function(key) {
   this.key = key;
   this.notes_in_key = this.getNotesByKey(this.key);
-  this.setNoteRange(28);
+  this.setNoteRange(this.notes_start);
 }
 
 Sequencer.prototype.getNotesByKey = function(key) {
-  if (key == 'chromatic') return this.notes;
-  var scale_pattern = [2, 2, 1, 2, 2, 2, 1];
   var notes_in_key = [];
+
+  if (key == 'chromatic') {
+    for (i = 0; i < this.notes.length; i++) {
+      if (i > 20) {
+        notes_in_key.push(this.notes[i]);
+      }
+    }
+    return notes_in_key;
+  }
+
+  var scale_pattern = [2, 2, 1, 2, 2, 2, 1];
   var note_index = 0;
   var key_sign = '';
   var key_note = '';
@@ -222,6 +232,30 @@ Sequencer.prototype.changeColorMode = function() {
   return;
 }
 
+Sequencer.prototype.randomSelection = function() {
+  var boardBlocks = this.getBoxes();//document.getElementsByClassName('board-block');
+  for (i=0;i<boardBlocks.length; i++) {
+    boardBlocks[i].classList.remove('selected');
+    boardBlocks[i].classList.add('unselected');
+  }
+  for (i=0;i<boardBlocks.length; i++) {
+    var rand = Math.round(Math.random() * 16);
+    if (i % rand == 6) {
+      boardBlocks[i].classList.remove('unselected');
+      boardBlocks[i].classList.add('selected');
+    }
+  }
+}
+
+Sequencer.prototype.autoModeToggle = function() {
+  if (!this.autoMode) {
+    this.autoMode = true;
+    this.randomSelection();
+    //if (this.isPaused) this.resume();
+  } else this.autoMode = false;
+  console.log(this.autoMode);
+}
+
 
 function sequenceInterval(seq) {
 
@@ -290,5 +324,7 @@ function sequenceInterval(seq) {
 
   seq.i++;
   if (seq.i == seq.steps) seq.i = 0;
+
+  if (seq.autoMode && currentStep == seq.steps-1) seq.randomSelection();
 
 }
