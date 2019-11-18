@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-17T18:53:20-05:00
+ * @Last modified time: 2019-11-17T22:48:34-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -36,7 +36,7 @@ app.controller('mainController', function($scope) {
 
   $scope.notes_in_key = $scope.notes;
 
-  $scope.appTitle = "StepSequencerJS";
+  $scope.appTitle = "Electric Lullaby";
   $scope.appSubTitle = "";
   $scope.logoPath = './icon.png';
   $scope.keys = [
@@ -78,9 +78,9 @@ app.controller('mainController', function($scope) {
   $scope.displaySustain = '2s';
   $scope.autoMode = false;
 
-  $scope.color_mode_value = 'light';
-  $scope.color_mode_btn_class = 'btn-light';
-  $scope.color_mode_display_txt = 'dark mode';
+  $scope.color_mode_value = $scope.board.color_mode_value;
+  $scope.color_mode_btn_class = $scope.board.color_mode_btn_class;
+  $scope.color_mode_display_txt = $scope.board.color_mode_display_txt;
 
   if (containerState.contains('hide')) {
     containerState.remove('hide');
@@ -198,36 +198,17 @@ app.controller('mainController', function($scope) {
 
 
   $scope.colorMode = function() {
-
-    if ($scope.color_mode_value === 'light') {
-      // now dark mode
-      $scope.color_mode_value = 'dark';
-      $scope.color_mode_display_txt = 'light mode';
-      document.body.style.background = '#000000';
-      document.body.style.color = '#ffffff';
-      $('.key-note-container').css('color', '#ffffff');
-      document.getElementById('play-button').style.color = '#ffffff';
-      document.getElementById('color-mode-btn').style.background = '#000000';
-      document.getElementById('color-mode-btn').style.color = '#ffffff';
-
-    } else {
-      // now light mode
-      $scope.color_mode_value = 'light';
-      $scope.color_mode_display_txt = 'dark mode';
-      document.body.style.background = '#ffffff';
-      document.body.style.color = '#000000';
-      $('.key-note-container').css('color', '#000000');
-      document.getElementById('play-button').style.color = '#000000';
-      document.getElementById('color-mode-btn').style.background = '#ffffff';
-      document.getElementById('color-mode-btn').style.color = '#000000';
-
-    }
-
+    var colorModes = $scope.board.colorMode();
+    $scope.color_mode_value = colorModes.color_mode_value;
+    $scope.color_mode_btn_class = colorModes.color_mode_btn_class;
+    $scope.color_mode_display_txt = colorModes.color_mode_display_txt;
   }
+
 
   /*****************************************************************************
   * handle blur and focus to pause sequence
   */
+
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
       sequencer.pause();
@@ -236,5 +217,5 @@ app.controller('mainController', function($scope) {
         sequencer.resume();
     }
   });
-
+  
 });

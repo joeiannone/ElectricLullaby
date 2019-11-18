@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-17T15:28:50-05:00
+ * @Last modified time: 2019-11-17T22:20:20-05:00
  */
 
 
@@ -25,6 +25,7 @@ function Sequencer(props) {
   this.notes_in_key = props.notes_in_key;
   this.notes_start = props.notes_start;
   this.freqs = [];
+  this.auto_seed = 1;
 
   if (this.notes_in_key !== null) {
     for (i = this.notes_start; i < this.notes_start+12; i++) this.freqs.push(Number(this.notes_in_key[i].frequency));
@@ -232,15 +233,16 @@ Sequencer.prototype.changeColorMode = function() {
   return;
 }
 
-Sequencer.prototype.randomSelection = function() {
+Sequencer.prototype.randomSelection = function(seed=null) {
+  if (seed == null) seed = this.auto_seed;
   var boardBlocks = this.getBoxes();//document.getElementsByClassName('board-block');
   for (i=0;i<boardBlocks.length; i++) {
     boardBlocks[i].classList.remove('selected');
     boardBlocks[i].classList.add('unselected');
   }
   for (i=0;i<boardBlocks.length; i++) {
-    var rand = Math.round(Math.random() * 16);
-    if (i % rand == 6) {
+    var rand = Math.round(Math.random() * (this.steps));
+    if (rand % i == seed) {
       boardBlocks[i].classList.remove('unselected');
       boardBlocks[i].classList.add('selected');
     }
@@ -250,7 +252,7 @@ Sequencer.prototype.randomSelection = function() {
 Sequencer.prototype.autoModeToggle = function() {
   if (!this.autoMode) {
     this.autoMode = true;
-    this.randomSelection();
+    this.randomSelection(this.auto_seed);
     //if (this.isPaused) this.resume();
   } else this.autoMode = false;
 }
@@ -324,6 +326,9 @@ function sequenceInterval(seq) {
   seq.i++;
   if (seq.i == seq.steps) seq.i = 0;
 
-  if (seq.autoMode && currentStep == seq.steps-1) seq.randomSelection();
-
+  console.log(seq.auto_seed);
+  if (seq.autoMode && currentStep == seq.steps-1) {
+    seq.auto_seed = Math.round(Math.random() * (seq.steps/2));
+    seq.randomSelection(seq.auto_seed);
+  }
 }

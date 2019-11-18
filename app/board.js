@@ -3,12 +3,14 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-17T18:34:07-05:00
+ * @Last modified time: 2019-11-17T22:47:43-05:00
  */
 
 
 // define global audio context
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+
 
 function Board() {
 
@@ -18,8 +20,50 @@ function Board() {
   // create click listener for sequencer blocks
   this.sequencerBlockClickListen();
 
+  this.color_mode_value = 'light';
+  this.color_mode_display_txt = 'dark mode';
+  this.color_mode_btn_class = 'btn-light';
+
 }
 
+Board.prototype.colorMode = function() {
+
+  if (this.color_mode_value === 'light') {
+    // now dark mode
+    this.color_mode_value = 'dark';
+    this.color_mode_display_txt = 'light mode';
+    document.body.style.background = '#000000';
+    document.body.style.color = '#ffffff';
+    //$('.key-note-container').css('color', '#ffffff');
+    $('.key-note-container').css('color', '#ffffff');
+    $('.modal-content').css('background-color', '#000000');
+    $('.modal-header button').css('color', '#ffffff');
+    document.getElementById('play-button').style.color = '#ffffff';
+    document.getElementById('color-mode-btn').style.background = '#000000';
+    document.getElementById('color-mode-btn').style.color = '#ffffff';
+
+  } else {
+    // now light mode
+    this.color_mode_value = 'light';
+    this.color_mode_display_txt = 'dark mode';
+    document.body.style.background = '#ffffff';
+    document.body.style.color = '#000000';
+    //$('.key-note-container').css('color', '#000000');
+    $('.key-note-container').css('color', '#000000');
+    $('.modal-content').css('background-color', '#ffffff');
+    $('.modal-header button').css('color', '#000000');
+    document.getElementById('play-button').style.color = '#000000';
+    document.getElementById('color-mode-btn').style.background = '#ffffff';
+    document.getElementById('color-mode-btn').style.color = '#000000';
+
+  }
+
+  return {
+    color_mode_value: this.color_mode_value,
+    color_mode_display_txt: this.color_mode_display_txt,
+    color_mode_btn_class: this.color_mode_btn_class
+  };
+}
 
 Board.prototype.build = function() {
   var i, step, note = 0;
