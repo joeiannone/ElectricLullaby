@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-17T22:20:20-05:00
+ * @Last modified time: 2019-11-17T22:57:40-05:00
  */
 
 
@@ -241,7 +241,7 @@ Sequencer.prototype.randomSelection = function(seed=null) {
     boardBlocks[i].classList.add('unselected');
   }
   for (i=0;i<boardBlocks.length; i++) {
-    var rand = Math.round(Math.random() * (this.steps));
+    var rand = Math.round(Math.random() * (16));
     if (rand % i == seed) {
       boardBlocks[i].classList.remove('unselected');
       boardBlocks[i].classList.add('selected');
