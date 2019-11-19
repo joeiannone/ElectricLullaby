@@ -109,31 +109,16 @@
               </div>
               <div class='row'>
                 <div>
-                  <button id="save-sequence-btn" ng-click='saveSequenceForm()' class='controller-btn btn-sm btn-success'>save sequence</button>
-                  <div class='modal fade' id='{{ saveSequenceModal.id }}' role="dialog">
-                    <div class='modal-dialog'>
-                      <div class='modal-content'>
-                        <!-- Modal Header -->
-                        <div class='modal-header'>
-                          <div class='modal-title'>
-                            {{ saveSequenceModal.header }}
-                          </div>
-                          <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class='modal-body'>
-                          <div>
-                            <form id='{{ saveSequenceModal.form_id }}' ng-submit="saveSequence(saveSequenceFormData)">
-                              <label>Sequence title:</label>
-                              <input type='text' ng-model='saveSequenceFormData.title' value='' required class='form-control form-control-sm'></input>
-                              <input type="submit" value="Save" class='btn btn-sm btn-success'></input>
-                            </form>
-                            <div class='form-general-notification'>{{ saveSequenceModal.form_notification }}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <button id="save-sequence-btn" class='controller-btn btn-sm btn-success'>save sequence</button>
+                  <div id='save-sequence-modal-container'></div>
+                </div>
+                <div>
+                  <button id="get-sequences-btn" ng-click='getSequencesForm()' class='controller-btn btn-sm btn-info'>sequences</button>
+                  <div id='get-sequences-modal-container'></div>
+                </div>
+                <div>
+                  <button id="get-sequence-chains-btn" ng-click='' class='controller-btn btn-sm btn-warning'>sequence chains</button>
+                  <div id='get-sequence-chains-modal-container'></div>
                 </div>
               </div>
             </div>

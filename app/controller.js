@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-17T22:48:34-05:00
+ * @Last modified time: 2019-11-18T21:47:48-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -58,11 +58,7 @@ app.controller('mainController', function($scope) {
   $scope.steps = ['16', '14', '12', '10'];
 
   $scope.saveSequenceModal = {
-    id: 'save-sequnce-modal',
-    header: 'Save Sequence State',
-    body: '',
     form_id: 'save-sequence-form',
-    form_notification: '',
   };
 
   $scope.key = $scope.keys[0].value;
@@ -172,28 +168,25 @@ app.controller('mainController', function($scope) {
     sequencer.autoModeToggle();
   }
 
-  $scope.saveSequenceForm = function() {
-    angular.element(`#${$scope.saveSequenceModal.id}`).modal('show');
-  }
-
   $scope.saveSequence = function() {
     // create sequence object
+
     var sequence = {
       title: $scope.saveSequenceFormData.title,
       synth_params: {key: $scope.key, wave: $scope.wave, detune: $scope.detune, sustain: $scope.sustain, step: $scope.step},
       sequence_matrix: $scope.board.getSelectedBlocks(),
     }
-    console.log($scope.saveSequenceFormData.title);
     // insert sequence to database
-    $scope.db.sequences.put(sequence).then(function(sequence) {
-      $scope.saveSequenceModal.form_notification = `Saved successfully.`;
-      $scope.saveSequenceFormData = null;
-      console.log(sequence)
-    }).catch(function(error) {
-      $scope.saveSequenceModal.form_notification = `Something went wrong :/`;
-      console.log(error);
-    });
+    if ($scope.db.sequences.put(sequence))
+      angular.element(`#${$scope.saveSequenceModal.id}`).modal('hide');
+    else
+      $scope.saveSequenceModal.form_notification = 'Something went wrong :/';
+  }
 
+  $scope.getSequencesForm = function() {
+    $scope.db.sequences.each(function(sequence) {
+      console.log(sequence);
+    });
   }
 
 
@@ -217,5 +210,5 @@ app.controller('mainController', function($scope) {
         sequencer.resume();
     }
   });
-  
+
 });

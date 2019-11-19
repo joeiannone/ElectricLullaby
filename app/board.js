@@ -3,13 +3,12 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-17T22:47:43-05:00
+ * @Last modified time: 2019-11-18T21:52:52-05:00
  */
 
 
 // define global audio context
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
 
 
 function Board() {
@@ -19,6 +18,12 @@ function Board() {
 
   // create click listener for sequencer blocks
   this.sequencerBlockClickListen();
+
+  // add save sequence modal html
+  $('#save-sequence-modal-container').html(this.getSaveSequenceForm());
+  $(document).on('click', '#save-sequence-btn', function() {
+    $('#save-sequnce-modal').modal();
+  });
 
   this.color_mode_value = 'light';
   this.color_mode_display_txt = 'dark mode';
@@ -94,7 +99,6 @@ Board.prototype.build = function() {
   }
   this.grid_str += '</div>';
 
-  //document.getElementById('controller').innerHTML = this.grid_str;
   $('#controller').html(this.grid_str);
 }
 
@@ -104,6 +108,45 @@ Board.prototype.getSelectedBlocks = function() {
     if ($(block).hasClass('selected')) selected.push(index);
   });
   return selected;
+}
+
+Board.prototype.getModal = function(modalObj) {
+  var html = '';
+  html += `
+    <div class='modal modal fade' id='${modalObj.id}'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <!-- Modal Header -->
+          <div class='modal-header'>
+            <div class='modal-title'>${modalObj.header}</div>
+            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class='modal-body'>${modalObj.body}</div>
+        </div>
+      </div>
+    </div>`;
+  return html;
+}
+
+Board.prototype.getSaveSequenceForm = function() {
+  var body =
+  `
+  <form id='{{ saveSequenceModal.form_id }}' ng-submit="saveSequence(saveSequenceFormData)">
+    <label>Sequence title:</label>
+    <input type='text' ng-model='saveSequenceFormData.title' value='' required class='form-control form-control-sm'></input>
+    <input type="submit" value="Save" class='btn btn-sm btn-success'></input>
+  </form>
+  `
+  var modalObj = {
+    id: 'save-sequnce-modal',
+    header: 'Save Sequence State',
+    body: body,
+  };
+
+  var form = this.getModal(modalObj);
+  return form;
+
 }
 
 Board.prototype.sequencerBlockClickListen = function() {
