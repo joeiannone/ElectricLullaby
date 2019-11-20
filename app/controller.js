@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-18T21:47:48-05:00
+ * @Last modified time: 2019-11-19T22:05:08-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -13,7 +13,7 @@ app.controller('mainController', function($scope) {
   $scope.board = board;
 
   // Instantiate SequenceStore
-  $scope.db = new Dexie('StepSequencerJS');
+  $scope.db = new Dexie('ElectricLullaby');
   $scope.db.version(1).stores({
     sequences: '++id, sequence_matrix, synth_params, title',
     sequence_chains: '++id, sequence_matrix_ids, title'
@@ -56,10 +56,6 @@ app.controller('mainController', function($scope) {
   ];
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
   $scope.steps = ['16', '14', '12', '10'];
-
-  $scope.saveSequenceModal = {
-    form_id: 'save-sequence-form',
-  };
 
   $scope.key = $scope.keys[0].value;
   $scope.wave = 'sine';
@@ -166,27 +162,6 @@ app.controller('mainController', function($scope) {
       $scope.autoMode = false;
     }
     sequencer.autoModeToggle();
-  }
-
-  $scope.saveSequence = function() {
-    // create sequence object
-
-    var sequence = {
-      title: $scope.saveSequenceFormData.title,
-      synth_params: {key: $scope.key, wave: $scope.wave, detune: $scope.detune, sustain: $scope.sustain, step: $scope.step},
-      sequence_matrix: $scope.board.getSelectedBlocks(),
-    }
-    // insert sequence to database
-    if ($scope.db.sequences.put(sequence))
-      angular.element(`#${$scope.saveSequenceModal.id}`).modal('hide');
-    else
-      $scope.saveSequenceModal.form_notification = 'Something went wrong :/';
-  }
-
-  $scope.getSequencesForm = function() {
-    $scope.db.sequences.each(function(sequence) {
-      console.log(sequence);
-    });
   }
 
 

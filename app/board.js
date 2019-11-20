@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-18T21:52:52-05:00
+ * @Last modified time: 2019-11-19T22:04:20-05:00
  */
 
 
@@ -18,12 +18,6 @@ function Board() {
 
   // create click listener for sequencer blocks
   this.sequencerBlockClickListen();
-
-  // add save sequence modal html
-  $('#save-sequence-modal-container').html(this.getSaveSequenceForm());
-  $(document).on('click', '#save-sequence-btn', function() {
-    $('#save-sequnce-modal').modal();
-  });
 
   this.color_mode_value = 'light';
   this.color_mode_display_txt = 'dark mode';
@@ -129,25 +123,6 @@ Board.prototype.getModal = function(modalObj) {
   return html;
 }
 
-Board.prototype.getSaveSequenceForm = function() {
-  var body =
-  `
-  <form id='{{ saveSequenceModal.form_id }}' ng-submit="saveSequence(saveSequenceFormData)">
-    <label>Sequence title:</label>
-    <input type='text' ng-model='saveSequenceFormData.title' value='' required class='form-control form-control-sm'></input>
-    <input type="submit" value="Save" class='btn btn-sm btn-success'></input>
-  </form>
-  `
-  var modalObj = {
-    id: 'save-sequnce-modal',
-    header: 'Save Sequence State',
-    body: body,
-  };
-
-  var form = this.getModal(modalObj);
-  return form;
-
-}
 
 Board.prototype.sequencerBlockClickListen = function() {
 
