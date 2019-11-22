@@ -74,25 +74,25 @@
 
         <div class='control-box'>
             <table>
-              <tr>
+              <tr id='tempo-input'>
                 <td><label>steps/minute: <span id='tempo-display'> {{ displayTempo }}</span></label></td>
-                <td><input class='form-control-sm' ng-model="tempo" ng-change="setTempo()" type="range" step="1" min="100" max="600"></td>
+                <td><input class='form-control-sm custom-range' ng-model="tempo" ng-change="setTempo()" type="range" step="1" min="100" max="600"></td>
               </tr>
-              <tr>
+              <tr id='vol-input'>
                 <td><label>vol: <span id='vol-display'> {{ displayVol }}</span></label></td>
-                <td><input class='form-control-sm' ng-model="vol" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
+                <td><input class='form-control-sm custom-range' ng-model="vol" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
               </tr>
-              <tr>
+              <tr id='range-input'>
                 <td><label>range: <span id='range-display'> {{ displayRange }}</span></label></td>
-                <td><input class='form-control-sm' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='45'></input></td>
+                <td><input class='form-control-sm custom-range' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='45'></input></td>
               </tr>
-              <tr>
+              <tr id='detune-input'>
                 <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>
-                <td><input class='form-control-sm' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-50" max="50"></td>
+                <td><input class='form-control-sm custom-range' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-50" max="50"></td>
               </tr>
-              <tr>
+              <tr id='sustain-input'>
                 <td><label>sustain: <span id='sustain-display'> {{ displaySustain }}</span></label></td>
-                <td><input class='form-control-sm' ng-model="sustain" ng-change="setSustain()" type="range" step=".1" min=".1" max="6"></td>
+                <td><input class='form-control-sm custom-range' ng-model="sustain" ng-change="setSustain()" type="range" step=".1" min=".1" max="6"></td>
               </tr>
             </table>
           </div> <!--/control-box-->

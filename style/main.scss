@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: main.css
-// @Last modified time: 2019-11-18T21:08:24-05:00
+// @Last modified time: 2019-11-22T00:02:51-05:00
  */
 
 $board-grid-min-width: 781px;
@@ -189,4 +189,34 @@ h3 {
 
 .active-step-dark {
   background-color: rgb(0,120,30);
+}
+
+#tempo-input {
+  .custom-range::-webkit-slider-thumb {
+    background: green;
+  }
+}
+
+#vol-input {
+  .custom-range::-webkit-slider-thumb {
+    background: red;
+  }
+}
+
+#range-input {
+  .custom-range::-webkit-slider-thumb {
+    background: blue;
+  }
+}
+
+#detune-input {
+  .custom-range::-webkit-slider-thumb {
+    background: yellow;
+  }
+}
+
+#sustain-input {
+  .custom-range::-webkit-slider-thumb {
+    background: pink;
+  }
 }
