@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-21T22:51:39-05:00
+ * @Last modified time: 2019-11-22T00:10:42-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -29,7 +29,7 @@ app.controller('mainController', function($scope) {
 
   $scope.notes_in_key = $scope.notes;
 
-  $scope.appTitle = "Electric Lullaby";
+  $scope.appTitle = "ElectricLullaby";
   $scope.appSubTitle = "";
   $scope.logoPath = './icon.png';
   $scope.keys = [
