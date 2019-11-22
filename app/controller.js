@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-19T22:05:08-05:00
+ * @Last modified time: 2019-11-21T22:51:39-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -11,13 +11,6 @@ const app = angular.module('stepScript', []);
 app.controller('mainController', function($scope) {
 
   $scope.board = board;
-
-  // Instantiate SequenceStore
-  $scope.db = new Dexie('ElectricLullaby');
-  $scope.db.version(1).stores({
-    sequences: '++id, sequence_matrix, synth_params, title',
-    sequence_chains: '++id, sequence_matrix_ids, title'
-  });
 
   // User interactive variable initiation
   var sequencer;
@@ -170,6 +163,11 @@ app.controller('mainController', function($scope) {
     $scope.color_mode_value = colorModes.color_mode_value;
     $scope.color_mode_btn_class = colorModes.color_mode_btn_class;
     $scope.color_mode_display_txt = colorModes.color_mode_display_txt;
+  }
+
+  $scope.getSequences = function() {
+    $scope.board.getSequencesForm();
+    $scope.board.setSequencesForm();
   }
 
 

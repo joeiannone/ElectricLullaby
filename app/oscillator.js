@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: oscillator.js
- * @Last modified time: 2019-11-14T22:33:50-05:00
+ * @Last modified time: 2019-11-21T23:20:25-05:00
  */
 
 
@@ -30,7 +30,12 @@ Oscillator.prototype.stop = function() {
 
 Oscillator.prototype.mute = function() {
   // This prevents not from making harsh clicking sound
-  this.vol.gain.setTargetAtTime(0, audioCtx.currentTime, this.sustain);
-  this.vol.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + this.sustain);
+  try {
+    this.vol.gain.setTargetAtTime(0, audioCtx.currentTime, this.sustain);
+    this.vol.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + this.sustain);
+  } catch (error) {
+    console.log(error);
+    this.vol.gain.value = 0;
+  }
   //this.vol.gain.value = 0;
 };

@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-19T22:04:20-05:00
+ * @Last modified time: 2019-11-21T23:35:39-05:00
  */
 
 
@@ -12,6 +12,13 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 
 function Board() {
+
+  // Instantiate SequenceStore
+  this.db = new Dexie('ElectricLullaby');
+  this.db.version(1).stores({
+    sequences: '++id, sequence_matrix, synth_params, title',
+    sequence_chains: '++id, sequence_matrix_ids, title'
+  });
 
   // build and insert the markup for sequencer board
   this.build();
@@ -22,6 +29,21 @@ function Board() {
   this.color_mode_value = 'light';
   this.color_mode_display_txt = 'dark mode';
   this.color_mode_btn_class = 'btn-light';
+
+
+  this.getSequencesFormModalObj = {
+    id: 'sequences-form-modal',
+    header: '<strong><i class="fas fa-retweet"></i> Sequences</strong>',
+    body: "<div id='get-sequences-modal-body'></div>",
+    body_id: 'get-sequences-modal-body',
+    modal_container_id: 'get-sequences-modal-container',
+    button_id: 'get-sequences-btn',
+    select_id: 'sequences-select',
+  };
+  $(`#${this.getSequencesFormModalObj.modal_container_id}`).html(this.getModal(this.getSequencesFormModalObj));
+  $(`#${this.getSequencesFormModalObj.button_id}`).click(function() { $('#sequences-form-modal').modal(); });
+
+
 
 }
 
@@ -35,7 +57,7 @@ Board.prototype.colorMode = function() {
     document.body.style.color = '#ffffff';
     //$('.key-note-container').css('color', '#ffffff');
     $('.key-note-container').css('color', '#ffffff');
-    $('.modal-content').css('background-color', '#000000');
+    $('.modal-content').css('background-color', '#333333');
     $('.modal-header button').css('color', '#ffffff');
     document.getElementById('play-button').style.color = '#ffffff';
     document.getElementById('color-mode-btn').style.background = '#000000';
@@ -121,6 +143,22 @@ Board.prototype.getModal = function(modalObj) {
       </div>
     </div>`;
   return html;
+}
+
+Board.prototype.getSequencesForm = function() {
+  var modal_body = `#${this.getSequencesFormModalObj.body_id}`;
+  $(modal_body).html('');
+  $(modal_body).append(`<select multiple class='form-control form-control-sm' id='${this.getSequencesFormModalObj.select_id}'></select>`);
+}
+
+Board.prototype.setSequencesForm = function() {
+  var sequences_select_id = `#${this.getSequencesFormModalObj.select_id}`;
+  this.db.sequences.each(function(elem, index) {
+    $(sequences_select_id).append(`<option value='${elem.id}'>${elem.title}</option>`);
+  }).then(function() {
+    if ($(sequences_select_id).length == 0) $(sequences_select_id).replaceWith('<div class="text-center">No Saved Sequences</div>');
+  });
+
 }
 
 
