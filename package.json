@@ -1,5 +1,5 @@
 {
-  "name": "StepSequencerJS",
+  "name": "ElectricLullaby",
   "version": "2.0.0",
   "description": "A polyphonic musical step sequencer",
   "main": "main.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jmi0/StepSequencerJS.git"
+    "url": "git+https://github.com/jmi0/ElectricLullaby.git"
   },
   "author": "Joe Iannone",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jmi0/StepSequencerJS/issues"
+    "url": "https://github.com/jmi0/ElectricLullaby/issues"
   },
-  "homepage": "https://github.com/jmi0/StepSequencerJS#readme",
+  "homepage": "https://github.com/jmi0/ElectricLullaby#readme",
   "devDependencies": {
     "electron": "^7.1.1",
     "electron-builder": "^22.1.0"
