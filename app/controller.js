@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-22T20:34:22-05:00
+ * @Last modified time: 2019-11-23T00:32:56-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -188,6 +188,13 @@ app.controller('mainController', function($scope) {
     $scope.board.saveSequence(sequence);
   }
 
+  $scope.loadSequences = function(selected_sequences) {
+    $scope.board.loadSequences(selected_sequences);
+  }
+
+  $scope.deleteSequences = function(selected_sequences) {
+    console.log(selected_sequences);
+  }
 
   /*****************************************************************************
   * handle blur and focus to pause sequence

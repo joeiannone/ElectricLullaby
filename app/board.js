@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-22T20:56:33-05:00
+ * @Last modified time: 2019-11-23T00:53:42-05:00
  */
 
 
@@ -53,10 +53,11 @@ function Board() {
     modal_container_id: 'get-sequences-modal-container',
     button_id: 'get-sequences-btn',
     select_id: 'sequences-select',
+    form_id: 'load-sequence-form',
   };
   $(`#${this.getSequencesFormModalObj.modal_container_id}`).html(this.getModal(this.getSequencesFormModalObj));
   $(`#${this.getSequencesFormModalObj.button_id}`).click(function() { $('#sequences-form-modal').modal(); });
-
+  $(`#${this.getSequencesFormModalObj.body_id}`).append(this.getSequencesForm());
 
 
 }
@@ -90,16 +91,45 @@ Board.prototype.getModal = function(modalObj) {
   return html;
 }
 
+Board.prototype.loadSavedBlocks = function() {
+
+}
+
+Board.prototype.loadSequences = function(sequence_ids) {
+  var sequences_modal_obj = this.getSequencesFormModalObj;
+  this.db.sequences.get(Number(sequence_ids[0])).then(function(sequence) {
+    console.log(sequences_modal_obj);
+    var all_blocks = $(`.board-block`);
+    for (i = 0; i < all_blocks.length; i++) {
+      if (all_blocks[i].classList.contains('selected'))
+        all_blocks[i].classList.remove('selected');
+      else if (sequence.sequence_matrix.includes(i))
+        all_blocks[i].classList.add('selected');
+    }
+    console.log(sequence);
+  }).catch(function(error) {
+    console.log(error);
+  }).finally(function() {
+    $(`#${sequences_modal_obj.id}`).modal('hide');
+  });
+
+}
 
 Board.prototype.getSequencesForm = function() {
-  var modal_body = `#${this.getSequencesFormModalObj.body_id}`;
-  $(modal_body).html('');
-  $(modal_body).append(`<select multiple class='form-control form-control-sm' id='${this.getSequencesFormModalObj.select_id}'></select>`);
+  return `
+    <form ng-submit='loadSequences(selected_sequences)'>
+    <select size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
+    <input type='submit' class='btn btn-primary btn-sm' value='Load Sequence(s)'></input>
+    <input ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm' value='Delete Sequence(s)'></input>
+    <div class='small'><i>* Select multiple sequences by holding Ctrl/Command to remove or chain sequences together</i></div>
+    </form>
+  `;
 }
 
 
 Board.prototype.setSequencesForm = function() {
   var sequences_select_id = `#${this.getSequencesFormModalObj.select_id}`;
+  $(sequences_select_id).html('');
   this.db.sequences.reverse().each(function(elem, index) {
     $(sequences_select_id).append(`<option value='${elem.id}'>${elem.title}</option>`);
   }).then(function() {
@@ -128,11 +158,11 @@ Board.prototype.saveSequence = function(sequence) {
   this.db.sequences.put(sequence).then(function() {
     $(`#${modal_obj.error_notification_id}`).html('');
     $(`#${modal_obj.input_id}`).val('');
-    $(`#${modal_obj.id}`).modal('hide');
   }).catch(function(error) {
     $(`#${modal_obj.error_notification_id}`).html('Something went wrong :/');
     console.log(error);
   }).finally(function() {
+    $(`#${modal_obj.id}`).modal('hide');
     //console.log('save sequence finished');
   });
 }
