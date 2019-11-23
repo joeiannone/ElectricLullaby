@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-21T23:08:28-05:00
+ * @Last modified time: 2019-11-22T19:23:21-05:00
  */
 
 
@@ -170,6 +170,16 @@ Sequencer.prototype.resetInterval = function() {
 
 Sequencer.prototype.getAllSteps = function() {
   return document.getElementById('controller').childNodes[0].childNodes;
+}
+
+Sequencer.prototype.getSelectedBlocks = function() {
+  var all_blocks = $('.board-block');
+  var selected_blocks = [];
+  for (i = 0; i < all_blocks.length; i++) {
+    if (all_blocks[i].classList.contains('selected'))
+      selected_blocks.push(i);
+  }
+  return selected_blocks;
 }
 
 Sequencer.prototype.getActiveStep = function() {

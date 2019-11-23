@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-21T23:35:39-05:00
+ * @Last modified time: 2019-11-22T20:56:33-05:00
  */
 
 
@@ -30,6 +30,20 @@ function Board() {
   this.color_mode_display_txt = 'dark mode';
   this.color_mode_btn_class = 'btn-light';
 
+  this.saveSequenceFormModalObj = {
+    id: 'save-sequence-form-modal',
+    header: '<strong><i class="fas fa-save"></i>&nbsp; Save Sequence</strong>',
+    body: "<div id='save-sequence-modal-body'></div>",
+    body_id: 'save-sequence-modal-body',
+    modal_container_id: 'save-sequence-modal-container',
+    button_id: 'save-sequence-modal-btn',
+    input_id: 'save-sequence-input',
+    error_notification_id: 'save-error-container',
+    form_id: 'save-sequence-form',
+  };
+  $(`#${this.saveSequenceFormModalObj.modal_container_id}`).html(this.getModal(this.saveSequenceFormModalObj));
+  $(`#${this.saveSequenceFormModalObj.button_id}`).click(function() { $('#save-sequence-form-modal').modal(); });
+  $(`#${this.saveSequenceFormModalObj.body_id}`).html(this.getSaveSequenceForm());
 
   this.getSequencesFormModalObj = {
     id: 'sequences-form-modal',
@@ -46,6 +60,83 @@ function Board() {
 
 
 }
+
+
+Board.prototype.getSelectedBlocks = function() {
+  var selected = [];
+  $('.board-block').each(function(index, block) {
+    if ($(block).hasClass('selected')) selected.push(index);
+  });
+  return selected;
+}
+
+
+Board.prototype.getModal = function(modalObj) {
+  var html = '';
+  html += `
+    <div class='modal modal fade' id='${modalObj.id}'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <!-- Modal Header -->
+          <div class='modal-header'>
+            <div class='modal-title'>${modalObj.header}</div>
+            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class='modal-body'>${modalObj.body}</div>
+        </div>
+      </div>
+    </div>`;
+  return html;
+}
+
+
+Board.prototype.getSequencesForm = function() {
+  var modal_body = `#${this.getSequencesFormModalObj.body_id}`;
+  $(modal_body).html('');
+  $(modal_body).append(`<select multiple class='form-control form-control-sm' id='${this.getSequencesFormModalObj.select_id}'></select>`);
+}
+
+
+Board.prototype.setSequencesForm = function() {
+  var sequences_select_id = `#${this.getSequencesFormModalObj.select_id}`;
+  this.db.sequences.reverse().each(function(elem, index) {
+    $(sequences_select_id).append(`<option value='${elem.id}'>${elem.title}</option>`);
+  }).then(function() {
+    if ($(sequences_select_id).length == 0) $(sequences_select_id).replaceWith('<div class="text-center">No Saved Sequences</div>');
+  });
+
+}
+
+
+Board.prototype.getSaveSequenceForm = function() {
+  return `
+  <form class='form-inline' id='${this.saveSequenceFormModalObj.form_id}' ng-submit='saveSequence(save_sequence_title)'>
+    <div class='form-group'>
+      <!--<label>Title</label>-->
+      <input placeholder='Sequence Title' required type='text' name='save_sequence_title' ng-model='save_sequence_title' class='form-control form-control-sm' id='${this.saveSequenceFormModalObj.input_id}'></input>
+      <input type='submit' class='btn btn-sm btn-primary' value='Save'></input>
+    </div>
+    <div id='save-error-container' class='pt-2 modal-error-notification'></div>
+  </form>
+  `;
+}
+
+
+Board.prototype.saveSequence = function(sequence) {
+  var modal_obj = this.saveSequenceFormModalObj;
+  this.db.sequences.put(sequence).then(function() {
+    $(`#${modal_obj.error_notification_id}`).html('');
+    $(`#${modal_obj.input_id}`).val('');
+    $(`#${modal_obj.id}`).modal('hide');
+  }).catch(function(error) {
+    $(`#${modal_obj.error_notification_id}`).html('Something went wrong :/');
+    console.log(error);
+  }).finally(function() {
+    //console.log('save sequence finished');
+  });
+}
+
 
 Board.prototype.colorMode = function() {
 
@@ -86,6 +177,30 @@ Board.prototype.colorMode = function() {
   };
 }
 
+
+Board.prototype.sequencerBlockClickListen = function() {
+
+  var buttons = document.getElementsByClassName('board-block-a');
+  for (var i = 0; i < buttons.length; i++) {
+
+    buttons[i].addEventListener('click', function() {
+      var div = this.childNodes[0];
+      if (!div.classList.contains('disabled-block')) {
+        if (div.classList.contains('unselected')) {
+          div.classList.remove('unselected');
+          div.classList.add('selected');
+        } else {
+          div.classList.remove('selected');
+          div.classList.add('unselected');
+        }
+      }
+    });
+
+  }
+
+}
+
+
 Board.prototype.build = function() {
   var i, step, note = 0;
   var key_step = 0;
@@ -116,72 +231,6 @@ Board.prototype.build = function() {
   this.grid_str += '</div>';
 
   $('#controller').html(this.grid_str);
-}
-
-Board.prototype.getSelectedBlocks = function() {
-  var selected = [];
-  $('.board-block').each(function(index, block) {
-    if ($(block).hasClass('selected')) selected.push(index);
-  });
-  return selected;
-}
-
-Board.prototype.getModal = function(modalObj) {
-  var html = '';
-  html += `
-    <div class='modal modal fade' id='${modalObj.id}'>
-      <div class='modal-dialog'>
-        <div class='modal-content'>
-          <!-- Modal Header -->
-          <div class='modal-header'>
-            <div class='modal-title'>${modalObj.header}</div>
-            <button type='button' class='close' data-dismiss='modal'>&times;</button>
-          </div>
-          <!-- Modal body -->
-          <div class='modal-body'>${modalObj.body}</div>
-        </div>
-      </div>
-    </div>`;
-  return html;
-}
-
-Board.prototype.getSequencesForm = function() {
-  var modal_body = `#${this.getSequencesFormModalObj.body_id}`;
-  $(modal_body).html('');
-  $(modal_body).append(`<select multiple class='form-control form-control-sm' id='${this.getSequencesFormModalObj.select_id}'></select>`);
-}
-
-Board.prototype.setSequencesForm = function() {
-  var sequences_select_id = `#${this.getSequencesFormModalObj.select_id}`;
-  this.db.sequences.each(function(elem, index) {
-    $(sequences_select_id).append(`<option value='${elem.id}'>${elem.title}</option>`);
-  }).then(function() {
-    if ($(sequences_select_id).length == 0) $(sequences_select_id).replaceWith('<div class="text-center">No Saved Sequences</div>');
-  });
-
-}
-
-
-Board.prototype.sequencerBlockClickListen = function() {
-
-  var buttons = document.getElementsByClassName('board-block-a');
-  for (var i = 0; i < buttons.length; i++) {
-
-    buttons[i].addEventListener('click', function() {
-      var div = this.childNodes[0];
-      if (!div.classList.contains('disabled-block')) {
-        if (div.classList.contains('unselected')) {
-          div.classList.remove('unselected');
-          div.classList.add('selected');
-        } else {
-          div.classList.remove('selected');
-          div.classList.add('unselected');
-        }
-      }
-    });
-
-  }
-
 }
 
 // required for chrome

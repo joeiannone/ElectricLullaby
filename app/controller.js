@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-22T00:10:42-05:00
+ * @Last modified time: 2019-11-22T20:34:22-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -55,8 +55,8 @@ app.controller('mainController', function($scope) {
   $scope.step = $scope.steps[0];
   $scope.tempo = 240;
   $scope.displayTempo = 240;
-  $scope.vol = 0.35;
-  $scope.displayVol = Math.round($scope.vol*100);
+  $scope.gain = 0.35;
+  $scope.displayVol = Math.round($scope.gain*100);
   $scope.detune = 0;
   $scope.displayDetune = $scope.detune;
   $scope.sustain = 2;
@@ -76,7 +76,7 @@ app.controller('mainController', function($scope) {
     tempo: $scope.tempo,
     key: $scope.key,
     wave: $scope.wave,
-    volume: $scope.vol,
+    volume: $scope.gain,
     detune: $scope.detune,
     sustain: $scope.sustain,
     step: $scope.step,
@@ -114,8 +114,8 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.setVol = function() {
-    $scope.displayVol = Math.round($scope.vol*100);
-    sequencer.setVol($scope.vol);
+    $scope.displayVol = Math.round($scope.gain*100);
+    sequencer.setVol($scope.gain);
   }
 
   $scope.setDetune = function() {
@@ -165,9 +165,27 @@ app.controller('mainController', function($scope) {
     $scope.color_mode_display_txt = colorModes.color_mode_display_txt;
   }
 
-  $scope.getSequences = function() {
+  $scope.getSequencesModal = function() {
     $scope.board.getSequencesForm();
     $scope.board.setSequencesForm();
+  }
+
+  $scope.saveSequence = function(sequence_title) {
+    var sequence_params = {
+      key: $scope.key,
+      wave: $scope.wave,
+      steps: $scope.step,
+      gain: $scope.gain,
+      note_start: $scope.notes_start,
+      detune: $scope.detune,
+      sustain: $scope.sustain,
+    };
+    var sequence = {
+      title: sequence_title,
+      sequence_matrix: sequencer.getSelectedBlocks(),
+      sequence_params: sequence_params,
+    };
+    $scope.board.saveSequence(sequence);
   }
 
 
