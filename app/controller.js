@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-23T00:32:56-05:00
+ * @Last modified time: 2019-11-23T01:24:32-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -189,7 +189,37 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.loadSequences = function(selected_sequences) {
-    $scope.board.loadSequences(selected_sequences);
+
+    $scope.board.db.sequences.get(Number(selected_sequences[0]), function(sequence) {
+      var all_blocks = angular.element(`.board-block`);
+      for (i = 0; i < all_blocks.length; i++) {
+        if (all_blocks[i].classList.contains('selected'))
+          all_blocks[i].classList.remove('selected');
+        else if (sequence.sequence_matrix.includes(i))
+          all_blocks[i].classList.add('selected');
+      }
+      return sequence;
+    }).then(function(sequence) {
+      $scope.detune = sequence.sequence_params.detune;
+      sequencer.setDetune($scope.detune);
+      $scope.gain = sequence.sequence_params.gain;
+      sequencer.setVol($scope.gain);
+      $scope.key = sequence.sequence_params.key;
+      sequencer.setKey($scope.key);
+      $scope.node_start = sequence.sequence_params.node_start;
+      sequencer.setNoteRange($scope.notes_start);
+      $scope.step = sequence.sequence_params.steps;
+      sequencer.setSteps($scope.step);
+      $scope.sustain = sequence.sequence_params.sustain;
+      sequencer.setSustain($scope.sustain);
+      $scope.wave = sequence.sequence_params.wave;
+      sequencer.setWave($scope.wave);
+      console.log(sequence);
+    }).catch(function(error) {
+      console.log(error);
+    }).finally(function() {
+      $(`#${$scope.board.getSequencesFormModalObj.id}`).modal('hide');
+    });
   }
 
   $scope.deleteSequences = function(selected_sequences) {

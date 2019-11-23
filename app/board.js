@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-23T00:53:42-05:00
+ * @Last modified time: 2019-11-23T01:13:50-05:00
  */
 
 
@@ -92,26 +92,6 @@ Board.prototype.getModal = function(modalObj) {
 }
 
 Board.prototype.loadSavedBlocks = function() {
-
-}
-
-Board.prototype.loadSequences = function(sequence_ids) {
-  var sequences_modal_obj = this.getSequencesFormModalObj;
-  this.db.sequences.get(Number(sequence_ids[0])).then(function(sequence) {
-    console.log(sequences_modal_obj);
-    var all_blocks = $(`.board-block`);
-    for (i = 0; i < all_blocks.length; i++) {
-      if (all_blocks[i].classList.contains('selected'))
-        all_blocks[i].classList.remove('selected');
-      else if (sequence.sequence_matrix.includes(i))
-        all_blocks[i].classList.add('selected');
-    }
-    console.log(sequence);
-  }).catch(function(error) {
-    console.log(error);
-  }).finally(function() {
-    $(`#${sequences_modal_obj.id}`).modal('hide');
-  });
 
 }
 
