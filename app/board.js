@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-23T01:13:50-05:00
+ * @Last modified time: 2019-11-23T11:03:20-05:00
  */
 
 
@@ -91,16 +91,13 @@ Board.prototype.getModal = function(modalObj) {
   return html;
 }
 
-Board.prototype.loadSavedBlocks = function() {
-
-}
 
 Board.prototype.getSequencesForm = function() {
   return `
     <form ng-submit='loadSequences(selected_sequences)'>
-    <select size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
+    <select required size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
     <input type='submit' class='btn btn-primary btn-sm' value='Load Sequence(s)'></input>
-    <input ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm' value='Delete Sequence(s)'></input>
+    <button ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm'>Delete Sequence(s)</button>
     <div class='small'><i>* Select multiple sequences by holding Ctrl/Command to remove or chain sequences together</i></div>
     </form>
   `;
