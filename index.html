@@ -62,19 +62,19 @@
                     <option ng-repeat="wave in waves" value="{{ wave }}">{{ wave }}</option>
                   </select></td>
               </tr>
-              <tr class=''>
-                <td><label>steps: </label></td>
-                <td>
-                  <select class='form-control-sm' ng-model="step" ng-change="setSteps()">
-                    <option ng-repeat="step in steps" value="{{ step }}">{{ step }}</option>
-                  </select>
-                </td>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
               </tr>
             </table>
           </div> <!--/control-box-->
 
         <div class='control-box'>
             <table>
+              <tr id='steps-input'>
+                <td><label>steps: <span id='steps-display'> {{ displaySteps }}</span></label></td>
+                <td><input class='form-control-sm custom-range' ng-model="steps" ng-change="setSteps()" type="range" step="1" min="2" max="16"></td>
+              </tr>
               <tr id='tempo-input'>
                 <td><label>steps/minute: <span id='tempo-display'> {{ displayTempo }}</span></label></td>
                 <td><input class='form-control-sm custom-range' ng-model="tempo" ng-change="setTempo()" type="range" step="1" min="100" max="600"></td>
@@ -85,7 +85,7 @@
               </tr>
               <tr id='range-input'>
                 <td><label>range: <span id='range-display'> {{ displayRange }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='45'></input></td>
+                <td><input class='form-control-sm custom-range' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='36'></input></td>
               </tr>
               <tr id='detune-input'>
                 <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>

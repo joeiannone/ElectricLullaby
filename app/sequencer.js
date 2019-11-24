@@ -3,15 +3,13 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: sequencer.js
- * @Last modified time: 2019-11-22T19:23:21-05:00
+ * @Last modified time: 2019-11-24T15:29:47-05:00
  */
 
 
-// global var to hold current step
-var currentStep = 0;
-
 function Sequencer(props) {
 
+  this.current_step = 0;
   this.interval_val = 60000 / props.tempo;
   this.key = props.key;
   this.wave = props.wave;
@@ -197,9 +195,11 @@ Sequencer.prototype.getActiveStep = function() {
 Sequencer.prototype.setSteps = function(steps) {
   this.steps = steps;
   this.deactivateSteps();
-  this.clearActiveStep();
-  this.i = 0;
-  this.resetInterval();
+  if (this.i >= this.steps) {
+    this.i = 0;
+    this.clearActiveStep();
+  }
+  //this.resetInterval();
 }
 
 Sequencer.prototype.clearActiveStep = function() {
@@ -274,7 +274,7 @@ function sequenceInterval(seq) {
 
   var j, count;
 
-  currentStep = seq.i;
+  this.current_step = seq.i;
 
   // pad display count
   count = seq.i+1;
@@ -333,11 +333,15 @@ function sequenceInterval(seq) {
   seq.oscillators['previous'] = seq.oscillators['current'];
   seq.oscillators['current'] = [];
 
+  // this clears extra active step bar in case it appears after change
+  if ($('.active-step').length > 12) seq.clearActiveStep();
+
   seq.i++;
   if (seq.i == seq.steps) seq.i = 0;
 
-  if (seq.autoMode && currentStep == seq.steps-1) {
+  if (seq.autoMode && this.current_step == seq.steps-1) {
     seq.auto_seed = Math.round(Math.random() * (seq.steps/2));
     seq.randomSelection(seq.auto_seed);
   }
+
 }

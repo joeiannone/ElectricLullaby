@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-24T14:05:23-05:00
+ * @Last modified time: 2019-11-24T15:31:09-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -21,11 +21,14 @@ app.controller('mainController', function($scope) {
   $scope.notes = null;
   $scope.notes_start = 0;
   $scope.displayRange = '';
+  $scope.range_zero = 0;
 
   if (typeof(notes) !== 'undefined') {
     $scope.notes = notes;
     $scope.notes_start = 23;
-    $scope.displayRange = $scope.notes_start;
+    $scope.range_zero = 28;
+    $scope.displayRange = $scope.notes_start - $scope.range_zero;
+    if ($scope.displayRange > 0) $scope.displayRange = '+'+$scope.displayRange;
   }
 
   $scope.notes_in_key = $scope.notes;
@@ -49,22 +52,15 @@ app.controller('mainController', function($scope) {
     {display: 'Chromatic', value: 'chromatic'}
   ];
   $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
-  $scope.steps = ['16', '14', '12', '10'];
-
-  $scope._steps = [
-    {value: 16, label: '16'},
-    {value: 14, label: '14'},
-    {value: 12, label: '12'},
-    {value: 10, label: '10'},
-  ];
+  $scope.steps = 16;
+  $scope.displaySteps = $scope.steps;
 
   $scope.key = $scope.keys[0].value;
   $scope.wave = 'sine';
-  $scope.step = $scope.steps[0];
   $scope.tempo = 240;
   $scope.displayTempo = 240;
-  $scope.gain = 0.35;
-  $scope.displayVol = Math.round($scope.gain*100);
+  $scope.gain = 0.3;
+  $scope.displayVol = $scope.gain*10;
   $scope.detune = 0;
   $scope.displayDetune = $scope.detune;
   $scope.sustain = 2;
@@ -87,7 +83,7 @@ app.controller('mainController', function($scope) {
     volume: $scope.gain,
     detune: $scope.detune,
     sustain: $scope.sustain,
-    step: $scope.step,
+    step: $scope.steps,
     notes: $scope.notes,
     notes_in_key: $scope.notes_in_key,
     notes_start: $scope.notes_start,
@@ -122,7 +118,7 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.setVol = function() {
-    $scope.displayVol = Math.round($scope.gain*100);
+    $scope.displayVol = Math.round(10*($scope.gain*10))/10;
     sequencer.setVol($scope.gain);
   }
 
@@ -140,12 +136,14 @@ app.controller('mainController', function($scope) {
 
   $scope.setRange = function() {
     if (typeof($scope.notes_start) == 'undefined') return;
-    $scope.displayRange = $scope.notes_start;
+    $scope.displayRange = $scope.notes_start - $scope.range_zero;
+    if ($scope.displayRange > 0) $scope.displayRange = '+'+$scope.displayRange;
     sequencer.setNoteRange($scope.notes_start);
   }
 
   $scope.setSteps = function() {
-    sequencer.setSteps($scope.step);
+    $scope.displaySteps = $scope.steps;
+    sequencer.setSteps($scope.steps);
   }
 
   $scope.clearBoard = function() {
@@ -183,7 +181,7 @@ app.controller('mainController', function($scope) {
     var sequence_params = {
       key: $scope.key,
       wave: $scope.wave,
-      steps: $scope.step,
+      steps: $scope.steps,
       gain: $scope.gain,
       note_start: $scope.notes_start,
       detune: $scope.detune,
@@ -224,7 +222,7 @@ app.controller('mainController', function($scope) {
       $scope.setKey();
       $scope.notes_start = sequence.sequence_params.note_start;
       $scope.setRange();
-      $scope.step = sequence.sequence_params.steps;
+      $scope.steps = Number(sequence.sequence_params.steps);
       $scope.setSteps();
       $scope.sustain = sequence.sequence_params.sustain;
       $scope.setSustain();
