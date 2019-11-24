@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: main.css
-// @Last modified time: 2019-11-24T12:58:59-05:00
+// @Last modified time: 2019-11-24T13:25:13-05:00
  */
 h3 {
   font-weight: 200; }
@@ -107,10 +107,10 @@ h3 {
 
 @keyframes blink-animation {
   50% {
-    opacity: 0; } }
+    opacity: 0.4; } }
 @-webkit-keyframes blink-animation {
   50% {
-    opacity: 0; } }
+    opacity: 0.4; } }
 .selected {
   background-color: rgba(255, 0, 0, 0.5); }
 

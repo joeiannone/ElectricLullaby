@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-24T13:08:08-05:00
+ * @Last modified time: 2019-11-24T14:05:23-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -188,6 +188,7 @@ app.controller('mainController', function($scope) {
       note_start: $scope.notes_start,
       detune: $scope.detune,
       sustain: $scope.sustain,
+      tempo: $scope.tempo,
     };
     var sequence = {
       title: sequence_title,
@@ -229,6 +230,8 @@ app.controller('mainController', function($scope) {
       $scope.setSustain();
       $scope.wave = sequence.sequence_params.wave;
       $scope.setWave();
+      $scope.tempo = sequence.sequence_params.tempo;
+      $scope.setTempo();
       angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('');
       $scope.$digest();
     }).catch(function(error) {
