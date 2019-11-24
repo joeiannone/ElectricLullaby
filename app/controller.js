@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-23T11:04:24-05:00
+ * @Last modified time: 2019-11-24T01:30:20-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -17,6 +17,7 @@ app.controller('mainController', function($scope) {
   var state = document.getElementById('play-button').classList;
   var containerState = document.getElementById('controller-container').classList;
 
+  $scope.selected_sequence_ids = [];
   $scope.notes = null;
   $scope.notes_start = 0;
   $scope.displayRange = '';
@@ -195,7 +196,12 @@ app.controller('mainController', function($scope) {
     $scope.board.saveSequence(sequence);
   }
 
+
   $scope.loadSequences = function(selected_sequences) {
+    // ignore in this case
+    if ($scope.selected_sequence_ids == selected_sequences) return;
+    else $scope.selected_sequence_ids = selected_sequences;
+
     $scope.board.db.sequences.get(Number(selected_sequences[0]), function(sequence) {
       var all_blocks = angular.element(`.board-block`);
       for (i = 0; i < all_blocks.length; i++) {
@@ -220,24 +226,26 @@ app.controller('mainController', function($scope) {
       $scope.setSustain();
       $scope.wave = sequence.sequence_params.wave;
       $scope.setWave();
+      angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('');
     }).catch(function(error) {
+      angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('Something went wrong :/');
       console.log(error);
     }).finally(function() {
       $scope.$digest();
-      $(`#${$scope.board.getSequencesFormModalObj.id}`).modal('hide');
+      //$(`#${$scope.board.getSequencesFormModalObj.id}`).modal('hide');
     });
   }
 
+
   $scope.deleteSequences = function(selected_sequences) {
     for (i in selected_sequences) {
-      $scope.board.db.sequences.delete(Number(selected_sequences[i]), function() {
-        console.log("successfully deleted");
-      }).then(function() {
-
-      }).catch((err) => {
-        console.log(err);
-      }).finally(() => {
-
+      $scope.board.db.sequences.delete(Number(selected_sequences[i])).then(function() {
+        angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('');
+      }).catch(function(error) {
+        angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('Something went wrong :/');
+        console.log(error);
+      }).finally(function() {
+        $scope.getSequencesModal();
       });
     }
   }

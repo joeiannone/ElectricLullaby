@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-23T11:03:20-05:00
+ * @Last modified time: 2019-11-24T01:16:15-05:00
  */
 
 
@@ -54,6 +54,7 @@ function Board() {
     button_id: 'get-sequences-btn',
     select_id: 'sequences-select',
     form_id: 'load-sequence-form',
+    error_notification_id: 'load-delete-modal-error',
   };
   $(`#${this.getSequencesFormModalObj.modal_container_id}`).html(this.getModal(this.getSequencesFormModalObj));
   $(`#${this.getSequencesFormModalObj.button_id}`).click(function() { $('#sequences-form-modal').modal(); });
@@ -96,9 +97,10 @@ Board.prototype.getSequencesForm = function() {
   return `
     <form ng-submit='loadSequences(selected_sequences)'>
     <select required size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
-    <input type='submit' class='btn btn-primary btn-sm' value='Load Sequence(s)'></input>
-    <button ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm'>Delete Sequence(s)</button>
+    <input type='submit' class='btn btn-primary btn-sm' value='Load Sequence'></input>
+    <button type='button' ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm'>Delete Sequence(s)</button>
     <div class='small'><i>* Select multiple sequences by holding Ctrl/Command to remove or chain sequences together</i></div>
+    <div id='load-delete-modal-error' class='pt-2 modal-error-notification'></div>
     </form>
   `;
 }
@@ -133,14 +135,14 @@ Board.prototype.getSaveSequenceForm = function() {
 Board.prototype.saveSequence = function(sequence) {
   var modal_obj = this.saveSequenceFormModalObj;
   this.db.sequences.put(sequence).then(function() {
+    $(`#${modal_obj.id}`).modal('hide');
     $(`#${modal_obj.error_notification_id}`).html('');
     $(`#${modal_obj.input_id}`).val('');
   }).catch(function(error) {
     $(`#${modal_obj.error_notification_id}`).html('Something went wrong :/');
     console.log(error);
   }).finally(function() {
-    $(`#${modal_obj.id}`).modal('hide');
-    //console.log('save sequence finished');
+
   });
 }
 
