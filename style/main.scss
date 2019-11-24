@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: main.css
-// @Last modified time: 2019-11-22T19:46:11-05:00
+// @Last modified time: 2019-11-24T12:58:59-05:00
  */
 
 $board-grid-min-width: 781px;
@@ -16,7 +16,6 @@ h3 {
 
 .hide {
   visibility: hidden;
-  opacity: 0;
 }
 
 .col1 {
@@ -73,9 +72,9 @@ h3 {
   }
   .modal {
     form {
-      padding: 10px;
+      padding: 2px;
       * {
-        margin: 5px;
+
       }
     }
 
@@ -151,18 +150,19 @@ h3 {
 }
 
 .autoMode {
-  color: green;
+  animation-direction: alternate;
   animation: blink-animation 1.3s infinite;
   -webkit-animation: blink-animation 1.3s infinite;
 }
+
 @keyframes blink-animation {
   50% {
-    color: #ffffff;
+    opacity: 0;
   }
 }
 @-webkit-keyframes blink-animation {
   50% {
-    color: #ffffff;
+    opacity: 0;
   }
 }
 
@@ -223,4 +223,12 @@ h3 {
 
 .modal-error-notification {
   color: pink;
+}
+
+#sequences-select {
+  font-family: monospace;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, .5);
 }

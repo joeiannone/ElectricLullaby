@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-24T01:30:20-05:00
+ * @Last modified time: 2019-11-24T13:08:08-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -156,13 +156,14 @@ app.controller('mainController', function($scope) {
     sequencer.randomSelection();
   }
 
-  $scope.autoModeToggle = function() {
+  $scope.autoModeToggle = function(e) {
     if (!$scope.autoMode) {
       $scope.autoMode = true;
     } else {
       $scope.autoMode = false;
     }
     sequencer.autoModeToggle();
+    $scope.board.toggleAutoModeButton(e.target.id);
   }
 
 
@@ -192,6 +193,7 @@ app.controller('mainController', function($scope) {
       title: sequence_title,
       sequence_matrix: sequencer.getSelectedBlocks(),
       sequence_params: sequence_params,
+      created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     };
     $scope.board.saveSequence(sequence);
   }
@@ -207,10 +209,11 @@ app.controller('mainController', function($scope) {
       for (i = 0; i < all_blocks.length; i++) {
         if (all_blocks[i].classList.contains('selected'))
           all_blocks[i].classList.remove('selected');
-        else if (sequence.sequence_matrix.includes(i))
+        if (sequence.sequence_matrix.includes(i))
           all_blocks[i].classList.add('selected');
       }
       return sequence;
+
     }).then(function(sequence) {
       $scope.detune = sequence.sequence_params.detune;
       $scope.setDetune();
@@ -218,7 +221,7 @@ app.controller('mainController', function($scope) {
       $scope.setVol();
       $scope.key = sequence.sequence_params.key;
       $scope.setKey();
-      $scope.node_start = sequence.sequence_params.node_start;
+      $scope.notes_start = sequence.sequence_params.note_start;
       $scope.setRange();
       $scope.step = sequence.sequence_params.steps;
       $scope.setSteps();
@@ -227,11 +230,12 @@ app.controller('mainController', function($scope) {
       $scope.wave = sequence.sequence_params.wave;
       $scope.setWave();
       angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('');
+      $scope.$digest();
     }).catch(function(error) {
       angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('Something went wrong :/');
       console.log(error);
     }).finally(function() {
-      $scope.$digest();
+
       //$(`#${$scope.board.getSequencesFormModalObj.id}`).modal('hide');
     });
   }
@@ -245,9 +249,10 @@ app.controller('mainController', function($scope) {
         angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('Something went wrong :/');
         console.log(error);
       }).finally(function() {
-        $scope.getSequencesModal();
+
       });
     }
+    $scope.getSequencesModal();
   }
 
   /*****************************************************************************

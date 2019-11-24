@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="./style/main.css">
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 
+  <script src="./node_modules/moment/min/moment.min.js"></script>
   <script src="./node_modules/dexie/dist/dexie.min.js"></script>
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -79,7 +80,7 @@
                 <td><input class='form-control-sm custom-range' ng-model="tempo" ng-change="setTempo()" type="range" step="1" min="100" max="600"></td>
               </tr>
               <tr id='vol-input'>
-                <td><label>vol: <span id='vol-display'> {{ displayVol }}</span></label></td>
+                <td><label>gain: <span id='vol-display'> {{ displayVol }}</span></label></td>
                 <td><input class='form-control-sm custom-range' ng-model="gain" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
               </tr>
               <tr id='range-input'>
@@ -102,14 +103,14 @@
               <div class='row'>
                 <div><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
                 <div><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
-                <div><button class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle()" ng-class="{autoMode: autoMode}">auto mode</button></div>
+                <div><button id='auto-mode-btn' class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle($event)" ng-class="{autoMode: autoMode}">auto mode</button></div>
               </div>
               <div class='row'>
                 <div><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></div>
               </div>
               <div class='row'>
                 <div>
-                  <button id="save-sequence-modal-btn" ng-click='saveSequenceModal()' class='controller-btn btn-sm btn-success'><i class='fas fa-save fa-sm'></i>&nbsp; save sequence</button>
+                  <button id="save-sequence-modal-btn" ng-click='saveSequenceModal()' class='controller-btn btn-sm btn-primary'><i class='fas fa-save fa-sm'></i>&nbsp; save sequence</button>
                   <div id='save-sequence-modal-container'></div>
                 </div>
                 <div>

@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-24T01:16:15-05:00
+ * @Last modified time: 2019-11-24T13:03:50-05:00
  */
 
 
@@ -16,8 +16,7 @@ function Board() {
   // Instantiate SequenceStore
   this.db = new Dexie('ElectricLullaby');
   this.db.version(1).stores({
-    sequences: '++id, sequence_matrix, synth_params, title',
-    sequence_chains: '++id, sequence_matrix_ids, title'
+    sequences: '++id, sequence_matrix, synth_params, title, created_at',
   });
 
   // build and insert the markup for sequencer board
@@ -42,7 +41,11 @@ function Board() {
     form_id: 'save-sequence-form',
   };
   $(`#${this.saveSequenceFormModalObj.modal_container_id}`).html(this.getModal(this.saveSequenceFormModalObj));
-  $(`#${this.saveSequenceFormModalObj.button_id}`).click(function() { $('#save-sequence-form-modal').modal(); });
+  $(`#${this.saveSequenceFormModalObj.button_id}`).click(function() {
+    $(`#save-sequence-input`).val('');
+    $(`#save-error-container`).html('');
+    $('#save-sequence-form-modal').modal();
+  });
   $(`#${this.saveSequenceFormModalObj.body_id}`).html(this.getSaveSequenceForm());
 
   this.getSequencesFormModalObj = {
@@ -97,9 +100,9 @@ Board.prototype.getSequencesForm = function() {
   return `
     <form ng-submit='loadSequences(selected_sequences)'>
     <select required size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
-    <input type='submit' class='btn btn-primary btn-sm' value='Load Sequence'></input>
-    <button type='button' ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm'>Delete Sequence(s)</button>
-    <div class='small'><i>* Select multiple sequences by holding Ctrl/Command to remove or chain sequences together</i></div>
+    <input type='submit' class='btn btn-primary btn-sm mt-2 mr-1' value='Load Sequence'></input>
+    <button type='button' ng-click='deleteSequences(selected_sequences)' class='btn btn-warning btn-sm mt-2 mr-1'>Delete Sequence(s)</button>
+    <div class='small pt-2'><i>* Select multiple sequences by holding Ctrl/Command to remove or chain sequences together</i></div>
     <div id='load-delete-modal-error' class='pt-2 modal-error-notification'></div>
     </form>
   `;
@@ -110,9 +113,13 @@ Board.prototype.setSequencesForm = function() {
   var sequences_select_id = `#${this.getSequencesFormModalObj.select_id}`;
   $(sequences_select_id).html('');
   this.db.sequences.reverse().each(function(elem, index) {
-    $(sequences_select_id).append(`<option value='${elem.id}'>${elem.title}</option>`);
+    var display_title = elem.title.padEnd(38, '%');
+    display_title = display_title.replace(/%/g, '&nbsp;');
+    $(sequences_select_id).append(`<option value='${elem.id}'>${display_title} ${elem.created_at}</option>`);
   }).then(function() {
-    if ($(sequences_select_id).length == 0) $(sequences_select_id).replaceWith('<div class="text-center">No Saved Sequences</div>');
+
+  }).finally(function() {
+
   });
 
 }
@@ -120,11 +127,15 @@ Board.prototype.setSequencesForm = function() {
 
 Board.prototype.getSaveSequenceForm = function() {
   return `
-  <form class='form-inline' id='${this.saveSequenceFormModalObj.form_id}' ng-submit='saveSequence(save_sequence_title)'>
-    <div class='form-group'>
-      <!--<label>Title</label>-->
-      <input placeholder='Sequence Title' required type='text' name='save_sequence_title' ng-model='save_sequence_title' class='form-control form-control-sm' id='${this.saveSequenceFormModalObj.input_id}'></input>
-      <input type='submit' class='btn btn-sm btn-primary' value='Save'></input>
+  <form id='${this.saveSequenceFormModalObj.form_id}' ng-submit='saveSequence(save_sequence_title)'>
+    <div class='form-row'>
+      <div class='col'>
+        <!--<label>Title</label>-->
+        <input maxlength="36" placeholder='Sequence Title' required type='text' name='save_sequence_title' ng-model='save_sequence_title' class='form-control form-control-sm' id='${this.saveSequenceFormModalObj.input_id}'></input>
+      </div>
+      <div class='col'>
+        <input type='submit' class='btn btn-sm btn-primary' value='Save'></input>
+      </div>
     </div>
     <div id='save-error-container' class='pt-2 modal-error-notification'></div>
   </form>
@@ -144,6 +155,18 @@ Board.prototype.saveSequence = function(sequence) {
   }).finally(function() {
 
   });
+}
+
+Board.prototype.toggleAutoModeButton = function(element_id) {
+  var onClass = 'btn-success';
+  var offClass = 'btn-light';
+  if ($(`#${element_id}`).hasClass(offClass)) {
+    $(`#${element_id}`).removeClass(offClass);
+    $(`#${element_id}`).addClass(onClass);
+  } else {
+    $(`#${element_id}`).removeClass(onClass);
+    $(`#${element_id}`).addClass(offClass);
+  }
 }
 
 
