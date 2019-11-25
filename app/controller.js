@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-24T20:41:24-05:00
+ * @Last modified time: 2019-11-24T21:13:07-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -51,7 +51,7 @@ app.controller('mainController', function($scope) {
     {display: 'Bmaj / G#min', value: 'b'},
     {display: 'Chromatic', value: 'chromatic'}
   ];
-  $scope.waves = ['sawtooth', 'sine', 'triangle', 'square'];
+  $scope.waves = ['sawtooth', 'sine', 'triangle', 'square', 'electric lullaby'];
   $scope.steps = 16;
   $scope.displaySteps = $scope.steps;
 
