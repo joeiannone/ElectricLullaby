@@ -3,12 +3,17 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: main.css
-// @Last modified time: 2019-11-24T13:25:13-05:00
+// @Last modified time: 2019-11-24T19:57:49-05:00
  */
 
 $board-grid-min-width: 781px;
 $board-grid-max-width: 854px;
-
+$steps-color: rgb(191, 102, 0);
+$tempo-color: green;
+$gain-color: red;
+$range-color: #007bff;
+$detune-color: #00C4AA;
+$sustain-color: rgb(174, 55, 182);
 
 h3 {
   font-weight: 200;
@@ -191,33 +196,69 @@ h3 {
   background-color: rgb(0,120,30);
 }
 
+#steps-input {
+  .custom-range::-webkit-slider-thumb {
+    background: $steps-color;
+  }
+  label {
+    span {
+      color: $steps-color;
+    }
+  }
+}
+
 #tempo-input {
   .custom-range::-webkit-slider-thumb {
-    background: green;
+    background: $tempo-color;
+  }
+  label {
+    span {
+      color: $tempo-color;
+    }
   }
 }
 
 #vol-input {
   .custom-range::-webkit-slider-thumb {
-    background: red;
+    background: $gain-color;
+  }
+  label {
+    span {
+      color: $gain-color;
+    }
   }
 }
 
 #range-input {
   .custom-range::-webkit-slider-thumb {
-    background: blue;
+    background: $range-color;
+  }
+  label {
+    span {
+      color: $range-color;
+    }
   }
 }
 
 #detune-input {
   .custom-range::-webkit-slider-thumb {
-    background: yellow;
+    background: $detune-color;
+  }
+  label {
+    span {
+      color: $detune-color;
+    }
   }
 }
 
 #sustain-input {
   .custom-range::-webkit-slider-thumb {
-    background: pink;
+    background: $sustain-color;
+  }
+  label {
+    span {
+      color: $sustain-color;
+    }
   }
 }
 

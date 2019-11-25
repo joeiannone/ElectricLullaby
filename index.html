@@ -36,94 +36,96 @@
       <div class="col3 col small" id="control-board">
 
         <div class='control-box'>
-            <table>
-              <tr>
-                <td><div id='logo-container'><img id="top-logo" class="logo" ng-src="{{ logoPath }}"></img></div></td>
-                <td><div id='title-container'>{{ appTitle }}</div></td>
-              <tr>
-              <tr>
-                <td><label>start/stop: </label></td>
-                <td><a id='startStopButton' href ng-click="$event.preventDefault();startStopSequencer()"><i id='play-button' class='fas fa-play'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span id='counter'>00</span></td>
-              </tr>
-              <!--<tr>
-                <td><label>steps/minute: </label></td>
-                <td><input class='form-control' ng-model="tempo" onkeypress="return false;" ng-mouseup="setTempo()" type='number' min='100' max='500'></input></td>
-              </tr>-->
-              <tr>
-                <td><label>key: </label></td>
-                <td><select class='form-control-sm' ng-model="key" ng-change="setKey()">
+          <table>
+            <tr>
+              <td><div id='logo-container'><img id="top-logo" class="logo" ng-src="{{ logoPath }}"></img></div></td>
+              <td><div id='title-container'>{{ appTitle }}</div></td>
+            <tr>
+            <tr>
+              <td><label>start/stop: </label></td>
+              <td><a id='startStopButton' href ng-click="$event.preventDefault();startStopSequencer()"><i id='play-button' class='fas fa-play'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span id='counter'>00</span></td>
+            </tr>
+            <!--<tr>
+              <td><label>steps/minute: </label></td>
+              <td><input class='form-control' ng-model="tempo" onkeypress="return false;" ng-mouseup="setTempo()" type='number' min='100' max='500'></input></td>
+            </tr>-->
+            <tr>
+              <td><label>key: </label></td>
+              <td>
+                <select class='form-control-sm' ng-model="key" ng-change="setKey()">
                   <option ng-repeat="key in keys" value="{{ key.value }}">{{ key.display }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr class=''>
+              <td><label>wave: </label></td>
+              <td>
+                <select class='form-control-sm' ng-model="wave" ng-change="setWave()">
+                  <option ng-repeat="wave in waves" value="{{ wave }}">{{ wave }}</option>
                 </select></td>
-              </tr>
-              <tr class=''>
-                <td><label>wave: </label></td>
-                <td>
-                  <select class='form-control-sm' ng-model="wave" ng-change="setWave()">
-                    <option ng-repeat="wave in waves" value="{{ wave }}">{{ wave }}</option>
-                  </select></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-            </table>
-          </div> <!--/control-box-->
+            </tr>
+          </table>
+        </div> <!--/control-box-->
+
+        <hr/>
 
         <div class='control-box'>
-            <table>
-              <tr id='steps-input'>
-                <td><label>steps: <span id='steps-display'> {{ displaySteps }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="steps" ng-change="setSteps()" type="range" step="1" min="2" max="16"></td>
-              </tr>
-              <tr id='tempo-input'>
-                <td><label>steps/minute: <span id='tempo-display'> {{ displayTempo }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="tempo" ng-change="setTempo()" type="range" step="1" min="100" max="600"></td>
-              </tr>
-              <tr id='vol-input'>
-                <td><label>gain: <span id='vol-display'> {{ displayVol }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="gain" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
-              </tr>
-              <tr id='range-input'>
-                <td><label>range: <span id='range-display'> {{ displayRange }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='20' max='36'></input></td>
-              </tr>
-              <tr id='detune-input'>
-                <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-50" max="50"></td>
-              </tr>
-              <tr id='sustain-input'>
-                <td><label>sustain: <span id='sustain-display'> {{ displaySustain }}</span></label></td>
-                <td><input class='form-control-sm custom-range' ng-model="sustain" ng-change="setSustain()" type="range" step=".1" min=".1" max="6"></td>
-              </tr>
-            </table>
-          </div> <!--/control-box-->
+          <table>
+            <tr id='steps-input'>
+              <td><label>steps: <span id='steps-display'> {{ displaySteps }}</span></label></td>
+              <td><input class='form-control-sm custom-range' ng-model="steps" ng-change="setSteps()" type="range" step="1" min="2" max="16"></td>
+            </tr>
+            <tr id='tempo-input'>
+              <td><label>steps/minute: <span id='tempo-display'> {{ displayTempo }}</span></label></td>
+              <td><input class='form-control-sm custom-range' ng-model="tempo" ng-change="setTempo()" type="range" step="1" min="100" max="600"></td>
+            </tr>
+            <tr id='vol-input'>
+              <td><label>gain: <span id='vol-display'> {{ displayVol }}</span></label></td>
+              <td><input class='form-control-sm custom-range' ng-model="gain" ng-change="setVol()" type="range" step="0.01" min="0" max="1"></td>
+            </tr>
+            <tr id='range-input'>
+              <td><label>range: <span id='range-display'> {{ displayRange }}</span></label></td>
+              <td><input class='form-control-sm custom-range' ng-model="notes_start" ng-change="setRange()" type='range' step="1" min='16' max='36'></input></td>
+            </tr>
+            <tr id='detune-input'>
+              <td><label>detune: <span id='detune-display'> {{ displayDetune }}</span></label></td>
+              <td><input class='form-control-sm custom-range' ng-model="detune" ng-change="setDetune()" type="range" step="1" min="-50" max="50"></td>
+            </tr>
+            <tr id='sustain-input'>
+              <td><label>sustain: <span id='sustain-display'> {{ displaySustain }}</span></label></td>
+              <td><input class='form-control-sm custom-range' ng-model="sustain" ng-change="setSustain()" type="range" step=".1" min=".1" max="6"></td>
+            </tr>
+          </table>
+        </div> <!--/control-box-->
+
+        <hr/>
 
         <div class='control-box'>
-            <div class='container'>
-              <div class='row'>
-                <div><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
-                <div><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
-                <div><button id='auto-mode-btn' class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle($event)" ng-class="{autoMode: autoMode}">auto mode</button></div>
+          <div class='container'>
+            <div class='row'>
+              <div><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
+              <div><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
+              <div><button id='auto-mode-btn' class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle($event)" ng-class="{autoMode: autoMode}">auto mode</button></div>
+            </div>
+            <div class='row'>
+              <div><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></div>
+            </div>
+            <div class='row'>
+              <div>
+                <button id="save-sequence-modal-btn" ng-click='saveSequenceModal()' class='controller-btn btn-sm btn-primary'><i class='fas fa-save fa-sm'></i>&nbsp; save sequence</button>
+                <div id='save-sequence-modal-container'></div>
               </div>
-              <div class='row'>
-                <div><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></div>
+              <div>
+                <button id="get-sequences-btn" ng-click='getSequencesModal()'  class='controller-btn btn-sm btn-warning'><i class='fas fa-upload fa-sm'></i>&nbsp; get sequences</button>
+                <div id='get-sequences-modal-container'></div>
               </div>
-              <div class='row'>
-                <div>
-                  <button id="save-sequence-modal-btn" ng-click='saveSequenceModal()' class='controller-btn btn-sm btn-primary'><i class='fas fa-save fa-sm'></i>&nbsp; save sequence</button>
-                  <div id='save-sequence-modal-container'></div>
-                </div>
-                <div>
-                  <button id="get-sequences-btn" ng-click='getSequencesModal()'  class='controller-btn btn-sm btn-warning'><i class='fas fa-upload fa-sm'></i>&nbsp; get sequences</button>
-                  <div id='get-sequences-modal-container'></div>
-                </div>
-                <div>
+              <div>
                   <!--<button id="get-sequence-chains-btn" ng-click='' class='controller-btn btn-sm btn-warning'>sequence chains</button>
                   <div id='get-sequence-chains-modal-container'></div>-->
-                </div>
               </div>
             </div>
-          </div> <!--/control-box-->
+          </div>
+        </div> <!--/control-box-->
 
       </div> <!--/control-board-->
 

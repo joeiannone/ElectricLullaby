@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: main.css
-// @Last modified time: 2019-11-24T13:25:13-05:00
+// @Last modified time: 2019-11-24T19:57:49-05:00
  */
 h3 {
   font-weight: 200; }
@@ -129,20 +129,35 @@ h3 {
 .active-step-dark {
   background-color: #00781e; }
 
+#steps-input .custom-range::-webkit-slider-thumb {
+  background: #bf6600; }
+#steps-input label span {
+  color: #bf6600; }
+
 #tempo-input .custom-range::-webkit-slider-thumb {
   background: green; }
+#tempo-input label span {
+  color: green; }
 
 #vol-input .custom-range::-webkit-slider-thumb {
   background: red; }
+#vol-input label span {
+  color: red; }
 
 #range-input .custom-range::-webkit-slider-thumb {
-  background: blue; }
+  background: #007bff; }
+#range-input label span {
+  color: #007bff; }
 
 #detune-input .custom-range::-webkit-slider-thumb {
-  background: yellow; }
+  background: #00C4AA; }
+#detune-input label span {
+  color: #00C4AA; }
 
 #sustain-input .custom-range::-webkit-slider-thumb {
-  background: pink; }
+  background: #ae37b6; }
+#sustain-input label span {
+  color: #ae37b6; }
 
 .modal-error-notification {
   color: pink; }

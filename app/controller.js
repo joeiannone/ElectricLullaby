@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-24T15:31:09-05:00
+ * @Last modified time: 2019-11-24T20:41:24-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -26,7 +26,7 @@ app.controller('mainController', function($scope) {
   if (typeof(notes) !== 'undefined') {
     $scope.notes = notes;
     $scope.notes_start = 23;
-    $scope.range_zero = 28;
+    $scope.range_zero = 26;
     $scope.displayRange = $scope.notes_start - $scope.range_zero;
     if ($scope.displayRange > 0) $scope.displayRange = '+'+$scope.displayRange;
   }
@@ -199,6 +199,10 @@ app.controller('mainController', function($scope) {
 
 
   $scope.loadSequences = function(selected_sequences) {
+
+    // turn off auto mode in this case (if on)
+    if ($scope.autoMode) $scope.autoModeToggle({target: {id: 'auto-mode-btn'}});
+
     // ignore in this case
     if ($scope.selected_sequence_ids == selected_sequences) return;
     else $scope.selected_sequence_ids = selected_sequences;
