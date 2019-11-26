@@ -3,12 +3,18 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-24T21:13:07-05:00
+ * @Last modified time: 2019-11-25T20:54:47-05:00
  */
 
 const app = angular.module('stepScript', []);
 
 app.controller('mainController', function($scope) {
+
+  // Instantiate Sequence Store
+  const db = new Dexie('ElectricLullaby');
+  db.version(1).stores({
+    sequences: '++id, sequence_matrix, synth_params, title, created_at',
+  });
 
   $scope.board = board;
 
@@ -22,6 +28,7 @@ app.controller('mainController', function($scope) {
   $scope.notes_start = 0;
   $scope.displayRange = '';
   $scope.range_zero = 0;
+  $scope.loadedSequences = [];
 
   if (typeof(notes) !== 'undefined') {
     $scope.notes = notes;
@@ -174,7 +181,19 @@ app.controller('mainController', function($scope) {
 
   $scope.getSequencesModal = function() {
     $scope.board.getSequencesForm();
-    $scope.board.setSequencesForm();
+
+    angular.element(`#${$scope.board.getSequencesFormModalObj.select_id}`).html('');
+    db.sequences.reverse().each(function(elem, index) {
+      var display_title = elem.title.padEnd(38, '%');
+      display_title = display_title.replace(/%/g, '&nbsp;');
+      angular.element(`#${$scope.board.getSequencesFormModalObj.select_id}`).append(
+        `<option value='${elem.id}'>${display_title} ${elem.created_at}</option>`
+      );
+    }).then(function() {
+
+    }).finally(function() {
+
+    });
   }
 
   $scope.saveSequence = function(sequence_title) {
@@ -194,7 +213,16 @@ app.controller('mainController', function($scope) {
       sequence_params: sequence_params,
       created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     };
-    $scope.board.saveSequence(sequence);
+    db.sequences.put(sequence).then(function() {
+      angular.element(`#${$scope.board.saveSequenceFormModalObj.id}`).modal('hide');
+      angular.element(`#${$scope.board.saveSequenceFormModalObj.error_notification_id}`).html('');
+      angular.element(`#${$scope.board.saveSequenceFormModalObj.input_id}`).val('');
+    }).catch(function(error) {
+      angular.element(`#${$scope.board.saveSequenceFormModalObj.error_notification_id}`).html('Something went wrong :/');
+      console.log(error);
+    }).finally(function() {
+
+    });
   }
 
 
@@ -207,7 +235,10 @@ app.controller('mainController', function($scope) {
     if ($scope.selected_sequence_ids == selected_sequences) return;
     else $scope.selected_sequence_ids = selected_sequences;
 
-    $scope.board.db.sequences.get(Number(selected_sequences[0]), function(sequence) {
+    db.sequences.get(Number(selected_sequences[0]), function(sequence) {
+      
+      $scope.loadedSequences.push(sequence);
+
       var all_blocks = angular.element(`.board-block`);
       for (i = 0; i < all_blocks.length; i++) {
         if (all_blocks[i].classList.contains('selected'))
@@ -248,7 +279,7 @@ app.controller('mainController', function($scope) {
 
   $scope.deleteSequences = function(selected_sequences) {
     for (i in selected_sequences) {
-      $scope.board.db.sequences.delete(Number(selected_sequences[i])).then(function() {
+      db.sequences.delete(Number(selected_sequences[i])).then(function() {
         angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('');
       }).catch(function(error) {
         angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('Something went wrong :/');

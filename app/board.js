@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-24T20:14:49-05:00
+ * @Last modified time: 2019-11-25T21:17:41-05:00
  */
 
 
@@ -12,12 +12,6 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 
 function Board() {
-
-  // Instantiate SequenceStore
-  this.db = new Dexie('ElectricLullaby');
-  this.db.version(1).stores({
-    sequences: '++id, sequence_matrix, synth_params, title, created_at',
-  });
 
   // build and insert the markup for sequencer board
   this.build();
@@ -102,27 +96,12 @@ Board.prototype.getSequencesForm = function() {
     <select required size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
     <input type='submit' class='btn btn-primary btn-sm mt-2 mr-1' value='Load Sequence'></input>
     <button type='button' ng-click='deleteSequences(selected_sequences)' class='float-right btn btn-danger btn-sm mt-2 mr-1'>Delete Sequence(s)</button>
-    <div class='small pt-2'><i>* Select multiple sequences by holding Ctrl/Command to remove or chain sequences together</i></div>
+    <div class='small pt-2'><i>* Select multiple sequences by holding Ctrl/Command to remove multiple at once</i></div>
     <div id='load-delete-modal-error' class='pt-2 modal-error-notification'></div>
     </form>
   `;
 }
 
-
-Board.prototype.setSequencesForm = function() {
-  var sequences_select_id = `#${this.getSequencesFormModalObj.select_id}`;
-  $(sequences_select_id).html('');
-  this.db.sequences.reverse().each(function(elem, index) {
-    var display_title = elem.title.padEnd(38, '%');
-    display_title = display_title.replace(/%/g, '&nbsp;');
-    $(sequences_select_id).append(`<option value='${elem.id}'>${display_title} ${elem.created_at}</option>`);
-  }).then(function() {
-
-  }).finally(function() {
-
-  });
-
-}
 
 
 Board.prototype.getSaveSequenceForm = function() {
@@ -140,21 +119,6 @@ Board.prototype.getSaveSequenceForm = function() {
     <div id='save-error-container' class='pt-2 modal-error-notification'></div>
   </form>
   `;
-}
-
-
-Board.prototype.saveSequence = function(sequence) {
-  var modal_obj = this.saveSequenceFormModalObj;
-  this.db.sequences.put(sequence).then(function() {
-    $(`#${modal_obj.id}`).modal('hide');
-    $(`#${modal_obj.error_notification_id}`).html('');
-    $(`#${modal_obj.input_id}`).val('');
-  }).catch(function(error) {
-    $(`#${modal_obj.error_notification_id}`).html('Something went wrong :/');
-    console.log(error);
-  }).finally(function() {
-
-  });
 }
 
 Board.prototype.toggleAutoModeButton = function(element_id) {
@@ -265,10 +229,6 @@ Board.prototype.build = function() {
   $('#controller').html(this.grid_str);
 }
 
-// required for chrome
-//document.addEventListener("DOMContentLoaded", function(event) {
-  //this.addEventListener('click', function() { audioCtx.resume(); });
-//});
 
 // instantiate new sequencer board
 const board = new Board();
