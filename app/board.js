@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: board.js
- * @Last modified time: 2019-11-25T21:17:41-05:00
+ * @Last modified time: 2019-11-26T21:20:38-05:00
  */
 
 
@@ -142,7 +142,6 @@ Board.prototype.colorMode = function() {
     this.color_mode_display_txt = 'light mode';
     document.body.style.background = '#000000';
     document.body.style.color = '#ffffff';
-    //$('.key-note-container').css('color', '#ffffff');
     $('.key-note-container').css('color', '#ffffff');
     $('.modal-content').css('background-color', '#333333');
     $('.modal-header button').css('color', '#ffffff');
@@ -156,7 +155,6 @@ Board.prototype.colorMode = function() {
     this.color_mode_display_txt = 'dark mode';
     document.body.style.background = '#ffffff';
     document.body.style.color = '#000000';
-    //$('.key-note-container').css('color', '#000000');
     $('.key-note-container').css('color', '#000000');
     $('.modal-content').css('background-color', '#ffffff');
     $('.modal-header button').css('color', '#000000');

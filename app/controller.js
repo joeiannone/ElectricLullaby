@@ -3,7 +3,7 @@
  * @Date:   2018-04-24T09:52:48-04:00
  * @Email:  joseph.m.iannone@gmail.com
  * @Filename: controller.js
- * @Last modified time: 2019-11-25T20:54:47-05:00
+ * @Last modified time: 2019-11-26T23:25:08-05:00
  */
 
 const app = angular.module('stepScript', []);
@@ -23,6 +23,7 @@ app.controller('mainController', function($scope) {
   var state = document.getElementById('play-button').classList;
   var containerState = document.getElementById('controller-container').classList;
 
+  $scope.current_sequence_title = '';
   $scope.selected_sequence_ids = [];
   $scope.notes = null;
   $scope.notes_start = 0;
@@ -236,7 +237,7 @@ app.controller('mainController', function($scope) {
     else $scope.selected_sequence_ids = selected_sequences;
 
     db.sequences.get(Number(selected_sequences[0]), function(sequence) {
-      
+
       $scope.loadedSequences.push(sequence);
 
       var all_blocks = angular.element(`.board-block`);
@@ -265,6 +266,7 @@ app.controller('mainController', function($scope) {
       $scope.setWave();
       $scope.tempo = sequence.sequence_params.tempo;
       $scope.setTempo();
+      $scope.current_sequence_title = sequence.title;
       angular.element(`#${$scope.board.getSequencesFormModalObj.error_notification_id}`).html('');
       $scope.$digest();
     }).catch(function(error) {
@@ -295,7 +297,7 @@ app.controller('mainController', function($scope) {
   * handle blur and focus to pause sequence
   */
 
-  document.addEventListener('visibilitychange', function () {
+  angular.element(document).on('visibilitychange', function () {
     if (document.hidden) {
       sequencer.pause();
     } else {

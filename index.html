@@ -103,8 +103,8 @@
         <div class='control-box'>
           <div class='container'>
             <div class='row'>
-              <div><button class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
-              <div><button class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
+              <div><button id='clear-board-button' class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
+              <div><button id='random-board-button' class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
               <div><button id='auto-mode-btn' class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle($event)" ng-class="{autoMode: autoMode}">auto mode</button></div>
             </div>
             <div class='row'>
@@ -124,6 +124,9 @@
                   <div id='get-sequence-chains-modal-container'></div>-->
               </div>
             </div>
+          </div>
+          <div class='alert alert-info mt-2 small' style='visibility: hidden;'>
+            <div class=''><strong>Playing now:</strong> <span id='playing-now'>{{ current_sequence_title }}</span></div>
           </div>
         </div> <!--/control-box-->
 
