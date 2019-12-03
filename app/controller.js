@@ -6,6 +6,11 @@
  * @Last modified time: 2019-11-26T23:25:08-05:00
  */
 
+
+// TODO: 'Step Sync mode' : Will only apply parameter change on first step of sequence
+
+
+
 const app = angular.module('stepScript', []);
 
 app.controller('mainController', function($scope) {
@@ -74,6 +79,7 @@ app.controller('mainController', function($scope) {
   $scope.sustain = 2;
   $scope.displaySustain = '2s';
   $scope.autoMode = false;
+  $scope.stepSyncMode = false;
 
   $scope.color_mode_value = $scope.board.color_mode_value;
   $scope.color_mode_btn_class = $scope.board.color_mode_btn_class;
@@ -96,6 +102,7 @@ app.controller('mainController', function($scope) {
     notes_in_key: $scope.notes_in_key,
     notes_start: $scope.notes_start,
     autoMode: $scope.autoMode,
+    stepSyncMode: $scope.stepSyncMode,
   };
 
   sequencer = new Sequencer(props);
@@ -163,13 +170,15 @@ app.controller('mainController', function($scope) {
   }
 
   $scope.autoModeToggle = function(e) {
-    if (!$scope.autoMode) {
-      $scope.autoMode = true;
-    } else {
-      $scope.autoMode = false;
-    }
+    if (!$scope.autoMode) $scope.autoMode = true;
+    else $scope.autoMode = false;
     sequencer.autoModeToggle();
     $scope.board.toggleAutoModeButton(e.target.id);
+  }
+
+  $scope.stepSyncModeToggle = function(e) {
+    if (!$scope.stepSyncMode) $scope.stepSyncMode = true;
+    else $scope.stepSyncMode = false;
   }
 
 

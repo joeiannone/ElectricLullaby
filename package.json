@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build-all": "electron-builder -mwl"
   },
   "repository": {
     "type": "git",

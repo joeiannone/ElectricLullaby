@@ -106,6 +106,7 @@
               <div><button id='clear-board-button' class='controller-btn btn btn-sm btn-light' ng-click="clearBoard()">clear board</button></div>
               <div><button id='random-board-button' class='controller-btn btn btn-sm btn-light' ng-click="randomSelection()">random</button></div>
               <div><button id='auto-mode-btn' class='controller-btn btn btn-sm btn-light' ng-click="autoModeToggle($event)" ng-class="{autoMode: autoMode}">auto mode</button></div>
+              <div><button id='step-sync-mode-btn' class='controller-btn btn btn-sm btn-light' ng-click="stepSyncModeToggle($event)" ng-class="{stepSyncMode: stepSyncMode}">step sync mode</button></div>
             </div>
             <div class='row'>
               <div><button id="color-mode-btn" ng-click="colorMode()" value="{{ color_mode_value }}" class='controller-btn btn-sm btn {{ color_mode_btn_class }}'>{{ color_mode_display_txt }}</button></div>
