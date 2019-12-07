@@ -121,7 +121,7 @@ Board.prototype.getSaveSequenceForm = function() {
   `;
 }
 
-Board.prototype.toggleAutoModeButton = function(element_id) {
+Board.prototype.toggleModeButton = function(element_id) {
   var onClass = 'btn-success';
   var offClass = 'btn-light';
   if ($(`#${element_id}`).hasClass(offClass)) {

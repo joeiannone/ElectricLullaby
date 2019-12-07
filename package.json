@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build": "electron-builder",
-    "build-all": "electron-builder -mwl"
+    "build-all": "electron-builder -mwl",
+    "dev-sass": "sass --watch ./style/main.scss:./style/main.css"
   },
   "repository": {
     "type": "git",

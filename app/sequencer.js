@@ -20,6 +20,7 @@ function Sequencer(props) {
   this.color_mode = 'light';
   this.notes = props.notes;
   this.autoMode = props.autoMode;
+  this.syncMode = props.syncMode;
   this.notes_in_key = props.notes_in_key;
   this.notes_start = props.notes_start;
   this.freqs = [];
@@ -45,7 +46,6 @@ function Sequencer(props) {
   this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
 
 }
-
 
 Sequencer.prototype.pause = function() {
   this.mute();
@@ -267,10 +267,19 @@ Sequencer.prototype.autoModeToggle = function() {
   } else this.autoMode = false;
 }
 
+Sequencer.prototype.syncModeToggle = function() {
+  if (!this.syncMode) {
+    this.syncMode = true;
+    //do stuff
+  } else this.syncMode = false;
+}
+
 
 function sequenceInterval(seq) {
 
   if (seq.isPaused) return;
+
+  if (seq.syncMode) {} // TODO
 
   var j, count;
 

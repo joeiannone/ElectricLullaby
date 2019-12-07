@@ -158,7 +158,7 @@ h3 {
   font-size: 32px;
 }
 
-.autoMode {
+.autoMode, .syncMode {
   animation-direction: alternate;
   animation: blink-animation 1.3s infinite;
   -webkit-animation: blink-animation 1.3s infinite;

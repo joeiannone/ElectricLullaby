@@ -7,7 +7,7 @@
  */
 
 
-// TODO: 'Step Sync mode' : Will only apply parameter change on first step of sequence
+// TODO: 'Sync mode' : Will only apply parameter change on first step of sequence
 
 
 
@@ -79,7 +79,7 @@ app.controller('mainController', function($scope) {
   $scope.sustain = 2;
   $scope.displaySustain = '2s';
   $scope.autoMode = false;
-  $scope.stepSyncMode = false;
+  $scope.syncMode = false;
 
   $scope.color_mode_value = $scope.board.color_mode_value;
   $scope.color_mode_btn_class = $scope.board.color_mode_btn_class;
@@ -102,7 +102,7 @@ app.controller('mainController', function($scope) {
     notes_in_key: $scope.notes_in_key,
     notes_start: $scope.notes_start,
     autoMode: $scope.autoMode,
-    stepSyncMode: $scope.stepSyncMode,
+    syncMode: $scope.syncMode,
   };
 
   sequencer = new Sequencer(props);
@@ -173,12 +173,14 @@ app.controller('mainController', function($scope) {
     if (!$scope.autoMode) $scope.autoMode = true;
     else $scope.autoMode = false;
     sequencer.autoModeToggle();
-    $scope.board.toggleAutoModeButton(e.target.id);
+    $scope.board.toggleModeButton(e.target.id);
   }
 
-  $scope.stepSyncModeToggle = function(e) {
-    if (!$scope.stepSyncMode) $scope.stepSyncMode = true;
-    else $scope.stepSyncMode = false;
+  $scope.syncModeToggle = function(e) {
+    if (!$scope.syncMode) $scope.syncMode = true;
+    else $scope.syncMode = false;
+    sequencer.syncModeToggle();
+    $scope.board.toggleModeButton(e.target.id);
   }
 
 
