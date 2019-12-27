@@ -29,8 +29,6 @@ app.controller('mainController', function($scope) {
           console.log("Sequence successfully put.");
         }).catch(function(error) {
           console.log(error);
-        }).finally(function() {
-
         });
       });
     }
@@ -363,5 +361,8 @@ app.controller('mainController', function($scope) {
       $scope.loadSequences([sequence.id]);
     })
   }
+
+  // toggle to dark mode by default
+  //$scope.colorMode();
 
 });
