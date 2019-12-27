@@ -10,16 +10,33 @@
 // TODO: 'Sync mode' : Will only apply parameter change on first step of sequence
 
 
-
 const app = angular.module('stepScript', []);
 
 app.controller('mainController', function($scope) {
 
   // Instantiate Sequence Store
   const db = new Dexie('ElectricLullaby');
+
   db.version(1).stores({
     sequences: '++id, sequence_matrix, synth_params, title, created_at',
   });
+
+  db.on("populate", function() {
+    if (typeof(demo_sequences) !== 'undefined') {
+      demo_sequences.forEach(function(sequence) {
+        sequence.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
+        db.sequences.put(sequence).then(function() {
+          console.log("Sequence successfully put.");
+        }).catch(function(error) {
+          console.log(error);
+        }).finally(function() {
+
+        });
+      });
+    }
+  });
+
+  db.open();
 
   $scope.board = board;
 
@@ -179,7 +196,6 @@ app.controller('mainController', function($scope) {
   $scope.syncModeToggle = function(e) {
     if (!$scope.syncMode) $scope.syncMode = true;
     else $scope.syncMode = false;
-    sequencer.syncModeToggle();
     $scope.board.toggleModeButton(e.target.id);
   }
 
@@ -231,6 +247,16 @@ app.controller('mainController', function($scope) {
       angular.element(`#${$scope.board.saveSequenceFormModalObj.input_id}`).val('');
     }).catch(function(error) {
       angular.element(`#${$scope.board.saveSequenceFormModalObj.error_notification_id}`).html('Something went wrong :/');
+      console.log(error);
+    }).finally(function() {
+
+    });
+  }
+
+  $scope.putSequence = function(sequence) {
+    db.sequences.put(sequence).then(function() {
+      console.log("Sequence successfully put.");
+    }).catch(function(error) {
       console.log(error);
     }).finally(function() {
 
@@ -304,6 +330,20 @@ app.controller('mainController', function($scope) {
     $scope.getSequencesModal();
   }
 
+
+
+
+  $scope.$watch('[wave, tempo, gain, key, detune, sustain, notes_start]', function (new_props, old_props) {
+
+    if (!$scope.syncMode) return true;
+
+    $scope.sync_mode_props = new_props;
+
+    // maintain old properties
+
+
+  }, true);
+
   /*****************************************************************************
   * handle blur and focus to pause sequence
   */
@@ -316,5 +356,12 @@ app.controller('mainController', function($scope) {
         sequencer.resume();
     }
   });
+
+
+  if (typeof(demo_sequences) !== 'undefined') {
+    db.sequences.orderBy('created_at').last(function(sequence) {
+      $scope.loadSequences([sequence.id]);
+    })
+  }
 
 });

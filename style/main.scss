@@ -158,20 +158,24 @@ h3 {
   font-size: 32px;
 }
 
+.mode-btn-on {
+  background-color: rgb(76, 225, 76);
+}
+
 .autoMode, .syncMode {
   animation-direction: alternate;
-  animation: blink-animation 1.3s infinite;
-  -webkit-animation: blink-animation 1.3s infinite;
+  animation: blink-animation 1.2s infinite;
+  -webkit-animation: blink-animation 1.2s infinite;
 }
 
 @keyframes blink-animation {
   50% {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 }
 @-webkit-keyframes blink-animation {
   50% {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 }
 

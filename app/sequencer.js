@@ -267,19 +267,10 @@ Sequencer.prototype.autoModeToggle = function() {
   } else this.autoMode = false;
 }
 
-Sequencer.prototype.syncModeToggle = function() {
-  if (!this.syncMode) {
-    this.syncMode = true;
-    //do stuff
-  } else this.syncMode = false;
-}
-
 
 function sequenceInterval(seq) {
 
   if (seq.isPaused) return;
-
-  if (seq.syncMode) {} // TODO
 
   var j, count;
 

@@ -122,7 +122,7 @@ Board.prototype.getSaveSequenceForm = function() {
 }
 
 Board.prototype.toggleModeButton = function(element_id) {
-  var onClass = 'btn-success';
+  var onClass = 'mode-btn-on';
   var offClass = 'btn-light';
   if ($(`#${element_id}`).hasClass(offClass)) {
     $(`#${element_id}`).removeClass(offClass);
