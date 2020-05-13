@@ -1,4 +1,5 @@
 .DS_Store
 dist
+webdist
 node_modules
 .sass-cache

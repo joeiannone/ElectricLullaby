@@ -281,3 +281,20 @@ h3 {
 .modal-backdrop {
   background-color: rgba(0, 0, 0, .5);
 }
+
+#device-width-msg {
+  display: none;
+}
+
+@media screen and (max-device-width: 855px) {
+  #controller-container {
+    display: none;
+  }
+  #device-width-msg {
+    display:block;
+  }
+  body {
+    min-width: 100%;
+    width: 100%;
+  }
+}

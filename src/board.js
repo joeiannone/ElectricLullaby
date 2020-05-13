@@ -7,11 +7,15 @@
  */
 
 
+/*******************************************************************************
+*******************************************************************************/
 // define global audio context
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 
-function Board() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board = function() {
 
   // build and insert the markup for sequencer board
   this.build();
@@ -60,8 +64,9 @@ function Board() {
 
 }
 
-
-Board.prototype.getSelectedBlocks = function() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.getSelectedBlocks = function() {
   var selected = [];
   $('.board-block').each(function(index, block) {
     if ($(block).hasClass('selected')) selected.push(index);
@@ -69,8 +74,9 @@ Board.prototype.getSelectedBlocks = function() {
   return selected;
 }
 
-
-Board.prototype.getModal = function(modalObj) {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.getModal = function(modalObj) {
   var html = '';
   html += `
     <div class='modal modal fade' id='${modalObj.id}'>
@@ -89,8 +95,9 @@ Board.prototype.getModal = function(modalObj) {
   return html;
 }
 
-
-Board.prototype.getSequencesForm = function() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.getSequencesForm = function() {
   return `
     <form ng-submit='loadSequences(selected_sequences)'>
     <select required size='6' multiple name='selected_sequences' class='form-control form-control-sm' ng-model='selected_sequences' id='${this.getSequencesFormModalObj.select_id}'></select>
@@ -103,8 +110,9 @@ Board.prototype.getSequencesForm = function() {
 }
 
 
-
-Board.prototype.getSaveSequenceForm = function() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.getSaveSequenceForm = function() {
   return `
   <form id='${this.saveSequenceFormModalObj.form_id}' ng-submit='saveSequence(save_sequence_title)'>
     <div class='form-row'>
@@ -121,7 +129,9 @@ Board.prototype.getSaveSequenceForm = function() {
   `;
 }
 
-Board.prototype.toggleModeButton = function(element_id) {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.toggleModeButton = function(element_id) {
   var onClass = 'mode-btn-on';
   var offClass = 'btn-light';
   if ($(`#${element_id}`).hasClass(offClass)) {
@@ -133,8 +143,9 @@ Board.prototype.toggleModeButton = function(element_id) {
   }
 }
 
-
-Board.prototype.colorMode = function() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.colorMode = function() {
 
   if (this.color_mode_value === 'light') {
     // now dark mode
@@ -171,13 +182,15 @@ Board.prototype.colorMode = function() {
   };
 }
 
-
-Board.prototype.sequencerBlockClickListen = function() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.sequencerBlockClickListen = function() {
 
   var buttons = document.getElementsByClassName('board-block-a');
   for (var i = 0; i < buttons.length; i++) {
 
-    buttons[i].addEventListener('click', function() {
+    buttons[i].addEventListener('click', function(e) {
+      e.preventDefault();
       var div = this.childNodes[0];
       if (!div.classList.contains('disabled-block')) {
         if (div.classList.contains('unselected')) {
@@ -194,8 +207,9 @@ Board.prototype.sequencerBlockClickListen = function() {
 
 }
 
-
-Board.prototype.build = function() {
+/*******************************************************************************
+*******************************************************************************/
+window.Board.prototype.build = function() {
   var i, step, note = 0;
   var key_step = 0;
   var key_note = '';
@@ -226,7 +240,3 @@ Board.prototype.build = function() {
 
   $('#controller').html(this.grid_str);
 }
-
-
-// instantiate new sequencer board
-const board = new Board();

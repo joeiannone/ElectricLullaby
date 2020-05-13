@@ -6,21 +6,41 @@
  * @Last modified time: 2019-11-26T23:25:08-05:00
  */
 
-
+/*******************************************************************************
+*******************************************************************************/
 // TODO: 'Sync mode' : Will only apply parameter change on first step of sequence
 
-
+/*******************************************************************************
+*******************************************************************************/
 const app = angular.module('stepScript', []);
 
-app.controller('mainController', function($scope) {
+/*******************************************************************************
+*******************************************************************************/
+let board = new window.Board();
 
+/*******************************************************************************
+*******************************************************************************/
+app.controller('mainController', ['$scope', function($scope) {
+
+  /*****************************************************************************
+  *****************************************************************************/
+  const demo_sequences = window.demo_sequences;
+  $scope.board = board;
+  const notes = window.Notes;
+
+  /*****************************************************************************
+  *****************************************************************************/
   // Instantiate Sequence Store
   const db = new Dexie('ElectricLullaby');
 
+  /*****************************************************************************
+  *****************************************************************************/
   db.version(1).stores({
     sequences: '++id, sequence_matrix, synth_params, title, created_at',
   });
 
+  /*****************************************************************************
+  *****************************************************************************/
   db.on("populate", function() {
     if (typeof(demo_sequences) !== 'undefined') {
       demo_sequences.forEach(function(sequence) {
@@ -34,15 +54,19 @@ app.controller('mainController', function($scope) {
     }
   });
 
+  /*****************************************************************************
+  *****************************************************************************/
   db.open();
 
-  $scope.board = board;
-
+  /*****************************************************************************
+  *****************************************************************************/
   // User interactive variable initiation
   var sequencer;
   var state = document.getElementById('play-button').classList;
   var containerState = document.getElementById('controller-container').classList;
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.current_sequence_title = '';
   $scope.selected_sequence_ids = [];
   $scope.notes = null;
@@ -51,6 +75,8 @@ app.controller('mainController', function($scope) {
   $scope.range_zero = 0;
   $scope.loadedSequences = [];
 
+  /*****************************************************************************
+  *****************************************************************************/
   if (typeof(notes) !== 'undefined') {
     $scope.notes = notes;
     $scope.notes_start = 23;
@@ -59,8 +85,12 @@ app.controller('mainController', function($scope) {
     if ($scope.displayRange > 0) $scope.displayRange = '+'+$scope.displayRange;
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.notes_in_key = $scope.notes;
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.appTitle = "ElectricLullaby";
   $scope.appSubTitle = "";
   $scope.logoPath = './icon.png';
@@ -100,11 +130,15 @@ app.controller('mainController', function($scope) {
   $scope.color_mode_btn_class = $scope.board.color_mode_btn_class;
   $scope.color_mode_display_txt = $scope.board.color_mode_display_txt;
 
+  /*****************************************************************************
+  *****************************************************************************/
   if (containerState.contains('hide')) {
     containerState.remove('hide');
     containerState.add('animate-display');
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   var props = {
     tempo: $scope.tempo,
     key: $scope.key,
@@ -120,8 +154,13 @@ app.controller('mainController', function($scope) {
     syncMode: $scope.syncMode,
   };
 
-  sequencer = new Sequencer(props);
 
+  /*****************************************************************************
+  *****************************************************************************/
+  sequencer = new window.Sequencer(props);
+
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.startStopSequencer = function() {
     if (state.contains('fa-play')) {
       state.remove('fa-play');
@@ -134,24 +173,34 @@ app.controller('mainController', function($scope) {
     }
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setTempo = function() {
     $scope.displayTempo = $scope.tempo;
     sequencer.setTempo($scope.tempo);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setKey = function() {
     sequencer.setKey($scope.key);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setWave = function() {
     sequencer.setWave($scope.wave);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setVol = function() {
     $scope.displayVol = Math.round(10*($scope.gain*10))/10;
     sequencer.setVol($scope.gain);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setDetune = function() {
     if ($scope.detune > 0) $scope.displayDetune = "+" + $scope.detune;
     else $scope.displayDetune = $scope.detune;
@@ -159,11 +208,15 @@ app.controller('mainController', function($scope) {
     sequencer.setDetune($scope.detune*10);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setSustain = function() {
     $scope.displaySustain = $scope.sustain+'s';
     sequencer.setSustain($scope.sustain);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setRange = function() {
     if (typeof($scope.notes_start) == 'undefined') return;
     $scope.displayRange = $scope.notes_start - $scope.range_zero;
@@ -171,19 +224,27 @@ app.controller('mainController', function($scope) {
     sequencer.setNoteRange($scope.notes_start);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.setSteps = function() {
     $scope.displaySteps = $scope.steps;
     sequencer.setSteps($scope.steps);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.clearBoard = function() {
     sequencer.clearBoard();
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.randomSelection = function() {
     sequencer.randomSelection();
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.autoModeToggle = function(e) {
     if (!$scope.autoMode) $scope.autoMode = true;
     else $scope.autoMode = false;
@@ -191,13 +252,16 @@ app.controller('mainController', function($scope) {
     $scope.board.toggleModeButton(e.target.id);
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.syncModeToggle = function(e) {
     if (!$scope.syncMode) $scope.syncMode = true;
     else $scope.syncMode = false;
     $scope.board.toggleModeButton(e.target.id);
   }
 
-
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.colorMode = function() {
     var colorModes = $scope.board.colorMode();
     $scope.color_mode_value = colorModes.color_mode_value;
@@ -205,6 +269,8 @@ app.controller('mainController', function($scope) {
     $scope.color_mode_display_txt = colorModes.color_mode_display_txt;
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.getSequencesModal = function() {
     $scope.board.getSequencesForm();
 
@@ -222,6 +288,8 @@ app.controller('mainController', function($scope) {
     });
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.saveSequence = function(sequence_title) {
     var sequence_params = {
       key: $scope.key,
@@ -251,6 +319,8 @@ app.controller('mainController', function($scope) {
     });
   }
 
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.putSequence = function(sequence) {
     db.sequences.put(sequence).then(function() {
       console.log("Sequence successfully put.");
@@ -261,7 +331,8 @@ app.controller('mainController', function($scope) {
     });
   }
 
-
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.loadSequences = function(selected_sequences) {
 
     // turn off auto mode in this case (if on)
@@ -279,8 +350,10 @@ app.controller('mainController', function($scope) {
       for (i = 0; i < all_blocks.length; i++) {
         if (all_blocks[i].classList.contains('selected'))
           all_blocks[i].classList.remove('selected');
-        if (sequence.sequence_matrix.includes(i))
+        if (sequence.sequence_matrix.includes(i)) {
           all_blocks[i].classList.add('selected');
+          all_blocks[i].classList.remove('unselected');
+        }
       }
       return sequence;
 
@@ -313,7 +386,8 @@ app.controller('mainController', function($scope) {
     });
   }
 
-
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.deleteSequences = function(selected_sequences) {
     for (i in selected_sequences) {
       db.sequences.delete(Number(selected_sequences[i])).then(function() {
@@ -330,7 +404,8 @@ app.controller('mainController', function($scope) {
 
 
 
-
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.$watch('[wave, tempo, gain, key, detune, sustain, notes_start]', function (new_props, old_props) {
 
     if (!$scope.syncMode) return true;
@@ -342,10 +417,12 @@ app.controller('mainController', function($scope) {
 
   }, true);
 
+
+  /*****************************************************************************
+  *****************************************************************************/
   /*****************************************************************************
   * handle blur and focus to pause sequence
   */
-
   angular.element(document).on('visibilitychange', function () {
     if (document.hidden) {
       sequencer.pause();
@@ -355,7 +432,9 @@ app.controller('mainController', function($scope) {
     }
   });
 
-
+  /*****************************************************************************
+  *****************************************************************************/
+  // automatically load latest sequence
   if (typeof(demo_sequences) !== 'undefined') {
     db.sequences.orderBy('created_at').last(function(sequence) {
       $scope.loadSequences([sequence.id]);
@@ -365,4 +444,4 @@ app.controller('mainController', function($scope) {
   // toggle to dark mode by default
   //$scope.colorMode();
 
-});
+}]);

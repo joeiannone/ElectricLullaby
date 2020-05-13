@@ -7,7 +7,9 @@
  */
 
 
-function Sequencer(props) {
+/*******************************************************************************
+*******************************************************************************/
+window.Sequencer = function(props) {
 
   this.current_step = 0;
   this.interval_val = 60000 / props.tempo;
@@ -47,28 +49,40 @@ function Sequencer(props) {
 
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.pause = function() {
   this.mute();
   this.isPaused = true;
 };
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.resume = function() {
   this.isPaused = false;
 };
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.getTempo = function() {
   return this.interval_val;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setTempo = function(bpm) {
   this.interval_val = 60000 / bpm;
   this.resetInterval();
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setWave = function(wave) {
   this.wave = wave;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.mute = function() {
   var j = 0;
   for (j=0; j < this.oscillators['previous'].length; j++) {
@@ -76,14 +90,20 @@ Sequencer.prototype.mute = function() {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setVol = function(vol) {
   this.vol = vol;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setDetune = function(detune) {
   this.detune = detune;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setNoteRange = function(start) {
   this.notes_start = start;
   this.freqs = [];
@@ -92,12 +112,16 @@ Sequencer.prototype.setNoteRange = function(start) {
   this.updateNoteKeyDisplay();
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setKey = function(key) {
   this.key = key;
   this.notes_in_key = this.getNotesByKey(this.key);
   this.setNoteRange(this.notes_start);
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.getNotesByKey = function(key) {
   var notes_in_key = [];
 
@@ -140,15 +164,20 @@ Sequencer.prototype.getNotesByKey = function(key) {
   return notes_in_key;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setSustain = function(sustain) {
   this.sustain = sustain;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.getBoxes = function() {
   return document.querySelectorAll('.grid-item .board-block');
 }
 
-
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.clearBoard = function() {
   var boxes = this.getBoxes();
   var i;
@@ -160,16 +189,22 @@ Sequencer.prototype.clearBoard = function() {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.resetInterval = function() {
   var that = this;
   clearInterval(this.interval);
   this.interval = setInterval(function() {sequenceInterval(that)}, this.interval_val);
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.getAllSteps = function() {
   return document.getElementById('controller').childNodes[0].childNodes;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.getSelectedBlocks = function() {
   var all_blocks = $('.board-block');
   var selected_blocks = [];
@@ -180,6 +215,8 @@ Sequencer.prototype.getSelectedBlocks = function() {
   return selected_blocks;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.getActiveStep = function() {
   var stepsList = this.getAllSteps();
   var i = 0;
@@ -192,6 +229,8 @@ Sequencer.prototype.getActiveStep = function() {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.setSteps = function(steps) {
   this.steps = steps;
   this.deactivateSteps();
@@ -202,6 +241,8 @@ Sequencer.prototype.setSteps = function(steps) {
   //this.resetInterval();
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.clearActiveStep = function() {
   var stepsList = this.getAllSteps();
   var i = 0;
@@ -211,6 +252,8 @@ Sequencer.prototype.clearActiveStep = function() {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.deactivateSteps = function() {
   var stepsList = this.getAllSteps();
   var i;
@@ -229,6 +272,8 @@ Sequencer.prototype.deactivateSteps = function() {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.updateNoteKeyDisplay = function() {
   var key_note_containers = document.querySelectorAll('.key-note-container');
   var start = this.notes_start+1;
@@ -238,11 +283,15 @@ Sequencer.prototype.updateNoteKeyDisplay = function() {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.changeColorMode = function() {
   //TODO
   return;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.randomSelection = function(seed=null) {
   if (seed == null) seed = this.auto_seed;
   var boardBlocks = this.getBoxes();//document.getElementsByClassName('board-block');
@@ -259,6 +308,8 @@ Sequencer.prototype.randomSelection = function(seed=null) {
   }
 }
 
+/*******************************************************************************
+*******************************************************************************/
 Sequencer.prototype.autoModeToggle = function() {
   if (!this.autoMode) {
     this.autoMode = true;
@@ -267,7 +318,8 @@ Sequencer.prototype.autoModeToggle = function() {
   } else this.autoMode = false;
 }
 
-
+/*******************************************************************************
+*******************************************************************************/
 function sequenceInterval(seq) {
 
   if (seq.isPaused) return;
@@ -316,7 +368,7 @@ function sequenceInterval(seq) {
 
   // now create an oscillator for each of those
   for (j = 0; j < seq.selected_notes.length; j++) {
-    seq.oscillators['current'].push(new Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune, seq.sustain));
+    seq.oscillators['current'].push(new window.Oscillator(seq.freqs[seq.selected_notes[j]], seq.wave, seq.vol, seq.detune, seq.sustain));
   }
 
   // now play those oscillator objects
