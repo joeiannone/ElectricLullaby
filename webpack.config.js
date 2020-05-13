@@ -17,7 +17,7 @@ module.exports = {
     index: './index.js',
   },
   output: {
-    filename: "[name].bundle.js",
+    filename: "electriclullaby-[name].bundle.js",
     path: path.resolve(__dirname, "webdist")
   },
   optimization: {
