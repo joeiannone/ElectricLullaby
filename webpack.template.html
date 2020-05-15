@@ -42,7 +42,7 @@
             <tr>
             <tr>
               <td><label>start/stop: </label></td>
-              <td><a id='startStopButton' href ng-click="$event.preventDefault();startStopSequencer()"><i id='play-button' class='fas fa-play'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span id='counter'>00</span></td>
+              <td><a id='startStopButton' href ng-click="$event.preventDefault();startStopSequencer()"><i id='play-button' class='fas fa-play'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class='font-weight-light' id='counter'>00</span></td>
             </tr>
             <!--<tr>
               <td><label>steps/minute: </label></td>
@@ -123,6 +123,7 @@
                   <!--<button id="get-sequence-chains-btn" ng-click='' class='controller-btn btn-sm btn-warning'>sequence chains</button>
                   <div id='get-sequence-chains-modal-container'></div>-->
               </div>
+              <div id='indexeddb-notifications-container'></div>
             </div>
           </div>
           <div class='alert alert-info mt-2 small' style='visibility: hidden;'>

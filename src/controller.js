@@ -290,6 +290,14 @@ app.controller('mainController', ['$scope', function($scope) {
 
   /*****************************************************************************
   *****************************************************************************/
+  $scope.elementTimeout = function(selector, ms) {
+    // fades out an element after specified ms
+    angular.element(selector).show();
+    setTimeout(function(){ angular.element(selector).fadeOut(1000) }, ms);
+  }
+
+  /*****************************************************************************
+  *****************************************************************************/
   $scope.saveSequence = function(sequence_title) {
     var sequence_params = {
       key: $scope.key,
@@ -311,6 +319,8 @@ app.controller('mainController', ['$scope', function($scope) {
       angular.element(`#${$scope.board.saveSequenceFormModalObj.id}`).modal('hide');
       angular.element(`#${$scope.board.saveSequenceFormModalObj.error_notification_id}`).html('');
       angular.element(`#${$scope.board.saveSequenceFormModalObj.input_id}`).val('');
+      angular.element(`#indexeddb-notifications-container`).html(`<div class='mt-2 p-2 alert alert-success font-weight-light'><i class='far fa-check-circle'></i> &nbsp;Sequence Saved!</div>`);
+      $scope.elementTimeout(`#indexeddb-notifications-container`, 5000);
     }).catch(function(error) {
       angular.element(`#${$scope.board.saveSequenceFormModalObj.error_notification_id}`).html('Something went wrong :/');
       console.log(error);
@@ -442,6 +452,12 @@ app.controller('mainController', ['$scope', function($scope) {
   }
 
   // toggle to dark mode by default
-  //$scope.colorMode();
+  $scope.colorMode();
+
+  // defualt auto mode
+  //$scope.autoMode = true;
+  //sequencer.autoModeToggle();
+  //angular.element(`#auto-mode-btn`).addClass('autoMode');
+  //$scope.board.toggleModeButton('auto-mode-btn');
 
 }]);

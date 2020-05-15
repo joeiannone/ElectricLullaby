@@ -24,4 +24,18 @@ window.demo_sequences = [
       wave: `sawtooth`,
     }
   },
+  {
+    title: `Test`,
+    sequence_matrix: [0, 2, 4, 7, 15, 38, 56, 82, 89, 101, 138, 143, 163, 177],
+    sequence_params: {
+      detune: -23,
+      gain: 0.1,
+      key: `e`,
+      note_start: 25,
+      steps: 8,
+      sustain: 3.2,
+      tempo: 233,
+      wave: `sawtooth`,
+    }
+  },
 ];

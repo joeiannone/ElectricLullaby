@@ -39,6 +39,7 @@ h3 {
   font-weight: 100; }
 
 #logo-container {
+  filter: blur(0.6px);
   width: 100%; }
   #logo-container #top-logo {
     border-radius: 50%;
@@ -58,7 +59,7 @@ h3 {
 #counter {
   padding: 20px;
   font-size: 40px;
-  font-weight: 200; }
+  color: gray; }
 
 .grid-container {
   display: grid;
