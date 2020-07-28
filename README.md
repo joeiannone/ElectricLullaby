@@ -4,5 +4,5 @@
 
 ## [Try it!](https://joeiannone.com/ElectricLullaby)
 
-### Screenshots:
+### UI:
 ![screenshot](img/electriclullaby.gif)
