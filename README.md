@@ -5,4 +5,4 @@
 ## [Try it!](https://joeiannone.com/ElectricLullaby)
 
 ### Screenshots:
-![screenshot](https://joeiannone.com/img/electriclullaby.gif)
+[![screenshot](https://joeiannone.com/img/electriclullaby.gif)](https://joeiannone.com)
