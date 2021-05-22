@@ -287,15 +287,15 @@ h3 {
   display: none;
 }
 
-@media screen and (max-device-width: 855px) {
+
+@media screen and (max-device-width: 767px) {
   #controller-container {
     display: none;
   }
   #device-width-msg {
-    display:block;
+    display: block;
   }
   body {
-    min-width: 100%;
-    width: 100%;
+    min-width: auto;
   }
 }

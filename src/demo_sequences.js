@@ -16,10 +16,10 @@ window.demo_sequences = [
     sequence_params: {
       detune: 0,
       gain: 0.16,
-      key: `c`,
+      key: `d`,
       note_start: 17,
       steps: 16,
-      sustain: 2.6,
+      sustain: 3.2,
       tempo: 155,
       wave: `sawtooth`,
     }
