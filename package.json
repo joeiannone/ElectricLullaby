@@ -1,6 +1,6 @@
 {
   "name": "ElectricLullaby",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A polyphonic musical step sequencer",
   "main": "main.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "electron": "^7.1.1",
     "electron-builder": "^22.1.0",
     "html-webpack-plugin": "^4.3.0",
+    "sass": "^1.34.0",
     "style-loader": "^1.2.1",
     "terser-webpack-plugin": "^3.0.1",
     "webpack": "^4.43.0",

@@ -446,13 +446,11 @@ app.controller('mainController', ['$scope', function($scope) {
   *****************************************************************************/
   // automatically load latest sequence
   if (typeof(demo_sequences) !== 'undefined') {
-    db.sequences.orderBy('created_at').last(function(sequence) {
+    db.sequences.orderBy('created_at').first(function(sequence) {
       $scope.loadSequences([sequence.id]);
     })
   }
 
-  // toggle to dark mode by default
-  $scope.colorMode();
 
   // defualt auto mode
   //$scope.autoMode = true;
